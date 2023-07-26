@@ -1,6 +1,7 @@
 import { UserOutlined, LaptopOutlined, NotificationOutlined, AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -22,8 +23,8 @@ function getItem(
 
 const items: MenuItem[] = [
     getItem('Bệnh nhân', 'sub1', <UserOutlined />, [
-        getItem('Tiếp nhận bệnh nhân', '1'),
-        getItem('Kiểm tra thông tin bệnh nhân', '2'),
+        getItem('Tiếp nhận bệnh nhân', '/receiving-patient'),
+        getItem('Kiểm tra thông tin bệnh nhân', '/patient'),
         getItem('Option 3', '3'),
         getItem('Option 4', '4'),
     ]),
@@ -41,6 +42,7 @@ const items: MenuItem[] = [
 ];
 
 export const SideNavigation = () => {
+    const navigate = useNavigate();
     const [openKeys, setOpenKeys] = useState(['sub1']);
 
     const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
@@ -50,6 +52,10 @@ export const SideNavigation = () => {
         } else {
         setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
         }
+    };
+
+    const onMenuClick: MenuProps["onClick"] = (info) => {
+        navigate(info.key);
     };
 
     // submenu keys of first level
@@ -62,6 +68,7 @@ export const SideNavigation = () => {
       onOpenChange={onOpenChange}
       style={{ width: 200 }}
       items={items}
+      onClick={onMenuClick}
     />
   )
 }
