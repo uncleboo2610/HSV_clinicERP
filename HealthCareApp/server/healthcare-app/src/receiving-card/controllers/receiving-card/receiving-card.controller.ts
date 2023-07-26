@@ -12,11 +12,12 @@ export class ReceivingCardController {
         return this.receivingCardService.getReceivingCards();
     }
 
-    @Post('create-receiving-card') 
+    @Post(':id/create-receiving-card') 
     createReceivingCard(
+        @Param('id') patientId: string,
         @Body() receivingCardDto: ReceivingCardDto
     ) {
-        return this.receivingCardService.createReceivingCard(receivingCardDto, receivingCardDto.departmentId);
+        return this.receivingCardService.createReceivingCard(patientId, receivingCardDto, receivingCardDto.departmentId);
     }
 
     @Put('update-receiving-card/:id')
