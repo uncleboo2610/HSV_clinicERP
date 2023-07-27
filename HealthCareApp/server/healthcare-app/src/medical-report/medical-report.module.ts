@@ -4,10 +4,10 @@ import { MedicalReportService } from './services/medical-report/medical-report.s
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MedicalReport } from 'src/entities/medical-report.entity';
 import { Patient } from 'src/entities/patient.entity';
-import { Doctor } from 'src/entities/doctor.entity';
+import { Staff } from 'src/entities/staff.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MedicalReport, Patient, Doctor])],
+  imports: [TypeOrmModule.forFeature([MedicalReport, Patient, Staff])],
   controllers: [MedicalReportController],
   providers: [MedicalReportService]
 })

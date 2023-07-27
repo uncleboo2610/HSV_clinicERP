@@ -13,8 +13,7 @@ export class ReceivingCard {
     @ManyToOne(() => Department)
     department: Department;
 
-    @OneToOne(() => Patient)
-    @JoinColumn()
+    @ManyToOne(() => Patient)
     patient: Patient;
 
     @CreateDateColumn()

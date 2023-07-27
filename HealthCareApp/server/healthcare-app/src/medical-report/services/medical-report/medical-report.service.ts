@@ -1,8 +1,8 @@
 import { BadRequestException, Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Doctor } from 'src/entities/doctor.entity';
 import { MedicalReport } from 'src/entities/medical-report.entity';
 import { Patient } from 'src/entities/patient.entity';
+import { Staff } from 'src/entities/staff.entity';
 import { MedicalReportDto } from 'src/medical-report/dtos/MedicalReport.dto';
 import { CreateMedicalReportParams } from 'src/medical-report/utils/types';
 import { Repository } from 'typeorm';
@@ -13,29 +13,29 @@ export class MedicalReportService {
     constructor(
         @InjectRepository(MedicalReport) private medicalReportRepository: Repository<MedicalReport>,
         @InjectRepository(Patient) private patientRepository: Repository<Patient>,
-        @InjectRepository(Doctor) private doctorRepository: Repository<Doctor>,
+        @InjectRepository(Staff) private staffRepository: Repository<Staff>,
     ) {}
 
     getMedicalReports() {
-        return this.medicalReportRepository.find({ relations: ['patient', 'doctor'] });
+        return this.medicalReportRepository.find({ relations: ['patient', 'staff'] });
     }
 
-    async createMedicalReport(id: string, medicalReportDetails: CreateMedicalReportParams, doctorId: string) {
+    async createMedicalReport(id: string, medicalReportDetails: CreateMedicalReportParams, staffId: string) {
         const patient = await this.patientRepository.findOneBy({ id });
-        const doctor = await this.doctorRepository.findOneBy({ id: doctorId });
+        const staff = await this.staffRepository.findOneBy({ id: staffId });
 
         if (!patient) {
             throw new BadRequestException('This patient does not exist !!!');
         }
 
-        if (!doctor) {
-            throw new BadRequestException('This doctor does not exist !!!');
+        if (!staff) {
+            throw new BadRequestException('This staff does not exist !!!');
         }
 
         const newMedicalReport = this.medicalReportRepository.create({
             ...medicalReportDetails,
             patient,
-            doctor,
+            staff,
             createdAt: new Date(),
             updatedAt: new Date(),
         });

@@ -17,7 +17,7 @@ export class MedicalReportController {
         @Param('id') id: string,
         @Body() medicalReportDto: MedicalReportDto
     ) {
-        return this.medicalReportService.createMedicalReport(id, medicalReportDto, medicalReportDto.doctorId);
+        return this.medicalReportService.createMedicalReport(id, medicalReportDto, medicalReportDto.staffId);
     }
 
     @Put('update-medical-report/:id')

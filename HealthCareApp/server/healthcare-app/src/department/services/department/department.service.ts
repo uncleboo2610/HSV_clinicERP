@@ -12,7 +12,7 @@ export class DepartmentService {
     ) {}
 
     getDepartments() {
-        return this.departmentRepository.find({ relations: ['doctor'] });
+        return this.departmentRepository.find();
     }
 
     createDepartment(DepartmentDetails: DepartmentDto) {

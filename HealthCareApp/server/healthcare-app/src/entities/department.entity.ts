@@ -1,5 +1,5 @@
 import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, Entity } from "typeorm";
-import { Doctor } from "./doctor.entity";
+import { Staff } from "./staff.entity";
 
 @Entity('department')
 export class Department {
@@ -9,8 +9,8 @@ export class Department {
     @Column()
     departmentName: string;
 
-    @OneToMany(() => Doctor, (doctor) => doctor.department, { nullable: false })
-    doctor: Doctor[];
+    @OneToMany(() => Staff, (staff) => staff.department, { nullable: false, onUpdate: 'CASCADE' }, )
+    staff: Staff[];
 
     @CreateDateColumn()
     createdAt: Date;

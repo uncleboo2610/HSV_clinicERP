@@ -1,4 +1,4 @@
-export type DoctorParams = {
+export type StaffParams = {
     name: string;
     dob: Date;
     idCard: number;
@@ -6,4 +6,6 @@ export type DoctorParams = {
     gender: string;
     phone: number;
     pob: string;
+    role: string;
+    position: string;
 }

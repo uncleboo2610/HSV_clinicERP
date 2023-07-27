@@ -2,8 +2,8 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { MedicalReport } from "./medical-report.entity";
 import { Department } from "./department.entity";
 
-@Entity('doctor')
-export class Doctor {
+@Entity('staff')
+export class Staff {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -28,10 +28,16 @@ export class Doctor {
     @Column()
     pob: string;
 
-    @OneToMany(() => MedicalReport, (mR) => mR.doctor)
+    @Column()
+    role: string;
+
+    @Column()
+    position: string;
+
+    @OneToMany(() => MedicalReport, (mR) => mR.staff)
     medical_report: MedicalReport[];
 
-    @ManyToOne(() => Department, (dept) => dept.doctor)
+    @ManyToOne(() => Department, (dept) => dept.staff)
     department: Department;
 
     @CreateDateColumn()

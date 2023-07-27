@@ -1,4 +1,6 @@
-export class DoctorDto {
+import { Department } from "src/entities/department.entity";
+
+export class StaffDto {
     name: string;
     dob: Date;
     idCard: number;
@@ -6,5 +8,7 @@ export class DoctorDto {
     gender: string;
     phone: number;
     pob: string;
+    role: string;
+    position: string;
     departmentId: number;
 }

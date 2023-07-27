@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Department } from 'src/entities/department.entity';
 import { Patient } from 'src/entities/patient.entity';
 import { ReceivingCard } from 'src/entities/receiving-card.entity';
-import { ReceivingCardDto } from 'src/receiving-card/dtos/ReceivingCard.dto';
 import { ReceivingCardParams } from 'src/receiving-card/utils/types';
 import { Repository } from 'typeorm';
 

@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToOne, JoinColumn } from "typeorm"
 import { Patient } from "./patient.entity";
-import { Doctor } from "./doctor.entity";
+import { Staff } from "./staff.entity";
 
 @Entity('medical_report')
 export class MedicalReport {
@@ -16,8 +16,8 @@ export class MedicalReport {
     @ManyToOne(() => Patient, (patient) => patient.medical_report)
     patient: Patient;
 
-    @ManyToOne(() => Doctor, (doctor) => doctor.medical_report)
-    doctor: Doctor;
+    @ManyToOne(() => Staff, (staff) => staff.medical_report)
+    staff: Staff;
 
     @CreateDateColumn()
     createdAt: Date;
