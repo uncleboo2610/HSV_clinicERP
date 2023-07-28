@@ -1,6 +1,6 @@
 import { Ref, forwardRef, useImperativeHandle, useState } from 'react';
 import { Button, Form, Input, Modal, Select } from 'antd';
-import useDepartment from '../../hooks/useDepartment';
+import useDepartment from '../../../departments/hooks/useDepartment';
 
 export interface RefObject {
     openModal: (data: any) => void;

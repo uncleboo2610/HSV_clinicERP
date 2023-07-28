@@ -1,4 +1,4 @@
 export type CreateMedicalReportParams = {
-    checkUpDate: Date;
+    reExaminationDate: Date;
     diagnostic: string;
 };

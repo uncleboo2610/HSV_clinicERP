@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { IPatient } from '../models';
 import { patientsService } from '../services/patients.service';
+import { IReceivingCard } from '../models';
 
-export default function usePatient() {
-    const [data, setData] = useState<IPatient[]>([]);
+export default function useReceivingCard() {
+    const [data, setData] = useState([]);
 
     useEffect(() => {
-        patientsService.getPatients()
+        patientsService.getReceivingCard()
             .then((res) => {
                 setData(res.data)
             })

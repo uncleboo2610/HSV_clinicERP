@@ -16,7 +16,7 @@ export class ReceivingCardService {
     ) {}
 
     getReceivingCards() {
-        return this.receivingCardRepository.find({ relations: ['department'] });
+        return this.receivingCardRepository.find({ relations: ['patient', 'department'] });
     }
 
     async createReceivingCard(patientId: string, receivingCardDetails: ReceivingCardParams, departmentId: number) {

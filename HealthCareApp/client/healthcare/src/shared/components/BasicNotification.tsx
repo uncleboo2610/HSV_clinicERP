@@ -1,6 +1,6 @@
 import { notification } from "antd";
 
-export function SuccessNotification(
+export function BasicNotification(
     type: any,
     title: string,
     description: any,

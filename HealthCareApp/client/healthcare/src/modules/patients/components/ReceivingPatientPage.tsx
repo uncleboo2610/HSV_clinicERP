@@ -8,6 +8,7 @@ import {
     Select,
 } from 'antd';
 import { patientsService } from '../services/patients.service';
+import { BasicNotification } from '../../../shared/components/BasicNotification';
 
 const { Option } = Select;
 
@@ -50,7 +51,15 @@ export const ReceivingPatientPage = () => {
             job: values.job,
         }
         
-        patientsService.createPatient(data).then().catch((e) => console.log(e));
+        patientsService.createPatient(data)
+            .then(() => {
+                BasicNotification(
+                    "success",
+                    "Success",
+                    "Đã đăng kí bệnh nhân thành công !",
+                )
+            })
+            .catch((e) => console.log(e));
     };
 
     const prefixSelector = (
@@ -144,8 +153,8 @@ export const ReceivingPatientPage = () => {
             rules={[{ required: true, message: 'Please select gender!' }]}
         >
             <Select placeholder="select your gender">
-                <Option value="male">Nam</Option>
-                <Option value="female">Nữ</Option>
+                <Option value="Nam">Nam</Option>
+                <Option value="Nữ">Nữ</Option>
             </Select>
         </Form.Item>
 

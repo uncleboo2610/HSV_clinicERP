@@ -4,6 +4,7 @@ import { MainLayout } from './shared/layout/MainLayout';
 import HomePage from './modules/HomePage';
 import { PatientPage } from './modules/patients/components/PatientPage';
 import { ReceivingPatientPage } from './modules/patients/components/ReceivingPatientPage';
+import { MedicalExaminationPage } from './modules/medical-examination/components/MedicalExaminationPage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path='/receiving-patient' element={<ReceivingPatientPage />} />
           <Route path='/patient' element={<PatientPage />} />
+          <Route path='/medical-examination' element={<MedicalExaminationPage />} />
         </Route>
       </Routes>
     </HashRouter>

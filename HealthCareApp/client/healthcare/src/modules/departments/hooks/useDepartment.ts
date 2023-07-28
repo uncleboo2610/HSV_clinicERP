@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { departmentService } from "../../departments/services/department.service";
+import { departmentService } from "../services/department.service";
 import { IDepartment } from "../models";
 
 export default function useDonation() {

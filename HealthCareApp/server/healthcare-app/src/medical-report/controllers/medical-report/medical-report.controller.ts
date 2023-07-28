@@ -12,12 +12,11 @@ export class MedicalReportController {
         return this.medicalReportService.getMedicalReports();
     }
 
-    @Post(':id/create-medical-report')
+    @Post('create-medical-report')
     createMedicalReport(
-        @Param('id') id: string,
         @Body() medicalReportDto: MedicalReportDto
     ) {
-        return this.medicalReportService.createMedicalReport(id, medicalReportDto, medicalReportDto.staffId);
+        return this.medicalReportService.createMedicalReport(medicalReportDto.patientId, medicalReportDto, medicalReportDto.staffId);
     }
 
     @Put('update-medical-report/:id')

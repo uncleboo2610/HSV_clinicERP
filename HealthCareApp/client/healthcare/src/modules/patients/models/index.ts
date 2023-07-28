@@ -10,7 +10,8 @@ export interface IPatient {
     job: string;
 }
 
-export interface IDepartment {
-    id: number;
-    departmentName: string;
+export interface IReceivingCard {
+    id: string;
+    patientName: string;
+    patientId: string;
 }

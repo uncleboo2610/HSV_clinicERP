@@ -8,7 +8,7 @@ export class MedicalReport {
     id: string;
 
     @Column()
-    checkUpDate: Date;
+    reExaminationDate: Date;
 
     @Column()
     diagnostic: string;

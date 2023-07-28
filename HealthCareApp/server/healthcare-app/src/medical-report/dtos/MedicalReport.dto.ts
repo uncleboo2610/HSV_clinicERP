@@ -1,5 +1,6 @@
 export class MedicalReportDto {
-    checkUpDate: Date;
+    patientId: string;
+    reExaminationDate: Date;
     diagnostic: string;
     staffId: string;
 }
