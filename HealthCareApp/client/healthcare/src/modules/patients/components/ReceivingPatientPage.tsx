@@ -59,7 +59,14 @@ export const ReceivingPatientPage = () => {
                     "Đã đăng kí bệnh nhân thành công !",
                 )
             })
-            .catch((e) => console.log(e));
+            .catch((e) => {
+                BasicNotification(
+                    "error",
+                    "Error",
+                    "Failed to update data !",
+                );
+                console.log(e);
+            });
     };
 
     const prefixSelector = (

@@ -20,7 +20,14 @@ export const MedicalExaminationForm = (props: any) => {
                     "Đã lưu giấy khám bệnh thành công !",
                 )
             })
-            .catch((e) => console.log(e));
+            .catch((e) => {
+                BasicNotification(
+                    "error",
+                    "Error",
+                    "Failed to update data !",
+                );
+                console.log(e);
+            });
     };
 
   return (

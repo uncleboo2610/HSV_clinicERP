@@ -17,6 +17,8 @@ export const PatientPage = () => {
     const child = useRef<RefObject>(null);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
+    const [patientId, setPatientId] = useState('');
+    const [patientName, setPatientName] = useState('');
     const searchInput = useRef<InputRef>(null);
 
     const submitForm = (values: any) => {
@@ -28,7 +30,14 @@ export const PatientPage = () => {
                     "Đã đăng kí phiếu tiếp nhận thành công !",
                     )
                 })
-                .catch((e) => console.log(e))
+                .catch((e) => {
+                    BasicNotification(
+                        "error",
+                        "Error",
+                        "Failed to update data !",
+                    );
+                    console.log(e);
+                });
     };
             
     const dataPatient: IPatient[] = data.map((patient, i) => ({
@@ -232,6 +241,9 @@ export const PatientPage = () => {
     ];
 
   return (
-    <Table columns={columnsPatient} dataSource={dataPatient} />
+    <Table 
+        columns={columnsPatient} 
+        dataSource={dataPatient} 
+    />
   )
 }
