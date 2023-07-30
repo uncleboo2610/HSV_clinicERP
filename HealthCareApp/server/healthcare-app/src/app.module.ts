@@ -10,6 +10,7 @@ import { DepartmentModule } from './department/department.module';
 import { ReceivingCardModule } from './receiving-card/receiving-card.module';
 import { StaffModule } from './staff/staff.module';
 import { Staff } from './entities/staff.entity';
+import { GatewayModule } from './gateway/gateway.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -29,7 +30,7 @@ import { Staff } from './entities/staff.entity';
         validateConnection: false,
         trustServerCertificate: true,
       },
-  }), PatientsModule, MedicalReportModule, StaffModule, DepartmentModule, ReceivingCardModule, StaffModule],
+  }), PatientsModule, MedicalReportModule, StaffModule, DepartmentModule, ReceivingCardModule, StaffModule, GatewayModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,14 +1,15 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { Button, Input, InputRef, Space, Table, Tooltip } from 'antd';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import { IPatient } from '../models';
 import { DeleteOutlined, EditOutlined, IdcardOutlined, SearchOutlined } from '@ant-design/icons';
-import ModalReceivingCardForm, { RefObject } from './form/ModalReceivingCardForm';
 import { patientsService } from '../services/patients.service';
 import { BasicNotification } from '../../../shared/components/BasicNotification';
 import { FilterConfirmProps } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
 import usePatient from '../hooks/usePatient';
+import ModalReceivingCardForm, { RefObject } from './Form/ModalReceivingCardForm';
+import { WebsocketContext } from '../../../contexts/WebSocketContext';
   
 type DataIndex = keyof IPatient;
 
@@ -17,9 +18,8 @@ export const PatientPage = () => {
     const child = useRef<RefObject>(null);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
-    const [patientId, setPatientId] = useState('');
-    const [patientName, setPatientName] = useState('');
     const searchInput = useRef<InputRef>(null);
+    const socket = useContext(WebsocketContext)
 
     const submitForm = (values: any) => {
         patientsService.createReceivingCard(values)
@@ -28,7 +28,8 @@ export const PatientPage = () => {
                     "success",
                     "Success",
                     "Đã đăng kí phiếu tiếp nhận thành công !",
-                    )
+                );
+                socket.emit('newReceiving')
                 })
                 .catch((e) => {
                     BasicNotification(
