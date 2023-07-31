@@ -8,7 +8,7 @@ import { BasicNotification } from '../../../shared/components/BasicNotification'
 import { FilterConfirmProps } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
 import usePatient from '../hooks/usePatient';
-import ModalReceivingCardForm, { RefObject } from './Form/ModalReceivingCardForm';
+import ModalReceivingCardForm, { RefObject } from './form/ModalReceivingCardForm';
 import { WebsocketContext } from '../../../contexts/WebSocketContext';
   
 type DataIndex = keyof IPatient;
@@ -22,23 +22,39 @@ export const PatientPage = () => {
     const socket = useContext(WebsocketContext)
 
     const submitForm = (values: any) => {
-        patientsService.createReceivingCard(values)
-            .then(() => {
+        patientsService.createReceivingCard({
+            patientId: values.patientId,
+            patientName: values.patientName
+        })
+        .then((res) => {
+            patientsService.createReceivingCardDetail({
+                patientId: values.patientId,
+                receivingCardId: res.data.id,
+                departmentId: values.departmentId
+            }).then(() => {
                 BasicNotification(
                     "success",
                     "Success",
                     "Đã đăng kí phiếu tiếp nhận thành công !",
                 );
                 socket.emit('newReceiving')
-                })
-                .catch((e) => {
-                    BasicNotification(
-                        "error",
-                        "Error",
-                        "Failed to update data !",
-                    );
-                    console.log(e);
-                });
+            }).catch((e) => {
+                BasicNotification(
+                    "error",
+                    "Error",
+                    "Failed to update data !",
+                );
+                console.log(e);
+            })
+        })
+        .catch((e) => {
+            BasicNotification(
+                "error",
+                "Error",
+                "Failed to update data !",
+            );
+            console.log(e);
+        });
     };
             
     const dataPatient: IPatient[] = data.map((patient, i) => ({

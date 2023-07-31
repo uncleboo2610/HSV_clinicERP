@@ -1,6 +1,7 @@
-import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, Entity, JoinColumn, OneToOne } from "typeorm";
+import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, Entity, JoinColumn, OneToOne, OneToMany } from "typeorm";
 import { Department } from "./department.entity";
 import { Patient } from "./patient.entity";
+import { ReceivingCardDetail } from "./receiving-card-detail.entity";
 
 @Entity('receiving_card')
 export class ReceivingCard {
@@ -10,8 +11,8 @@ export class ReceivingCard {
     @Column()
     patientName: string;
 
-    @ManyToOne(() => Department)
-    department: Department;
+    @OneToMany(() => ReceivingCardDetail, (receivingCarDetail) => receivingCarDetail.receivingCard)
+    receivingCardDetail: ReceivingCardDetail[];
 
     @ManyToOne(() => Patient)
     patient: Patient;

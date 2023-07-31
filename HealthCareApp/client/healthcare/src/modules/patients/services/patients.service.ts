@@ -10,6 +10,10 @@ class PatientsService {
         return httpClient.get(apiEndpoints.ReceivingCard.GetReceivingCard);
     }
 
+    getReceivingCardDetail() {
+        return httpClient.get(apiEndpoints.ReceivingCard.GetReceivingCardDetail);
+    }
+
     createPatient(data: any) {
         return httpClient.post(
             apiEndpoints.Patient.AddPatient,
@@ -20,6 +24,13 @@ class PatientsService {
     createReceivingCard(data: any) {
         return httpClient.post(
             apiEndpoints.ReceivingCard.AddReceivingCard,
+            data,
+        );
+    }
+
+    createReceivingCardDetail(data: any) {
+        return httpClient.post(
+            apiEndpoints.ReceivingCard.AddReceivingCardDetail,
             data,
         );
     }

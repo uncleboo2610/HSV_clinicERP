@@ -48,7 +48,7 @@ export const ModalReceivingCardForm = (props: Props, ref: Ref<RefObject>) => {
   return (
     <>
         <Modal
-            title="Member"
+            title="Đăng kí khám bệnh"
             open={isModalOpen}
             onCancel={closeModal}
             footer={null}

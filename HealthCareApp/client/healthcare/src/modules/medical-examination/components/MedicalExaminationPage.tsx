@@ -2,13 +2,13 @@ import { Radio, Divider, Table, Button, Row, Col, Input, Space, InputRef } from 
 import { ColumnType, ColumnsType } from 'antd/es/table';
 import { useRef, useState } from 'react';
 import useReceivingCard from '../../patients/hooks/useReceivingCard'
-import { IPatient, IReceivingCard } from '../../patients/models';
+import { IPatient, IReceivingCard, IReceivingCardDetail } from '../../patients/models';
 import { MedicalExaminationForm } from './form/MedicalExaminationForm';
 import { SearchOutlined } from '@ant-design/icons';
 import { FilterConfirmProps } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
 
-type DataIndex = keyof IReceivingCard;
+type DataIndex = keyof IReceivingCardDetail;
 
 export const MedicalExaminationPage = () => {
     const [data] = useReceivingCard();
@@ -33,7 +33,7 @@ export const MedicalExaminationPage = () => {
         setSearchText('');
     };
     
-    const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<IReceivingCard> => ({
+    const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<IReceivingCardDetail> => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
             <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
                 <Input
@@ -110,7 +110,7 @@ export const MedicalExaminationPage = () => {
             ),
     });
 
-    const columnsReceivingCard: ColumnsType<IReceivingCard> = [
+    const columnsReceivingCard: ColumnsType<IReceivingCardDetail> = [
         {
             title: 'STT',
             width: 50,
@@ -127,19 +127,25 @@ export const MedicalExaminationPage = () => {
           title: 'Mã bệnh nhân',
           dataIndex: 'patientId',
           key: 'patientId'
+        },
+        {
+            title: 'Khoa khám bệnh',
+            dataIndex: 'departmentName',
+            key: 'departmentName'
         }
     ];
       
-    const dataReceivingCard: IReceivingCard[] = data.map((receivingCard: any, i) => ({
+    const dataReceivingCard: IReceivingCardDetail[] = data.map((receivingCardDetail: any, i) => ({
         key: i + 1,
-        id: receivingCard.id,
-        patientName: receivingCard.patientName,
-        patientId: receivingCard.patient.id,
+        id: receivingCardDetail.id,
+        patientName: receivingCardDetail.patient.name,
+        patientId: receivingCardDetail.patient.id,
+        departmentName: receivingCardDetail.department.departmentName
     }))
       
     // rowSelection object indicates the need for row selection
     const rowSelection = {
-        onChange: (selectedRowKeys: React.Key[], selectedRows: IReceivingCard[]) => {
+        onChange: (selectedRowKeys: React.Key[], selectedRows: IReceivingCardDetail[]) => {
             const pId = selectedRows.map((p: any) => {return p.patientId});
             const pName = selectedRows.map((p: any) => {return p.patientName});
             setPatientId(String(pId));

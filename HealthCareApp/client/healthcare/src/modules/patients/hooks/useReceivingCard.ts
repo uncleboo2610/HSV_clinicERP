@@ -22,7 +22,7 @@ export default function useReceivingCard() {
     }, []);
 
     useEffect(() => {
-        patientsService.getReceivingCard()
+        patientsService.getReceivingCardDetail()
             .then((res) => {
                 setData(res.data)
             })

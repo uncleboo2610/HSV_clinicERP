@@ -15,3 +15,10 @@ export interface IReceivingCard {
     patientName: string;
     patientId: string;
 }
+
+export interface IReceivingCardDetail {
+    id: string;
+    patientName: string;
+    patientId: string;
+    departmentName: string;
+}

@@ -2,9 +2,8 @@ import { OnModuleInit } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { WebSocketGateway, WebSocketServer, SubscribeMessage, MessageBody } from "@nestjs/websockets";
 import { Server } from "socket.io";
-import { Department } from "src/entities/department.entity";
 import { Patient } from "src/entities/patient.entity";
-import { ReceivingCard } from "src/entities/receiving-card.entity";
+import { ReceivingCardDetail } from "src/entities/receiving-card-detail.entity";
 import { Repository } from "typeorm";
 
 @WebSocketGateway(3001, {
@@ -14,19 +13,15 @@ import { Repository } from "typeorm";
 })
 export class MyGateWay implements OnModuleInit {
     constructor(
-        @InjectRepository(ReceivingCard) private receivingCardRepository: Repository<ReceivingCard>,
-        @InjectRepository(Department) private departmentRepository: Repository<Department>,
-        @InjectRepository(Patient) private patientRepository: Repository<Patient>,
+        @InjectRepository(ReceivingCardDetail) private receivingCardDetailRepository: Repository<ReceivingCardDetail>,
+        @InjectRepository(Patient) private receivingPatientRepository: Repository<Patient>,
     ) {}
     
     @WebSocketServer()
     server: Server;
 
     onModuleInit() {
-        this.server.on('connection', (socket) => {
-            console.log(socket.id);
-            console.log('Connected');
-        })
+        this.server.on('connection', (socket) => {})
     }
 
     @SubscribeMessage('newMessage')
@@ -39,8 +34,16 @@ export class MyGateWay implements OnModuleInit {
 
     @SubscribeMessage('newReceiving')
     async onNewReceiving(@MessageBody() body: any) {
-        const data = await this.receivingCardRepository.find({ relations: ['patient', 'department'] });
+        const data = await this.receivingCardDetailRepository.find({ relations: ['patient', 'receivingCard', 'department'] });
         this.server.emit('onReceiving', {
+            content: data
+        })
+    }
+
+    @SubscribeMessage('newPatient')
+    async onNewPatient() {
+        const data = await this.receivingPatientRepository.find();
+        this.server.emit('onPatient', {
             content: data
         })
     }
