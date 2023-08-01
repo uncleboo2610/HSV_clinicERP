@@ -9,3 +9,7 @@ export type StaffParams = {
     role: string;
     position: string;
 }
+
+export type StaffTicketParams = {
+    note: string;
+}

@@ -8,6 +8,12 @@ class MedicalExaminationService {
             data,
         );
     }
+
+    getStaffTicket() {
+        return httpClient.get(
+            apiEndpoints.Staff.getStaffTicket,
+        );
+    }
 }
 
 export const medicalExaminationService = new MedicalExaminationService();

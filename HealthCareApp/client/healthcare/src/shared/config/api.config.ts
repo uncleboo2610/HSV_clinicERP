@@ -16,5 +16,11 @@ export const apiEndpoints = {
     },
     MedicalReport: {
         AddMedicalReport: `${apiBaseUrl}/medical-report/create-medical-report`,
+    },
+    Paraclinical: {
+        AddParaclinic: `${apiBaseUrl}/paraclinical/create-paraclinical-report`,
+    },
+    Staff: {
+        getStaffTicket: `${apiBaseUrl}/staff/get-staff-tickets`,
     }
 }

@@ -11,6 +11,9 @@ import { ReceivingCardModule } from './receiving-card/receiving-card.module';
 import { StaffModule } from './staff/staff.module';
 import { Staff } from './entities/staff.entity';
 import { GatewayModule } from './gateway/gateway.module';
+import { TypeServiceModule } from './type-service/type-service.module';
+import { StaffTicket } from './entities/staff-ticket.entity';
+import { ParaclinicalModule } from './paraclinical/paraclinical.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -30,7 +33,7 @@ import { GatewayModule } from './gateway/gateway.module';
         validateConnection: false,
         trustServerCertificate: true,
       },
-  }), PatientsModule, MedicalReportModule, StaffModule, DepartmentModule, ReceivingCardModule, StaffModule, GatewayModule],
+  }), PatientsModule, MedicalReportModule, StaffModule, DepartmentModule, ReceivingCardModule, StaffModule, GatewayModule, TypeServiceModule, StaffTicket, ParaclinicalModule],
   controllers: [AppController],
   providers: [AppService],
 })

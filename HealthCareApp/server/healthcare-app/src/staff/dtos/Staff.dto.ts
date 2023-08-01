@@ -12,3 +12,8 @@ export class StaffDto {
     position: string;
     departmentId: number;
 }
+
+export class StaffTicketDto {
+    note: string;
+    patientId: string;
+}

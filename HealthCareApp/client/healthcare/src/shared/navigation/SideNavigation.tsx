@@ -25,19 +25,13 @@ const items: MenuItem[] = [
     getItem('Bệnh nhân', 'sub1', <UserOutlined />, [
         getItem('Tiếp nhận bệnh nhân', '/receiving-patient'),
         getItem('Kiểm tra thông tin bệnh nhân', '/patient'),
-        getItem('Option 3', '3'),
-        getItem('Option 4', '4'),
     ]),
     getItem('Khám bệnh', 'sub2', <AppstoreOutlined />, [
         getItem('Phiếu khám bệnh', '/medical-examination'),
-        getItem('Option 6', '6'),
-        getItem('Submenu', 'sub3', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
     ]),
-    getItem('Navigation Three', 'sub4', <SettingOutlined />, [
-        getItem('Option 9', '9'),
-        getItem('Option 10', '10'),
-        getItem('Option 11', '11'),
-        getItem('Option 12', '12'),
+    getItem('Cận lâm sàng', 'sub4', <SettingOutlined />, [
+        getItem('Chẩn đoán hình ảnh', '/imaging-diagnostic'),
+        getItem('Xét nghiệm máu', '/blood-test'),
     ]),
 ];
 
