@@ -7,14 +7,15 @@ import { ReceivingPatientPage } from './modules/patients/components/ReceivingPat
 import { MedicalExaminationPage } from './modules/medical-examination/components/MedicalExaminationPage';
 import { BloodTestPage } from './modules/paraclinical/components/blood-test/BloodTestPage';
 import { ImagingDiagnosticPage } from './modules/paraclinical/components/imaging-diagnostic/ImagingDiagnosticPage';
+import { LogInPage } from './modules/auth/components/LogInPage';
 
 function App() {
   return (
     <HashRouter>
       <Routes>
-        {/* <Route errorElement={<h2>Error</h2>}>
+        <Route errorElement={<h2>Error</h2>}>
           <Route path='/auth/login' element={<LogInPage />} />
-        </Route> */}
+        </Route>
         <Route element={<MainLayout />} errorElement={<h2>Error</h2>}>
           <Route path='/' element={<HomePage />} />
           <Route path='/receiving-patient' element={<ReceivingPatientPage />} />

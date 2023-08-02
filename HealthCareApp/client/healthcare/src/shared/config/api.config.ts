@@ -1,6 +1,9 @@
 const apiBaseUrl = `http://localhost:2023`;
 
 export const apiEndpoints = {
+    Auth: {
+        LogIn: `${apiBaseUrl}/auth/login`,
+    },
     Patient: {
         GetPatients: `${apiBaseUrl}/patients/get-patients`,
         AddPatient: `${apiBaseUrl}/patients/create-patient`
