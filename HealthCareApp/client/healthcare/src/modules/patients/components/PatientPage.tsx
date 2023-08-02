@@ -8,7 +8,7 @@ import { BasicNotification } from '../../../shared/components/BasicNotification'
 import { FilterConfirmProps } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
 import usePatient from '../hooks/usePatient';
-import ModalReceivingCardForm, { RefObject } from './form/ModalReceivingCardForm';
+import ModalReceivingCardForm, { RefObject } from './form/ModalReceivingCardFrom';
 import { WebsocketContext } from '../../../contexts/WebSocketContext';
   
 type DataIndex = keyof IPatient;
