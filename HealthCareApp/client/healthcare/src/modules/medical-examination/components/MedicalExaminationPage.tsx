@@ -1,19 +1,19 @@
-import { Radio, Divider, Table, Button, Row, Col, Input, Space, InputRef } from 'antd';
+import { Divider, Table, Button, Row, Col, Input, Space, InputRef, Tabs, TabsProps } from 'antd';
 import { ColumnType, ColumnsType } from 'antd/es/table';
 import { useRef, useState } from 'react';
 import useReceivingCard from '../../patients/hooks/useReceivingCard'
-import { IPatient, IReceivingCard, IReceivingCardDetail } from '../../patients/models';
+import { IPatient, IReceivingCardDetail } from '../../patients/models';
 import { MedicalExaminationForm } from './form/MedicalExaminationForm';
 import { SearchOutlined } from '@ant-design/icons';
 import { FilterConfirmProps } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
+import { StaffTicketForm } from './form/StaffTicketForm';
 
 type DataIndex = keyof IReceivingCardDetail;
 
 export const MedicalExaminationPage = () => {
     const [data] = useReceivingCard();
-    const [patientId, setPatientId] = useState('');
-    const [patientName, setPatientName] = useState('');
+    const [patient, setPatient] = useState<IPatient | null>(null);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef<InputRef>(null);
@@ -146,17 +146,29 @@ export const MedicalExaminationPage = () => {
     // rowSelection object indicates the need for row selection
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: IReceivingCardDetail[]) => {
-            const pId = selectedRows.map((p: any) => {return p.patientId});
-            const pName = selectedRows.map((p: any) => {return p.patientName});
-            setPatientId(String(pId));
-            setPatientName(String(pName));
+            selectedRows.map((p: any) => {
+                setPatient(p)
+            });
         },
     };
+
+    const items: TabsProps['items'] = [
+        {
+          key: '1',
+          label: `Phiếu khám bệnh`,
+          children: <MedicalExaminationForm patient={patient} />,
+        },
+        {
+          key: '2',
+          label: `Ticket`,
+          children: <StaffTicketForm patient={patient}/>,
+        },
+      ];
 
   return (
     <div>
         <Row>
-            <Col span={'10'}>
+            <Col span={'16'}>
                 <Table
                     rowSelection={{
                         type: 'radio',
@@ -172,7 +184,7 @@ export const MedicalExaminationPage = () => {
         </Row>
         <Row>
             <Col span={'24'}>
-                <MedicalExaminationForm patientId={patientId} patientName={patientName} />
+                <Tabs defaultActiveKey="1" items={items} />
             </Col>
         </Row>
     </div>

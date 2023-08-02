@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { paraclinicalService } from "../services/paraclinical.service";
-import { medicalExaminationService } from "../../medical-examination/services/medical-examination.service";
+import { ITypeService } from "../models";
 
-export default function useStaffTicket() {
-    const [data, setData] = useState([]);
+export default function useTypeService() {
+    const [data, setData] = useState<ITypeService[]>([]);
 
     useEffect(() => {
-        medicalExaminationService.getStaffTicket()
+        paraclinicalService.getTypeService()
             .then((res) => {
                 setData(res.data)
             })

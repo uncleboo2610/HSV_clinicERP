@@ -9,6 +9,6 @@ async function bootstrap() {
     methods: '*',
     credentials: true,
   });
-  await app.listen(2023);
+  await app.listen(process.env.PORT);
 }
 bootstrap();

@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Req, Headers } from '@nestjs/common';
 import { StaffDto, StaffTicketDto } from 'src/staff/dtos/Staff.dto';
 import { StaffService } from 'src/staff/services/staff/staff.service';
+import { Request } from 'express';
 
 @Controller('staff')
 export class StaffController {
@@ -17,9 +18,20 @@ export class StaffController {
         return this.staffService.getStaffTickets();
     }
 
+    @Get('get-profile')
+    getProfile(
+        @Headers() headers
+    ) {
+        return this.staffService.getProfile(headers);
+    }
+
     @Post('create-staff')
     createStaff(@Body() staffDto: StaffDto) {
-        return this.staffService.createStaff(staffDto, staffDto.departmentId);
+        if(staffDto.password === staffDto.confirmPassword) {
+            return this.staffService.createStaff(staffDto, staffDto.password, staffDto.departmentId);
+        } else {
+            throw new BadRequestException('Wrong password!');
+        }
     }
 
     @Post('create-staff-ticket')

@@ -4,6 +4,7 @@ import { WebSocketGateway, WebSocketServer, SubscribeMessage, MessageBody } from
 import { Server } from "socket.io";
 import { Patient } from "src/entities/patient.entity";
 import { ReceivingCardDetail } from "src/entities/receiving-card-detail.entity";
+import { StaffTicket } from "src/entities/staff-ticket.entity";
 import { Repository } from "typeorm";
 
 @WebSocketGateway(3001, {
@@ -15,6 +16,7 @@ export class MyGateWay implements OnModuleInit {
     constructor(
         @InjectRepository(ReceivingCardDetail) private receivingCardDetailRepository: Repository<ReceivingCardDetail>,
         @InjectRepository(Patient) private receivingPatientRepository: Repository<Patient>,
+        @InjectRepository(StaffTicket) private staffTicketRepository: Repository<StaffTicket>,
     ) {}
     
     @WebSocketServer()
@@ -44,6 +46,14 @@ export class MyGateWay implements OnModuleInit {
     async onNewPatient() {
         const data = await this.receivingPatientRepository.find();
         this.server.emit('onPatient', {
+            content: data
+        })
+    }
+
+    @SubscribeMessage('newStaffTicket')
+    async onNewStaffTicket() {
+        const data = await this.staffTicketRepository.find({ relations: ['patient'] });
+        this.server.emit('onStaffTicket', {
             content: data
         })
     }

@@ -1,23 +1,25 @@
-import { Button, DatePicker, Form, Input } from 'antd'
+import { Button, Form, Input } from 'antd'
+import React, { useContext } from 'react'
 import { medicalExaminationService } from '../../services/medical-examination.service';
 import { BasicNotification } from '../../../../shared/components/BasicNotification';
+import { WebsocketContext } from '../../../../contexts/WebSocketContext';
 
-
-export const MedicalExaminationForm = (props: any) => {
+export const StaffTicketForm = (props: any) => {
+    const socket = useContext(WebsocketContext);
     const handleSubmit = (value: any) => {
         const data = {
+            // staffId: value.staffId,
+            note: value.note,
             patientId: props?.patient?.patientId,
-            staffId: value.staffId,
-            diagnostic: value.diagnostic,
-            reExaminationDate: value.reExaminationDate,
         };
-        medicalExaminationService.createMedicalExamination(data)
+        medicalExaminationService.createStaffTicket(data)
             .then(() => {
                 BasicNotification(
                     "success",
                     "Success",
                     "Đã lưu giấy khám bệnh thành công !",
-                )
+                );
+                socket.emit('newStaffTicket')
             })
             .catch((e) => {
                 BasicNotification(
@@ -28,10 +30,9 @@ export const MedicalExaminationForm = (props: any) => {
                 console.log(e);
             });
     };
-
   return (
     <Form
-        name="medicalexamination"
+        name="staffticket"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 600 }}
@@ -51,33 +52,25 @@ export const MedicalExaminationForm = (props: any) => {
             <div>{props?.patient?.patientName}</div>
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
             label="Bác sĩ"
             name="staffId"
             rules={[{ required: true, message: 'Please input staffId!' }]}
         >
             <Input />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
-            label="Chuẩn đoán sơ bộ"
-            name="diagnostic"
-            rules={[{ required: true, message: 'Please input your diagnostic!' }]}
+            label="Ghi chú"
+            name="note"
+            rules={[{ required: true, message: 'Please input your note!' }]}
         >
             <Input />
         </Form.Item>
 
-        <Form.Item
-            label="Ngày tái khám"
-            name="reExaminationDate"
-            rules={[{ required: true, message: 'Please input check-up date!' }]}
-        >
-            <DatePicker />
-        </Form.Item>
-
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
-                Lưu báo cáo khám bệnh
+                Lưu Ticket
             </Button>
         </Form.Item>
     </Form>

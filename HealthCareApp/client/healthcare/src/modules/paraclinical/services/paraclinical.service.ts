@@ -2,8 +2,11 @@ import { httpClient } from "../../../core/http";
 import { apiEndpoints } from "../../../shared/config/api.config";
 
 class ParaclinicalService {
-    createParaclinical() {
-        return httpClient.post(apiEndpoints.Paraclinical.AddParaclinic);
+    getTypeService() {
+        return httpClient.get(apiEndpoints.TypeService.getTypeService);
+    }
+    createParaclinical(data: any) {
+        return httpClient.post(apiEndpoints.Paraclinical.AddParaclinic, data);
     }
 }
 

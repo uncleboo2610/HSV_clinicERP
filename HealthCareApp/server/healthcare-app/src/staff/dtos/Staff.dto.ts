@@ -11,6 +11,9 @@ export class StaffDto {
     role: string;
     position: string;
     departmentId: number;
+    username: string;
+    password: string;
+    confirmPassword: string;
 }
 
 export class StaffTicketDto {

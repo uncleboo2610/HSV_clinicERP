@@ -22,5 +22,9 @@ export const apiEndpoints = {
     },
     Staff: {
         getStaffTicket: `${apiBaseUrl}/staff/get-staff-tickets`,
+        createStaffTicket: `${apiBaseUrl}/staff/create-staff-ticket`
+    },
+    TypeService: {
+        getTypeService: `${apiBaseUrl}/type-service/get-type-services`,
     }
 }

@@ -14,15 +14,18 @@ import { GatewayModule } from './gateway/gateway.module';
 import { TypeServiceModule } from './type-service/type-service.module';
 import { StaffTicket } from './entities/staff-ticket.entity';
 import { ParaclinicalModule } from './paraclinical/paraclinical.module';
+import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  imports: [ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
     type: 'mssql',
-      host: 'localhost',
+      host: process.env.DATABASE_HOST,
       port: 1433,
-      username: 'sa',
-      password: 'test12345',
-      database: 'healthcare',
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       entities: [Staff, Patient, MedicalReport],
       synchronize: true,
       autoLoadEntities: true,
@@ -33,7 +36,7 @@ import { ParaclinicalModule } from './paraclinical/paraclinical.module';
         validateConnection: false,
         trustServerCertificate: true,
       },
-  }), PatientsModule, MedicalReportModule, StaffModule, DepartmentModule, ReceivingCardModule, StaffModule, GatewayModule, TypeServiceModule, StaffTicket, ParaclinicalModule],
+  }), PatientsModule, MedicalReportModule, StaffModule, DepartmentModule, ReceivingCardModule, StaffModule, GatewayModule, TypeServiceModule, StaffTicket, ParaclinicalModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

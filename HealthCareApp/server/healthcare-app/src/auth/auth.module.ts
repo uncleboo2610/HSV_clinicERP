@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { StaffService } from './services/staff/staff.service';
-import { StaffController } from './controllers/staff/staff.controller';
-import { Department } from 'src/entities/department.entity';
-import { Staff } from 'src/entities/staff.entity';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { StaffTicket } from 'src/entities/staff-ticket.entity';
-import { Patient } from 'src/entities/patient.entity';
+import { AuthService } from './services/auth/auth.service';
+import { AuthController } from './controllers/auth/auth.controller';
 import { JwtModule } from '@nestjs/jwt';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Department } from 'src/entities/department.entity';
+import { Patient } from 'src/entities/patient.entity';
+import { StaffTicket } from 'src/entities/staff-ticket.entity';
+import { Staff } from 'src/entities/staff.entity';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -19,7 +19,7 @@ import { ConfigModule } from '@nestjs/config';
     signOptions: { expiresIn: '1d' },
   }),
   ],
-  providers: [StaffService],
-  controllers: [StaffController]
+  providers: [AuthService],
+  controllers: [AuthController]
 })
-export class StaffModule {}
+export class AuthModule {}

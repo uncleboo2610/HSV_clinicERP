@@ -6,6 +6,8 @@ import { StaffTicket } from 'src/entities/staff-ticket.entity';
 import { Staff } from 'src/entities/staff.entity';
 import { StaffParams, StaffTicketParams } from 'src/staff/utils/types';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class StaffService {
@@ -14,7 +16,8 @@ export class StaffService {
         @InjectRepository(Staff) private staffRepository: Repository<Staff>,
         @InjectRepository(Department) private departmentRepository: Repository<Department>,
         @InjectRepository(StaffTicket) private staffTicketRepository: Repository<StaffTicket>,
-        @InjectRepository(Patient) private patientRepository: Repository<Patient>
+        @InjectRepository(Patient) private patientRepository: Repository<Patient>,
+        private readonly jwtService: JwtService,
     ) {}
 
     getStaffs() {
@@ -22,15 +25,25 @@ export class StaffService {
     }
 
     getStaffTickets() {
-        return this.staffTicketRepository.find();
+        return this.staffTicketRepository.find({ relations: ['patient'] });
     }
 
-    async createStaff(staffDetails: StaffParams, departmentId: number) {
+    async getProfile(header: any) {
+        const token = header['token'];
+        const decodedJwtAccessToken = this.jwtService.verify(token);
+        const profile = await this.staffRepository.findOneBy({ id: decodedJwtAccessToken?.id })
+
+        return profile;
+    }
+
+    async createStaff(staffDetails: StaffParams, password: string, departmentId: number) {
         const department = await this.departmentRepository.findOneBy({ id: departmentId });
 
         if(!department) {
             throw new BadRequestException('This department does not exist !!!');
         };
+
+        staffDetails.password = await bcrypt.hash(password, 12);
 
         const newStaff = this.staffRepository.create({
             ...staffDetails,

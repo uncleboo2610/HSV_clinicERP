@@ -8,6 +8,8 @@ export type StaffParams = {
     pob: string;
     role: string;
     position: string;
+    username: string;
+    password: string;
 }
 
 export type StaffTicketParams = {
