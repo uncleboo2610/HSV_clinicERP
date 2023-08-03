@@ -13,12 +13,12 @@ export class PrescriptionService {
         @InjectRepository(PrescriptionDetail) private prescriptionDetailRepository: Repository<PrescriptionDetail>
     ) {}
 
-    getPrescription() {
-        return this.prescriptionRepository.find();
+    getPrescriptions() {
+        return this.prescriptionRepository.find({ relations: ['prescriptionDetail'] });
     }
 
-    getPrescriptionDetail() {
-        return this.prescriptionDetailRepository.find();
+    getPrescriptionDetails() {
+        return this.prescriptionDetailRepository.find({ relations: ['drug', 'prescription'] });
     }
 
     createPrescription(prescriptionData: PrescriptionParams) {
@@ -31,11 +31,14 @@ export class PrescriptionService {
         return this.prescriptionRepository.save(newPrescription);
     }
 
-    async createPrescriptionDetail(prescriptionDetailData: PrescriptionDetailParams, prescriptionId: number) {
+    async createPrescriptionDetail(prescriptionDetailData: PrescriptionDetailParams, prescriptionId: number, drugId: number) {
         const prescription = await this.prescriptionRepository.findOneBy({ id: prescriptionId })
+        const drug = await this.prescriptionRepository.findOneBy({ id: drugId })
+
         const newPrescription = this.prescriptionDetailRepository.create({
             ...prescriptionDetailData,
             prescription,
+            drug,
         });
         
         return this.prescriptionDetailRepository.save(newPrescription);

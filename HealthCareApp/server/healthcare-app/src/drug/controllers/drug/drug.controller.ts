@@ -9,12 +9,12 @@ export class DrugController {
         private drugService: DrugService
     ) {}
 
-    @Get()
-    getDrug() {
-        return this.drugService.getDrug();
+    @Get('get-drugs')
+    getDrugs() {
+        return this.drugService.getDrugs();
     }
 
-    @Post()
+    @Post('create-drug')
     createDrug(
         @Body() drugDto: DrugDto
     ) {

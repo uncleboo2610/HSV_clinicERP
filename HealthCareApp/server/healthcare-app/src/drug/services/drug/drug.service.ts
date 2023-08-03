@@ -11,7 +11,7 @@ export class DrugService {
         @InjectRepository(Drug) private drugRepository: Repository<Drug>,
     ) {}
 
-    getDrug() {
+    getDrugs() {
         return this.drugRepository.find({});
     }
 

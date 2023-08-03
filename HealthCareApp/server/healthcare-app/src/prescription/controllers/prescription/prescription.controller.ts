@@ -9,14 +9,14 @@ export class PrescriptionController {
         private prescriptionService: PrescriptionService
     ) {}
 
-    @Get('get-prescription')
-    getPrescription() {
-        return this.prescriptionService.getPrescription();
+    @Get('get-prescriptions')
+    getPrescriptions() {
+        return this.prescriptionService.getPrescriptions();
     }
 
-    @Get('get-prescription-detail')
-    getPrescriptionDetail() {
-        return this.prescriptionService.getPrescriptionDetail();
+    @Get('get-prescription-details')
+    getPrescriptionDetails() {
+        return this.prescriptionService.getPrescriptionDetails();
     }
 
     @Post('create-prescription')
@@ -30,6 +30,6 @@ export class PrescriptionController {
     createPrescriptionDetail(
         @Body() prescriptionDetailDto: PrescriptionDetailDto
     ) {
-        return this.prescriptionService.createPrescriptionDetail(prescriptionDetailDto, prescriptionDetailDto.prescriptionId);
+        return this.prescriptionService.createPrescriptionDetail(prescriptionDetailDto, prescriptionDetailDto.prescriptionId, prescriptionDetailDto.drugId);
     }
 }
