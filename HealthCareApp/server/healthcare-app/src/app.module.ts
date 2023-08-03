@@ -16,6 +16,8 @@ import { StaffTicket } from './entities/staff-ticket.entity';
 import { ParaclinicalModule } from './paraclinical/paraclinical.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { PrescriptionModule } from './prescription/prescription.module';
+import { DrugModule } from './drug/drug.module';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -36,7 +38,7 @@ import { AuthModule } from './auth/auth.module';
         validateConnection: false,
         trustServerCertificate: true,
       },
-  }), PatientsModule, MedicalReportModule, StaffModule, DepartmentModule, ReceivingCardModule, StaffModule, GatewayModule, TypeServiceModule, StaffTicket, ParaclinicalModule, AuthModule],
+  }), PatientsModule, MedicalReportModule, StaffModule, DepartmentModule, ReceivingCardModule, StaffModule, GatewayModule, TypeServiceModule, StaffTicket, ParaclinicalModule, AuthModule, PrescriptionModule, DrugModule],
   controllers: [AppController],
   providers: [AppService],
 })

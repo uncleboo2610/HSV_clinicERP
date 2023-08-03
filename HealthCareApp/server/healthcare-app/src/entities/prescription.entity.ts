@@ -1,22 +1,18 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { StaffTicket } from "./staff-ticket.entity";
 import { MedicalReport } from "./medical-report.entity";
+import { PrescriptionDetail } from "./prescription-detail.entity";
 
 @Entity('prescription')
 export class Prescription {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(() => MedicalReport)
-    @JoinColumn()
-    medicalReport: MedicalReport;
-
     @Column()
     note: string;
 
-    // @OneToOne(() => MedicalReport)
-    // @JoinColumn()
-    // // medicalReport: MedicalReport;
+    @OneToMany(() => PrescriptionDetail, (prescriptionDetail) => prescriptionDetail.prescription)
+    prescriptionDetail: PrescriptionDetail[];
 
     @CreateDateColumn()
     createdAt: Date;

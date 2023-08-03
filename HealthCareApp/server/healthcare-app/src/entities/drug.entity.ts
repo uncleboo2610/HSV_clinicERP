@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { PrescriptionDetail } from "./prescription-detail.entity";
 
 @Entity('drug')
 export class Drug {
@@ -9,12 +10,17 @@ export class Drug {
     drugName: string;
     
     @Column()
-    price: string;
+    price: number;
 
     @Column()
     unit: string;
 
-    // @OneToOne(() => MedicalReport)
-    // @JoinColumn()
-    // // medicalReport: MedicalReport;
+    @OneToMany(() => PrescriptionDetail, (prescriptionDetail) => prescriptionDetail.drug)
+    prescriptionDetail: PrescriptionDetail[];
+
+    @CreateDateColumn()
+    createdAt: Date;
+
+    @UpdateDateColumn()
+    updatedAt: Date;
 }
