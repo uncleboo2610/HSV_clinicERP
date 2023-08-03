@@ -1,8 +1,8 @@
 import { Button, Form, Input } from 'antd'
 import React, { useContext } from 'react'
-import { medicalExaminationService } from '../../services/medical-examination.service';
 import { BasicNotification } from '../../../../shared/components/BasicNotification';
 import { WebsocketContext } from '../../../../contexts/WebSocketContext';
+import { staffService } from '../../../staff/services/staff.service';
 
 export const StaffTicketForm = (props: any) => {
     const socket = useContext(WebsocketContext);
@@ -12,7 +12,7 @@ export const StaffTicketForm = (props: any) => {
             note: value.note,
             patientId: props?.patient?.patientId,
         };
-        medicalExaminationService.createStaffTicket(data)
+        staffService.createStaffTicket(data)
             .then(() => {
                 BasicNotification(
                     "success",

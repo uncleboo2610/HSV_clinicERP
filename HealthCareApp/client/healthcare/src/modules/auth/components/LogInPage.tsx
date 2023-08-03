@@ -1,6 +1,9 @@
 import { Input, Button, Form, message, Row, Col } from 'antd';
 import React, { useState } from 'react'
 import { authService } from '../services/auth.service';
+import { useNavigate } from 'react-router-dom';
+import { useUserProfileStore } from '../store/auth.store';
+import { staffService } from '../../staff/services/staff.service';
 
 interface ILoginForm{
     username: string
@@ -9,11 +12,15 @@ interface ILoginForm{
 
 export const LogInPage = () => {
     const [err, setErr] = useState<Error | null>(null);
+    const { loadProfile } = useUserProfileStore();
+    const navigate = useNavigate()
 
     const onFinish = (values: ILoginForm) => {
         authService.logIn(values)
             .then(( token ) => {
-                // authService.saveToken(String(token))
+                authService.saveToken(String(token));
+                loadProfile();
+                navigate('/');
             })
             .catch((e) => {
                 setErr(e)

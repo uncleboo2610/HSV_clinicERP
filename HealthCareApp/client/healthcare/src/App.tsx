@@ -8,6 +8,7 @@ import { MedicalExaminationPage } from './modules/medical-examination/components
 import { BloodTestPage } from './modules/paraclinical/components/blood-test/BloodTestPage';
 import { ImagingDiagnosticPage } from './modules/paraclinical/components/imaging-diagnostic/ImagingDiagnosticPage';
 import { LogInPage } from './modules/auth/components/LogInPage';
+import { AuthChecker } from './modules/auth/layouts/AuthChecker';
 
 function App() {
   return (
@@ -16,13 +17,15 @@ function App() {
         <Route errorElement={<h2>Error</h2>}>
           <Route path='/auth/login' element={<LogInPage />} />
         </Route>
-        <Route element={<MainLayout />} errorElement={<h2>Error</h2>}>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/receiving-patient' element={<ReceivingPatientPage />} />
-          <Route path='/patient' element={<PatientPage />} />
-          <Route path='/medical-examination' element={<MedicalExaminationPage />} />
-          <Route path='/imaging-diagnostic' element={<ImagingDiagnosticPage />} />
-          <Route path='/blood-test' element={<BloodTestPage />} />
+        <Route element={<AuthChecker />}>
+          <Route element={<MainLayout />} errorElement={<h2>Error</h2>}>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/receiving-patient' element={<ReceivingPatientPage />} />
+            <Route path='/patient' element={<PatientPage />} />
+            <Route path='/medical-examination' element={<MedicalExaminationPage />} />
+            <Route path='/imaging-diagnostic' element={<ImagingDiagnosticPage />} />
+            <Route path='/blood-test' element={<BloodTestPage />} />
+          </Route>
         </Route>
       </Routes>
     </HashRouter>

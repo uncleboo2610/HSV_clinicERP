@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-import { medicalExaminationService } from "../../medical-examination/services/medical-examination.service";
 import { WebsocketContext } from "../../../contexts/WebSocketContext";
+import { staffService } from "../services/staff.service";
 
 export default function useStaffTicket() {
     const [data, setData] = useState([]);
@@ -20,7 +20,7 @@ export default function useStaffTicket() {
     }, []);
 
     useEffect(() => {
-        medicalExaminationService.getStaffTicket()
+        staffService.getStaffTicket()
             .then((res) => {
                 setData(res.data)
             })

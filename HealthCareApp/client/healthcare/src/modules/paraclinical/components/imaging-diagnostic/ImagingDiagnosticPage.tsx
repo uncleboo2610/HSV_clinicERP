@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import useStaffTicket from '../../../medical-examination/hooks/useStaffTicket';
 import Table, { ColumnsType } from 'antd/es/table';
 import { Row, Col, Divider } from 'antd';
 import { IStaffTicket } from '../../../medical-examination/models';
 import { ImagingDiagnosticForm } from './form/ImagingDiagnosticForm';
+import useStaffTicket from '../../../staff/hooks/useStaffTicket';
 
 export const ImagingDiagnosticPage = () => {
     const [data] = useStaffTicket();
@@ -32,7 +32,6 @@ export const ImagingDiagnosticPage = () => {
             key: 'note'
         }
     ];
-    console.log(data)
       
     const dataStaffTicket: IStaffTicket[] = data.map((staffTicket: any, i) => ({
         key: i + 1,

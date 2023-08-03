@@ -8,19 +8,6 @@ class MedicalExaminationService {
             data,
         );
     }
-
-    getStaffTicket() {
-        return httpClient.get(
-            apiEndpoints.Staff.getStaffTicket,
-        );
-    }
-
-    createStaffTicket(data: any) {
-        return httpClient.post(
-            apiEndpoints.Staff.createStaffTicket,
-            data
-        );
-    }
 }
 
 export const medicalExaminationService = new MedicalExaminationService();
