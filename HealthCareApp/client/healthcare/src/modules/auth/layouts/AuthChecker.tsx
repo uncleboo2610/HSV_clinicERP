@@ -6,7 +6,7 @@ export const AuthChecker = () => {
     const { user } = useUserProfileStore();
 
     if (!user) {
-        return <Navigate to="/auth/login" />
+        // return <Navigate to="/auth/login" />
     }
     
   return <Outlet />

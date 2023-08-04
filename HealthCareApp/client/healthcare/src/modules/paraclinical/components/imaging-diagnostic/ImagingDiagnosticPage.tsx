@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Table, { ColumnsType } from 'antd/es/table';
 import { Row, Col, Divider } from 'antd';
-import { IStaffTicket } from '../../../medical-examination/models';
 import { ImagingDiagnosticForm } from './form/ImagingDiagnosticForm';
 import useStaffTicket from '../../../staff/hooks/useStaffTicket';
+import { IStaffTicket } from '../../../medical-examination/medical-report/models';
 
 export const ImagingDiagnosticPage = () => {
     const [data] = useStaffTicket();

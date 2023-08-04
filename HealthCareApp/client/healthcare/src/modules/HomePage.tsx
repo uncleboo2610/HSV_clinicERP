@@ -1,69 +1,172 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { WebsocketContext } from '../contexts/WebSocketContext'
-import { IReceivingCard } from './patients/models';
+import { useRef } from 'react';
+import { Button, Space, Table, Tooltip } from 'antd';
+import type { ColumnType, ColumnsType } from 'antd/es/table';
+import { RefObject } from './patients/components/form/ModalReceivingCardFrom';
+import { IdcardOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { BasicNotification } from '../shared/components/BasicNotification';
+import usePatient from './patients/hooks/usePatient';
+import { IPatient } from './patients/models';
+import { patientsService } from './patients/services/patients.service';
+import { useReactToPrint } from "react-to-print";
 
-type MessagePayload = {
-  content: string;
-};
 
-const HomePage = () => {
-  const [value, setValue] = useState('');
-  const [messages, setMessages] = useState<IReceivingCard[]>([]);
-  const socket = useContext(WebsocketContext)
+export const HomePage = () => {
+    const [ data ] = usePatient();
+    const child = useRef<RefObject>(null);
 
-  useEffect(() => {
-    socket.on('connect', () => {
-      console.log('connected!')
+    const componentPDF = useRef(null)
+    const generatePDF = useReactToPrint({
+      content: () => componentPDF.current,
+      documentTitle: "test pdf",
+      onAfterPrint: () => alert("saved")
     })
 
-    socket.on('onReceiving', (newMessage: IReceivingCard) => {
-      console.log('onMessage event received!')
-      console.log(newMessage);
-      setMessages((prev) => [...prev, newMessage]);
-    })
+    const submitForm = (values: any) => {
+        patientsService.createReceivingCard({
+            patientId: values.patientId,
+            patientName: values.patientName
+        })
+        .then((res) => {
+            patientsService.createReceivingCardDetail({
+                patientId: values.patientId,
+                receivingCardId: res.data.id,
+                departmentId: values.departmentId
+            }).then(() => {
+                BasicNotification(
+                    "success",
+                    "Success",
+                    "Đã đăng kí phiếu tiếp nhận thành công !",
+                );
+            }).catch((e) => {
+                BasicNotification(
+                    "error",
+                    "Error",
+                    "Failed to update data !",
+                );
+                console.log(e);
+            })
+        })
+        .catch((e) => {
+            BasicNotification(
+                "error",
+                "Error",
+                "Failed to update data !",
+            );
+            console.log(e);
+        });
+    };
+            
+    const dataPatient: IPatient[] = data.map((patient, i) => ({
+        key: i + 1,
+        id: patient.id,
+        name: patient.name,
+        dob: patient.dob,
+        idCard: patient.idCard,
+        address: patient.address,
+        gender: patient.gender,
+        phone: patient.phone,
+        pob: patient.pob,
+        job: patient.job,
+    }));
 
-    return () => {
-      socket.off('connect');
-      socket.off('onReceiving');
-      console.log('unregistering')
-    }
-  }, [])
-
-
-  const onSubmit = () => {
-    socket.emit('newReceiving', value);
-    setValue('');
-  };
+    const columnsPatient: ColumnsType<IPatient> = [
+        {
+            title: 'STT',
+            width: 50,
+            dataIndex: 'key',
+            key: 'key',
+        },
+        {
+            title: 'Họ tên',
+            width: 100,
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'CCCD/CMND',
+            width: 100,
+            dataIndex: 'idCard',
+            key: 'idCard',
+        },
+        {
+            title: 'Địa chỉ',
+            dataIndex: 'address',
+            key: '1',
+            width: 150,
+        },
+        {
+            title: 'Giới tính',
+            dataIndex: 'gender',
+            key: '2',
+            width: 150,
+        },
+        {
+            title: 'Số điện thoại',
+            dataIndex: 'phone',
+            key: '3',
+            width: 150,
+        },
+        {
+            title: 'Nơi sinh',
+            dataIndex: 'pob',
+            key: '4',
+            width: 150,
+        },
+        {
+            title: 'Nghề nghiệp',
+            dataIndex: 'job',
+            key: '5',
+            width: 150,
+        },
+        {
+            title: 'Tương tác',
+            key: 'operation',
+            fixed: 'right',
+            width: 100,
+            render: (_, record) => (
+                <>
+                    <Space>
+                        <Tooltip title={'Tạo thẻ tiếp nhận'}>
+                            <IdcardOutlined
+                                style={{ fontSize: "1.2rem", color: "green" }}
+                                onClick={() => {
+                                    child.current?.openModal(record);
+                                }} 
+                            />
+                        </Tooltip>
+                        <Tooltip title={'Chỉnh sửa'}>
+                            <EditOutlined
+                                style={{ fontSize: "1.2rem", color: "orange" }}
+                                onClick={() => {
+                                    console.log('clicked')
+                                }}
+                            />
+                        </Tooltip>
+                        <Tooltip title={'Xóa'}>
+                            <DeleteOutlined
+                                style={{ fontSize: "1.2rem", color: "red" }}
+                                onClick={() => {
+                                    console.log('clicked')
+                                }}
+                            />
+                        </Tooltip>
+                        {/* <ModalReceivingCardForm ref={child} submitModalForm={submitForm} /> */}
+                    </Space>
+                </>
+            ),
+        },
+    ];
 
   return (
-    <div>
-      <div>
-        <h1>Websocket Component</h1>
-        <div>
-          {messages.length === 0 ? (
-            <div>No Messages</div>
-          ) : (
-            <div>
-              {messages.map((msg, i) => (
-                <div key={i}>
-                  <p>{msg.id}</p>
-                  <p>{msg.patientName}</p>
-                </div>
-              ))}
-            </div>
-          )}
+    <>
+        <div ref={componentPDF}>
+            <Table
+            columns={columnsPatient}
+            dataSource={dataPatient}
+            pagination={false}
+            />
         </div>
-        <div>
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <button onClick={onSubmit}>Submit</button>
-        </div>
-      </div>
-    </div>
+        <Button onClick={generatePDF}>pdf</Button>
+    </>
   )
 }
-
-export default HomePage

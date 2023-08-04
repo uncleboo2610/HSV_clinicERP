@@ -1,13 +1,13 @@
 import { Divider, Table, Button, Row, Col, Input, Space, InputRef, Tabs, TabsProps } from 'antd';
 import { ColumnType, ColumnsType } from 'antd/es/table';
 import { useRef, useState } from 'react';
-import useReceivingCard from '../../patients/hooks/useReceivingCard'
-import { IPatient, IReceivingCardDetail } from '../../patients/models';
 import { MedicalExaminationForm } from './form/MedicalExaminationForm';
 import { SearchOutlined } from '@ant-design/icons';
 import { FilterConfirmProps } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
 import { StaffTicketForm } from './form/StaffTicketForm';
+import useReceivingCard from '../../../patients/hooks/useReceivingCard';
+import { IReceivingCardDetail, IPatient } from '../../../patients/models';
 
 type DataIndex = keyof IReceivingCardDetail;
 

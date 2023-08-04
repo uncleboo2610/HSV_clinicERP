@@ -1,5 +1,5 @@
-import { httpClient } from "../../../core/http";
-import { apiEndpoints } from "../../../shared/config/api.config";
+import { httpClient } from "../../../../core/http";
+import { apiEndpoints } from "../../../../shared/config/api.config";
 
 class MedicalExaminationService {
     createMedicalExamination(data: any) {

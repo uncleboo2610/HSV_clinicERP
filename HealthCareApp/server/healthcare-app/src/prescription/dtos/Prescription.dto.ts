@@ -5,5 +5,5 @@ export class PrescriptionDto {
 export class PrescriptionDetailDto {
     note: string;
     prescriptionId: number;
-    drugId: number;
+    drugId: number[];
 }

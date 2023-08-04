@@ -14,6 +14,13 @@ export class PrescriptionController {
         return this.prescriptionService.getPrescriptions();
     }
 
+    @Get('get-prescriptions-by-id')
+    getPrescriptionById(
+        @Body() id: number
+    ) {
+        return this.prescriptionService.getPrescriptionById(id);
+    }
+
     @Get('get-prescription-details')
     getPrescriptionDetails() {
         return this.prescriptionService.getPrescriptionDetails();
