@@ -3,5 +3,7 @@ export type PrescriptionParams = {
 }
 
 export type PrescriptionDetailParams = {
-    note: string;
+    morningDose: number;
+    afternoonDose: number;
+    eveningDose: number;
 }

@@ -10,7 +10,13 @@ export class PrescriptionDetail {
     id: number;
 
     @Column()
-    note: string;
+    morningDose: number;
+
+    @Column()
+    afternoonDose: number;
+
+    @Column()
+    eveningDose: number;
 
     @ManyToOne(() => Prescription, (prescription) => prescription.prescriptionDetail)
     prescription: Prescription;

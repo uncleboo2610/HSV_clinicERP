@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print';
+import PrescriptionForm from './form/PrescriptionForm';
 
 export const PrescriptionPage = () => {
 
@@ -20,6 +21,7 @@ export const PrescriptionPage = () => {
             pagination={false}
             />
         </div> */}
+        <PrescriptionForm />
         <Button onClick={generatePDF}>pdf</Button>
     </>
   )

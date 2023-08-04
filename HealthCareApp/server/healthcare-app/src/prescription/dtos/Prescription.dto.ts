@@ -3,7 +3,9 @@ export class PrescriptionDto {
 }
 
 export class PrescriptionDetailDto {
-    note: string;
+    morningDose: number;
+    afternoonDose: number;
+    eveningDose: number;
     prescriptionId: number;
     drugId: number[];
 }

@@ -14,16 +14,11 @@ export class PrescriptionService {
     ) {}
 
     getPrescriptions() {
-        const rawQueryString = `select p.id, p.note, drug.drugName, pd.drugId from prescription p
-                                inner join (select note, prescriptionId, drugId from prescription_detail) pd on pd.prescriptionId = p.id
-                                inner join (select id, drugName from drug) drug on pd.drugId = drug.id`;
-
-        // return this.prescriptionRepository.find({ relations: ['prescriptionDetail'] });
-        return this.prescriptionRepository.query(rawQueryString);
+        return this.prescriptionRepository.find({ relations: ['prescriptionDetail'] });
     }
 
     getPrescriptionById(id: number) {
-        const rawQueryString = `select p.id, p.note, drug.drugName, pd.drugId from prescription p
+        const rawQueryString = `select p.id, p.note, drug.drugName, pd.drugId, pd.morningDose, pd.afternoonDose, pd.eveningDose from prescription p
                                 inner join (select note, prescriptionId, drugId from prescription_detail) pd on pd.prescriptionId = p.id
                                 inner join (select id, drugName from drug) drug on pd.drugId = drug.id
                                 where p.id = ${id}`;
