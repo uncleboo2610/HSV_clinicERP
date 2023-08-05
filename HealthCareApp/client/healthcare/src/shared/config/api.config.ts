@@ -36,5 +36,9 @@ export const apiEndpoints = {
         getPrescriptionDetail: `${apiBaseUrl}/prescription/get-prescription-details`,
         createPrescription: `${apiBaseUrl}/prescription/create-prescription`,
         createPrescriptionDetail: `${apiBaseUrl}/prescription/create-prescription-detail`,
+    },
+    Drug: {
+        getDrug: `${apiBaseUrl}/drug/get-drugs`,
+        createDrug: `${apiBaseUrl}/dug/create-drug`,
     }
 }

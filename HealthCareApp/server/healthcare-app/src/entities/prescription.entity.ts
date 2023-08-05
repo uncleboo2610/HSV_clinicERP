@@ -8,9 +8,6 @@ export class Prescription {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    note: string;
-
     @OneToMany(() => PrescriptionDetail, (prescriptionDetail) => prescriptionDetail.prescription)
     prescriptionDetail: PrescriptionDetail[];
 

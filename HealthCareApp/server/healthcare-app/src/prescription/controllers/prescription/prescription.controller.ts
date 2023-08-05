@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { PrescriptionDetailDto, PrescriptionDto } from 'src/prescription/dtos/Prescription.dto';
+import { PrescriptionDetailDto } from 'src/prescription/dtos/Prescription.dto';
 import { PrescriptionService } from 'src/prescription/services/prescription/prescription.service';
 
 @Controller('prescription')
@@ -27,10 +27,8 @@ export class PrescriptionController {
     }
 
     @Post('create-prescription')
-    createPrescription(
-        @Body() prescriptionDto: PrescriptionDto
-    ) {
-        return this.prescriptionService.createPrescription(prescriptionDto);
+    createPrescription() {
+        return this.prescriptionService.createPrescription();
     }
 
     @Post('create-prescription-detail')

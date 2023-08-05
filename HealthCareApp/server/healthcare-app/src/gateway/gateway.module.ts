@@ -7,9 +7,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Patient } from "src/entities/patient.entity";
 import { ReceivingCardDetail } from "src/entities/receiving-card-detail.entity";
 import { StaffTicket } from "src/entities/staff-ticket.entity";
+import { Prescription } from "src/entities/prescription.entity";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([ReceivingCard, Department, Patient, ReceivingCardDetail, StaffTicket])],
+    imports: [TypeOrmModule.forFeature([ReceivingCard, Department, Patient, ReceivingCardDetail, StaffTicket, Prescription])],
     providers: [MyGateWay]
 })
 export class GatewayModule {}

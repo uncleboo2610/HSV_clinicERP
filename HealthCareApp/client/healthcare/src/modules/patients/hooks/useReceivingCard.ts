@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
 import { patientsService } from '../services/patients.service';
-import { IReceivingCard } from '../models';
 import { WebsocketContext } from '../../../contexts/WebSocketContext';
 
 export default function useReceivingCard() {

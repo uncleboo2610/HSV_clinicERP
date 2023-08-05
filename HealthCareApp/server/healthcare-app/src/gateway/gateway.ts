@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { WebSocketGateway, WebSocketServer, SubscribeMessage, MessageBody } from "@nestjs/websockets";
 import { Server } from "socket.io";
 import { Patient } from "src/entities/patient.entity";
+import { Prescription } from "src/entities/prescription.entity";
 import { ReceivingCardDetail } from "src/entities/receiving-card-detail.entity";
 import { StaffTicket } from "src/entities/staff-ticket.entity";
 import { Repository } from "typeorm";
@@ -17,6 +18,7 @@ export class MyGateWay implements OnModuleInit {
         @InjectRepository(ReceivingCardDetail) private receivingCardDetailRepository: Repository<ReceivingCardDetail>,
         @InjectRepository(Patient) private receivingPatientRepository: Repository<Patient>,
         @InjectRepository(StaffTicket) private staffTicketRepository: Repository<StaffTicket>,
+        @InjectRepository(Prescription) private prescriptionRepository: Repository<Prescription>,
     ) {}
     
     @WebSocketServer()
@@ -54,6 +56,19 @@ export class MyGateWay implements OnModuleInit {
     async onNewStaffTicket() {
         const data = await this.staffTicketRepository.find({ relations: ['patient'] });
         this.server.emit('onStaffTicket', {
+            content: data
+        })
+    }
+
+    @SubscribeMessage('newPrescriptionDetail')
+    async onPrescriptionDetail(@MessageBody() body: any) {
+        const rawQueryString = `select p.id, pd.note, drug.drugName, pd.drugId, pd.morningDose, pd.afternoonDose, pd.eveningDose from prescription p
+                                inner join (select note, prescriptionId, drugId from prescription_detail) pd on pd.prescriptionId = p.id
+                                inner join (select id, drugName from drug) drug on pd.drugId = drug.id
+                                where p.id = ${body}`;
+
+        const data = this.prescriptionRepository.query(rawQueryString);
+        this.server.emit('onPrescriptionDetail', {
             content: data
         })
     }

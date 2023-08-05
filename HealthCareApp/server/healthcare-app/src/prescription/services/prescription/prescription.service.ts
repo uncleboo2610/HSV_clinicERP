@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PrescriptionDetail } from 'src/entities/prescription-detail.entity';
 import { Prescription } from 'src/entities/prescription.entity';
-import { PrescriptionDetailParams, PrescriptionParams } from 'src/prescription/utils/types';
+import { PrescriptionDetailParams } from 'src/prescription/utils/types';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class PrescriptionService {
     }
 
     getPrescriptionById(id: number) {
-        const rawQueryString = `select p.id, p.note, drug.drugName, pd.drugId, pd.morningDose, pd.afternoonDose, pd.eveningDose from prescription p
+        const rawQueryString = `select p.id, pd.note, drug.drugName, pd.drugId, pd.morningDose, pd.afternoonDose, pd.eveningDose from prescription p
                                 inner join (select note, prescriptionId, drugId from prescription_detail) pd on pd.prescriptionId = p.id
                                 inner join (select id, drugName from drug) drug on pd.drugId = drug.id
                                 where p.id = ${id}`;
@@ -30,9 +30,8 @@ export class PrescriptionService {
         return this.prescriptionDetailRepository.find({ relations: ['drug', 'prescription'] });
     }
 
-    createPrescription(prescriptionData: PrescriptionParams) {
+    createPrescription() {
         const newPrescription = this.prescriptionRepository.create({
-            ...prescriptionData,
             createdAt: new Date(),
             updatedAt: new Date()
         });
@@ -40,16 +39,14 @@ export class PrescriptionService {
         return this.prescriptionRepository.save(newPrescription);
     }
 
-    async createPrescriptionDetail(prescriptionDetailData: PrescriptionDetailParams, prescriptionId: number, drugId: number[]) {
+    async createPrescriptionDetail(prescriptionDetailData: PrescriptionDetailParams, prescriptionId: number, drugId: number) {
         const prescription = await this.prescriptionRepository.findOneBy({ id: prescriptionId });
-        drugId.map(async (id) => {
-            const drug = await this.prescriptionRepository.findOneBy({ id: id })
-            const newPrescription = this.prescriptionDetailRepository.create({
+        const drug = await this.prescriptionRepository.findOneBy({ id: drugId })
+            const newPrescriptionDetail = this.prescriptionDetailRepository.create({
                 ...prescriptionDetailData,
                 prescription,
                 drug,
             });
-            return this.prescriptionDetailRepository.save(newPrescription);
-        })
+        return this.prescriptionDetailRepository.save(newPrescriptionDetail);
     }
 }
