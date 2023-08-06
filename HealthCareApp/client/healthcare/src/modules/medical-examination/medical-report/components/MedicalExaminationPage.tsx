@@ -8,6 +8,7 @@ import Highlighter from 'react-highlight-words';
 import { StaffTicketForm } from './form/StaffTicketForm';
 import useReceivingCard from '../../../patients/hooks/useReceivingCard';
 import { IReceivingCardDetail, IPatient } from '../../../patients/models';
+import { PrescriptionPage } from '../../prescription/component/PrescriptionPage';
 
 type DataIndex = keyof IReceivingCardDetail;
 
@@ -163,6 +164,11 @@ export const MedicalExaminationPage = () => {
           label: `Ticket`,
           children: <StaffTicketForm patient={patient}/>,
         },
+        {
+            key: '3',
+            label: `Thêm toa thuốc`,
+            children: <PrescriptionPage />
+        }
       ];
 
   return (

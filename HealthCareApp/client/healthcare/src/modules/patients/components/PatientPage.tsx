@@ -19,7 +19,7 @@ export const PatientPage = () => {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef<InputRef>(null);
-    const socket = useContext(WebsocketContext)
+    const socket = useContext(WebsocketContext);
 
     const submitForm = (values: any) => {
         patientsService.createReceivingCard({

@@ -13,10 +13,9 @@ class PrescriptionService {
         );
     }
 
-    createPrescription(data: any) {
+    createPrescription() {
         return httpClient.post(
             apiEndpoints.Prescription.createPrescription,
-            data,
         );
     }
 

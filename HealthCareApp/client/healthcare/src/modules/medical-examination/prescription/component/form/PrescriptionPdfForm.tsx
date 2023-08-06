@@ -1,7 +1,5 @@
-import { IdcardOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Space, Tooltip, Table } from 'antd';
+import { Table, Button } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import React from 'react'
 import usePatient from '../../../../patients/hooks/usePatient';
 import { IPatient } from '../../../../patients/models';
 
@@ -73,10 +71,17 @@ export const PrescriptionPdfForm = () => {
     ];
 
   return (
-    <Table
-        columns={columnsPatient}
-        dataSource={dataPatient}
-        pagination={false}
-    />
+    <>
+        <div style={{padding: '50px'}}>
+            <div>
+                <span>Họ tên:</span>
+            </div>
+            <Table
+            columns={columnsPatient}
+            dataSource={dataPatient}
+            pagination={false}
+            />
+        </div>
+    </>
   )
 }

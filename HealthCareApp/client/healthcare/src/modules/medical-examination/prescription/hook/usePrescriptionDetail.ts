@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { WebsocketContext } from "../../../../contexts/WebSocketContext";
 
-export default function usePrescription() {
-    const [data, setData] = useState<[]>([]);
+export default function usePrescriptionDetail() {
+    const [data, setData] = useState([]);
     const socket = useContext(WebsocketContext);
 
     useEffect(() => {

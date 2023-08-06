@@ -19,6 +19,9 @@ export class PrescriptionDetail {
     eveningDose: number;
 
     @Column()
+    quantity: number;
+
+    @Column()
     note: string;
 
     @ManyToOne(() => Prescription, (prescription) => prescription.prescriptionDetail)

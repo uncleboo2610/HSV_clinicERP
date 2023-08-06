@@ -61,13 +61,13 @@ export class MyGateWay implements OnModuleInit {
     }
 
     @SubscribeMessage('newPrescriptionDetail')
-    async onPrescriptionDetail(@MessageBody() body: any) {
+    async onPrescriptionDetail(@MessageBody() body: number) {
         const rawQueryString = `select p.id, pd.note, drug.drugName, pd.drugId, pd.morningDose, pd.afternoonDose, pd.eveningDose from prescription p
-                                inner join (select note, prescriptionId, drugId from prescription_detail) pd on pd.prescriptionId = p.id
+                                inner join (select note, prescriptionId, drugId, morningDose, afternoonDose, eveningDose from prescription_detail) pd on pd.prescriptionId = p.id
                                 inner join (select id, drugName from drug) drug on pd.drugId = drug.id
                                 where p.id = ${body}`;
-
-        const data = this.prescriptionRepository.query(rawQueryString);
+        
+        const data = await this.prescriptionRepository.query(rawQueryString);
         this.server.emit('onPrescriptionDetail', {
             content: data
         })

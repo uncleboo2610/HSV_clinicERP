@@ -19,7 +19,7 @@ export class PrescriptionService {
 
     getPrescriptionById(id: number) {
         const rawQueryString = `select p.id, pd.note, drug.drugName, pd.drugId, pd.morningDose, pd.afternoonDose, pd.eveningDose from prescription p
-                                inner join (select note, prescriptionId, drugId from prescription_detail) pd on pd.prescriptionId = p.id
+                                inner join (select note, prescriptionId, drugId, morningDose, afternoonDose, eveningDose from prescription_detail) pd on pd.prescriptionId = p.id
                                 inner join (select id, drugName from drug) drug on pd.drugId = drug.id
                                 where p.id = ${id}`;
 
