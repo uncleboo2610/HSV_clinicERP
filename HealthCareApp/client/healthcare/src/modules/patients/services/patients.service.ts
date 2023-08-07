@@ -6,6 +6,13 @@ class PatientsService {
         return httpClient.get(apiEndpoints.Patient.GetPatients);
     }
 
+    getPatientById(data: any) {
+        return httpClient.get(
+            apiEndpoints.Patient.GetPatientById,
+            data,
+        );
+    }
+
     getReceivingCard() {
         return httpClient.get(apiEndpoints.ReceivingCard.GetReceivingCard);
     }

@@ -1,19 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { PrescriptionForm } from './form/PrescriptionForm'
-import { Button, Divider, Modal, Row, Space, Table, Upload } from 'antd'
+import { Button, Col, Divider, Modal, Row, Space, Table, Upload } from 'antd'
 import { IPrescriptionDetail } from '../models';
 import { ColumnsType } from 'antd/es/table';
 import { prescriptionService } from '../services/prescription.service';
-import usePrescription from '../hook/usePrescriptionDetail';
 import { UploadOutlined } from '@ant-design/icons';
 import { BasicNotification } from '../../../../shared/components/BasicNotification';
 import { PrescriptionPdfForm } from './form/PrescriptionPdfForm';
 import { useReactToPrint } from 'react-to-print';
+import usePrescriptionDetail from '../hook/usePrescriptionDetail';
+import { WebsocketContext } from '../../../../contexts/WebSocketContext';
 
-export const PrescriptionPage = () => {
+export const PrescriptionPage = (props: any) => {
     const [presrcriptionId, setPresrcriptionId] = useState();
-    const [ data ] = usePrescription();
+    const [ data, patient, medicalReport ] = usePrescriptionDetail();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const[medicalReportId, setMedicalReportId] = useState();
+    const socket = useContext(WebsocketContext);
+
+    useEffect(() => {
+        socket.on('connect', () => {
+        });
+
+        socket.on('onMedicalReport', (newMessage) => {
+            setMedicalReportId(newMessage.content);
+        });
+
+        return () => {
+        socket.off('connect');
+        socket.off('onMedicalReport');
+        };
+    }, []);
 
     const componentPDF = useRef(null);
     const generatePDF = useReactToPrint({
@@ -76,14 +93,14 @@ export const PrescriptionPage = () => {
     const dataPrescriptionDetail: IPrescriptionDetail[] = data?.map((prescriptionDetail: any, i) => ({
         key: i + 1,
         id: prescriptionDetail?.id,
-        drugName: prescriptionDetail?.drugName,
+        drugName: prescriptionDetail?.drug.drugName,
         drugId: prescriptionDetail?.drugId,
         morningDose: prescriptionDetail?.morningDose,
         afternoonDose: prescriptionDetail?.afternoonDose,
         eveningDose: prescriptionDetail?.eveningDose,
         quantity: prescriptionDetail?.quantity,
         note: prescriptionDetail?.note
-    }))
+    }));
 
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: IPrescriptionDetail[]) => {
@@ -95,7 +112,10 @@ export const PrescriptionPage = () => {
     };
 
     const onCreatingPrescription = () => {
-        prescriptionService.createPrescription()
+        prescriptionService.createPrescription({
+            patientId: props?.patient?.patientId,
+            medicalReportId: medicalReportId
+        })
             .then((e :any) => {
                 BasicNotification(
                     "success",
@@ -123,11 +143,23 @@ export const PrescriptionPage = () => {
                     <Button icon={<UploadOutlined />} onClick={showModal}>In toa</Button>
                     <Modal style={{minWidth: '1300px'}} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                         <div ref={componentPDF}>
-                            <PrescriptionPdfForm />
+                            <PrescriptionPdfForm prescription={data} patient={patient} medicalReport={medicalReport}/>
                         </div>
                     </Modal>
                 </>
             </Space>
+        </Row>
+        <Row style={{marginTop: '1rem'}}>
+            <Col span={10}>
+                <div>
+                    <span>Mã bệnh nhân: {props?.patient?.patientId}</span>
+                </div>
+            </Col>
+            <Col span={14}>
+                <div>
+                    <span>Họ tên bệnh nhân: {props?.patient?.patientName}</span>
+                </div>
+            </Col>
         </Row>
         <Row style={{marginTop: '1rem'}}>
             <PrescriptionForm id={presrcriptionId} />

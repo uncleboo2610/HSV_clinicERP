@@ -1,9 +1,13 @@
 import { Button, DatePicker, Form, Input } from 'antd'
 import { BasicNotification } from '../../../../../shared/components/BasicNotification';
 import { medicalExaminationService } from '../../services/medical-examination.service';
+import { useContext } from 'react';
+import { WebsocketContext } from '../../../../../contexts/WebSocketContext';
 
 
 export const MedicalExaminationForm = (props: any) => {
+    const socket = useContext(WebsocketContext);
+
     const handleSubmit = (value: any) => {
         const data = {
             patientId: props?.patient?.patientId,
@@ -12,7 +16,8 @@ export const MedicalExaminationForm = (props: any) => {
             reExaminationDate: value.reExaminationDate,
         };
         medicalExaminationService.createMedicalExamination(data)
-            .then(() => {
+            .then((e) => {
+                socket.emit('newMedicalReportById', e.data.id);
                 BasicNotification(
                     "success",
                     "Success",

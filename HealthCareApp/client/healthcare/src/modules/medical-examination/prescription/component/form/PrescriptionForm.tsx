@@ -1,7 +1,6 @@
 import { Space, Input, Button, Form, InputNumber, Select, FormInstance } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import useDrug from '../../../../drug/hooks/useDrug';
-import usePrescriptionDetail from '../../hook/usePrescriptionDetail';
 import { prescriptionService } from '../../services/prescription.service';
 import { WebsocketContext } from '../../../../../contexts/WebSocketContext';
 import { BasicNotification } from '../../../../../shared/components/BasicNotification';
@@ -35,7 +34,6 @@ export const PrescriptionForm = (props: any) => {
             drugId: value.drugId,
             prescriptionId: prescriptionId
         }
-        console.log(data)
         prescriptionService.createPrescriptionDetail(data)
             .then(() => {
                 socket.emit('newPrescriptionDetail', prescriptionId)

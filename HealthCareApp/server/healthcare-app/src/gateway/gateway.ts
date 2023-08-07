@@ -2,6 +2,7 @@ import { OnModuleInit } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { WebSocketGateway, WebSocketServer, SubscribeMessage, MessageBody } from "@nestjs/websockets";
 import { Server } from "socket.io";
+import { MedicalReport } from "src/entities/medical-report.entity";
 import { Patient } from "src/entities/patient.entity";
 import { Prescription } from "src/entities/prescription.entity";
 import { ReceivingCardDetail } from "src/entities/receiving-card-detail.entity";
@@ -19,6 +20,7 @@ export class MyGateWay implements OnModuleInit {
         @InjectRepository(Patient) private receivingPatientRepository: Repository<Patient>,
         @InjectRepository(StaffTicket) private staffTicketRepository: Repository<StaffTicket>,
         @InjectRepository(Prescription) private prescriptionRepository: Repository<Prescription>,
+        @InjectRepository(MedicalReport) private medicalReportRepository: Repository<MedicalReport>,
     ) {}
     
     @WebSocketServer()
@@ -26,14 +28,6 @@ export class MyGateWay implements OnModuleInit {
 
     onModuleInit() {
         this.server.on('connection', (socket) => {})
-    }
-
-    @SubscribeMessage('newMessage')
-    onNewMessage(@MessageBody() body: any) {
-        console.log(body)
-        this.server.emit('onMessage', {
-            content: body
-        });
     }
 
     @SubscribeMessage('newReceiving')
@@ -62,13 +56,19 @@ export class MyGateWay implements OnModuleInit {
 
     @SubscribeMessage('newPrescriptionDetail')
     async onPrescriptionDetail(@MessageBody() body: number) {
-        const rawQueryString = `select p.id, pd.note, drug.drugName, pd.drugId, pd.morningDose, pd.afternoonDose, pd.eveningDose from prescription p
-                                inner join (select note, prescriptionId, drugId, morningDose, afternoonDose, eveningDose from prescription_detail) pd on pd.prescriptionId = p.id
-                                inner join (select id, drugName from drug) drug on pd.drugId = drug.id
-                                where p.id = ${body}`;
-        
-        const data = await this.prescriptionRepository.query(rawQueryString);
+        const data = await this.prescriptionRepository.findOne({ 
+            where: {id: body},
+            relations: ['prescriptionDetail.drug', 'patient', 'medicalReport']
+        });
         this.server.emit('onPrescriptionDetail', {
+            content: data
+        })
+    }
+
+    @SubscribeMessage('newMedicalReportById')
+    async onMedicalReportById(@MessageBody() body: string) {
+        const data = await this.medicalReportRepository.findOneBy({id: body})
+        this.server.emit('onMedicalReport', {
             content: data
         })
     }

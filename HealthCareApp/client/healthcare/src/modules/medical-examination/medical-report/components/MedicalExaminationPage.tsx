@@ -9,6 +9,7 @@ import { StaffTicketForm } from './form/StaffTicketForm';
 import useReceivingCard from '../../../patients/hooks/useReceivingCard';
 import { IReceivingCardDetail, IPatient } from '../../../patients/models';
 import { PrescriptionPage } from '../../prescription/component/PrescriptionPage';
+import { HealthRecordTable } from '../../health-record/components/HealthRecordTable';
 
 type DataIndex = keyof IReceivingCardDetail;
 
@@ -167,7 +168,12 @@ export const MedicalExaminationPage = () => {
         {
             key: '3',
             label: `Thêm toa thuốc`,
-            children: <PrescriptionPage />
+            children: <PrescriptionPage patient={patient}/>
+        },
+        {
+            key: '4',
+            label: `Bệnh án`,
+            children: <HealthRecordTable />
         }
       ];
 

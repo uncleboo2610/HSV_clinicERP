@@ -5,9 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Prescription } from 'src/entities/prescription.entity';
 import { PrescriptionDetail } from 'src/entities/prescription-detail.entity';
 import { Drug } from 'src/entities/drug.entity';
+import { Patient } from 'src/entities/patient.entity';
+import { MedicalReport } from 'src/entities/medical-report.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Prescription, PrescriptionDetail, Drug])],
+  imports: [TypeOrmModule.forFeature([Prescription, PrescriptionDetail, Drug, Patient, MedicalReport])],
   controllers: [PrescriptionController],
   providers: [PrescriptionService]
 })

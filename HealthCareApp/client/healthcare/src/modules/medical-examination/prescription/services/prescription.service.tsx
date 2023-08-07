@@ -6,6 +6,13 @@ class PrescriptionService {
         return httpClient.get(apiEndpoints.Prescription.getPrescription);
     }
 
+    getPrescriptionById(data: any) {
+        return httpClient.get(
+            apiEndpoints.Prescription.getPrescriptionById,
+            data,
+        );
+    }
+
     getPrescriptionDetails(id: any) {
         return httpClient.get(
             apiEndpoints.Prescription.getPrescriptionDetail,
@@ -13,7 +20,7 @@ class PrescriptionService {
         );
     }
 
-    createPrescription() {
+    createPrescription(data: any) {
         return httpClient.post(
             apiEndpoints.Prescription.createPrescription,
         );

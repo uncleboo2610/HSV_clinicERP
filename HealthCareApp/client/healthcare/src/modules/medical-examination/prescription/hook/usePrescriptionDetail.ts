@@ -3,6 +3,8 @@ import { WebsocketContext } from "../../../../contexts/WebSocketContext";
 
 export default function usePrescriptionDetail() {
     const [data, setData] = useState([]);
+    const [patient, setPatient] = useState([]);
+    const [medicalReport, setMedicalReport] = useState([]);
     const socket = useContext(WebsocketContext);
 
     useEffect(() => {
@@ -10,7 +12,9 @@ export default function usePrescriptionDetail() {
         });
 
         socket.on('onPrescriptionDetail', (newMessage) => {
-            setData(newMessage.content);
+            setData(newMessage.content.prescriptionDetail);
+            setPatient(newMessage.content.patient);
+            setMedicalReport(newMessage.content.medicalReport);
         });
 
         return () => {
@@ -19,5 +23,5 @@ export default function usePrescriptionDetail() {
         };
     }, []);
 
-    return [data] as const;
+    return [data, patient, medicalReport] as const;
 }

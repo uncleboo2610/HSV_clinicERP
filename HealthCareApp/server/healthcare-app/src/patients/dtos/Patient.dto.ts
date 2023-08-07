@@ -8,3 +8,7 @@ export class CreatePatientDto {
     pob: string;
     job: string;
 }
+
+export class GetPatientByIdDto {
+    patientId: string;
+}

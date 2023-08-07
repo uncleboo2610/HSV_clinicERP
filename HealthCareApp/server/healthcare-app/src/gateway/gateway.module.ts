@@ -8,9 +8,10 @@ import { Patient } from "src/entities/patient.entity";
 import { ReceivingCardDetail } from "src/entities/receiving-card-detail.entity";
 import { StaffTicket } from "src/entities/staff-ticket.entity";
 import { Prescription } from "src/entities/prescription.entity";
+import { MedicalReport } from "src/entities/medical-report.entity";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([ReceivingCard, Department, Patient, ReceivingCardDetail, StaffTicket, Prescription])],
+    imports: [TypeOrmModule.forFeature([ReceivingCard, Department, Patient, ReceivingCardDetail, StaffTicket, Prescription, MedicalReport])],
     providers: [MyGateWay]
 })
 export class GatewayModule {}

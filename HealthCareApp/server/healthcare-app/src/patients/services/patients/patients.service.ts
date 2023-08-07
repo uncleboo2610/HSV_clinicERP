@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Patient } from 'src/entities/patient.entity';
-import { CreatePatientDto } from 'src/patients/dtos/CreatePatient.dto';
+import { CreatePatientDto } from 'src/patients/dtos/Patient.dto';
 import { UpdatePatientDto } from 'src/patients/dtos/UpdatePatient.dto';
 import { Repository } from 'typeorm';
 
@@ -14,6 +14,10 @@ export class PatientsService {
 
     getPatients() {
         return this.patientRepository.find({ relations: ['medical_report'] });
+    }
+
+    getPatientById(patientId: string) {
+        return this.patientRepository.findOneBy({ id: patientId })
     }
 
     createPatient(patientDetails: CreatePatientDto) {

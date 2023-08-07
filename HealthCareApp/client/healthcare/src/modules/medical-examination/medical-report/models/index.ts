@@ -4,3 +4,8 @@ export interface IStaffTicket {
     patientId: string;
     note: string;
 }
+
+export interface IMedicalReport {
+    diagnostic: string;
+    reExaminationDate: string;
+}

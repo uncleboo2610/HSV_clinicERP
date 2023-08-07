@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm"
 import { MedicalReport } from "./medical-report.entity";
+import { Prescription } from "./prescription.entity";
 
 @Entity('patient')
 export class Patient {
@@ -32,6 +33,9 @@ export class Patient {
 
     @OneToMany(() => MedicalReport, (mR) => mR.patient)
     medical_report: MedicalReport[];
+
+    @OneToMany(() => Prescription, (prescription) => prescription.patient)
+    prescription: Prescription[];
 
     @CreateDateColumn()
     createdAt: Date;

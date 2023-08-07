@@ -6,6 +6,7 @@ export const apiEndpoints = {
     },
     Patient: {
         GetPatients: `${apiBaseUrl}/patients/get-patients`,
+        GetPatientById: `${apiBaseUrl}/patients/get-patient-by-id`,
         AddPatient: `${apiBaseUrl}/patients/create-patient`
     },
     ReceivingCard: {
@@ -33,6 +34,7 @@ export const apiEndpoints = {
     },
     Prescription: {
         getPrescription: `${apiBaseUrl}/prescription/get-prescriptions`,
+        getPrescriptionById: `${apiBaseUrl}/prescription/get-prescription-by-id`,
         getPrescriptionDetail: `${apiBaseUrl}/prescription/get-prescription-details`,
         createPrescription: `${apiBaseUrl}/prescription/create-prescription`,
         createPrescriptionDetail: `${apiBaseUrl}/prescription/create-prescription-detail`,
