@@ -8,6 +8,7 @@ export interface IPatient {
     phone: number;
     pob: string;
     job: string;
+    createdAt: Date;
 }
 
 export interface IReceivingCard {

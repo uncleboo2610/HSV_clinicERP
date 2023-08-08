@@ -27,6 +27,7 @@ export const HomePage = () => {
         phone: patient.phone,
         pob: patient.pob,
         job: patient.job,
+        createdAt: patient.createdAt
     }));
 
     const columnsPatient: ColumnsType<IPatient> = [

@@ -32,7 +32,7 @@ export class Patient {
     job: string;
 
     @OneToMany(() => MedicalReport, (mR) => mR.patient)
-    medical_report: MedicalReport[];
+    medicalReport: MedicalReport[];
 
     @OneToMany(() => Prescription, (prescription) => prescription.patient)
     prescription: Prescription[];

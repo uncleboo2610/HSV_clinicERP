@@ -68,6 +68,7 @@ export const PatientPage = () => {
         phone: patient.phone,
         pob: patient.pob,
         job: patient.job,
+        createdAt: patient.createdAt,
     }));
 
     const handleSearch = (

@@ -13,10 +13,10 @@ export class MedicalReport {
     @Column()
     diagnostic: string;
 
-    @ManyToOne(() => Patient, (patient) => patient.medical_report)
+    @ManyToOne(() => Patient, (patient) => patient.medicalReport)
     patient: Patient;
 
-    @ManyToOne(() => Staff, (staff) => staff.medical_report)
+    @ManyToOne(() => Staff, (staff) => staff.medicalReport)
     staff: Staff;
 
     @CreateDateColumn()

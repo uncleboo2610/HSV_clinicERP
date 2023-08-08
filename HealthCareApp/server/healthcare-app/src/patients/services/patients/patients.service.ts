@@ -13,7 +13,7 @@ export class PatientsService {
     ) {}
 
     getPatients() {
-        return this.patientRepository.find({ relations: ['medical_report'] });
+        return this.patientRepository.find({ relations: ['medicalReport'] });
     }
 
     getPatientById(patientId: string) {

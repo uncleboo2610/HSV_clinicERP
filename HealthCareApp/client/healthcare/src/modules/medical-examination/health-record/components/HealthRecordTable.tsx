@@ -1,16 +1,8 @@
 import { DownOutlined } from '@ant-design/icons';
 import { TableColumnsType, Badge, Space, Dropdown, Table } from 'antd';
 import React from 'react'
-
-interface DataType {
-    key: React.Key;
-    name: string;
-    platform: string;
-    version: string;
-    upgradeNum: number;
-    creator: string;
-    createdAt: string;
-}
+import usePrescription from '../../prescription/hook/usePrescription';
+import { IHealthRecord } from '../models';
   
 interface ExpandedDataType {
     key: React.Key;
@@ -20,7 +12,10 @@ interface ExpandedDataType {
 }
 
 export const HealthRecordTable = () => {
-    const expandedRowRender = () => {
+    const [data] = usePrescription();
+    console.log(data)
+
+    const expandedRowRender = (record: any) => {
         const columns: TableColumnsType<ExpandedDataType> = [
             { title: 'Date', dataIndex: 'date', key: 'date' },
             { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -32,40 +27,36 @@ export const HealthRecordTable = () => {
             data.push({
                 key: i.toString(),
                 date: '2014-12-24 23:12:00',
-                name: 'This is production name',
+                name: record.key,
                 upgradeNum: 'Upgraded: 56',
             });
         }
-        return <Table columns={columns} dataSource={data} pagination={false} />;
+        return <Table columns={columns} dataSource={data} pagination={false} rowKey={(record) => record.key}/>;
     };
     
-    const columns: TableColumnsType<DataType> = [
-        { title: 'Name', dataIndex: 'name', key: 'name' },
-        { title: 'Platform', dataIndex: 'platform', key: 'platform' },
-        { title: 'Version', dataIndex: 'version', key: 'version' },
-        { title: 'Upgraded', dataIndex: 'upgradeNum', key: 'upgradeNum' },
-        { title: 'Creator', dataIndex: 'creator', key: 'creator' },
+    const columnsPrescription: TableColumnsType<IHealthRecord> = [
+        { title: 'STT', dataIndex: 'key', key: 'key' },
+        { title: 'Khoa', dataIndex: 'department', key: 'department' },
+        { title: 'Chuẩn Đoán', dataIndex: 'diagnostic', key: 'diagnostic' },
+        { title: 'Hẹn tái khám', dataIndex: 'reExaminationDate', key: 'reExaminationDate' },
         { title: 'Date', dataIndex: 'createdAt', key: 'createdAt' },
     ];
     
-    const data: DataType[] = [];
-    for (let i = 0; i < 3; ++i) {
-        data.push({
-            key: i.toString(),
-            name: 'Screen',
-            platform: 'iOS',
-            version: '10.3.4.5654',
-            upgradeNum: 500,
-            creator: 'Jack',
-            createdAt: '2014-12-24 23:12:00',
-        });
-    }
+    const dataPrescription: IHealthRecord[] = data.map((record: any, i) => ({
+        key: i + 1,
+        id: record.id,
+        diagnostic: record?.medicalReport?.diagnostic,
+        department: record?.medicalReport?.staff?.department?.departmentName,
+        reExaminationDate: record?.medicalReport?.reExaminationDate,
+        createdAt: record.createdAt,
+    }))
   return (
     <>
         <Table
-            columns={columns}
+            columns={columnsPrescription}
             expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
-            dataSource={data}
+            dataSource={dataPrescription}
+            rowKey={(record) => record.key}
         />
     </>
   )

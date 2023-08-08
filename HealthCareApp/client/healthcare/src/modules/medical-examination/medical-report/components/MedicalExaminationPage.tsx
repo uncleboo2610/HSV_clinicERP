@@ -9,7 +9,7 @@ import { StaffTicketForm } from './form/StaffTicketForm';
 import useReceivingCard from '../../../patients/hooks/useReceivingCard';
 import { IReceivingCardDetail, IPatient } from '../../../patients/models';
 import { PrescriptionPage } from '../../prescription/component/PrescriptionPage';
-import { HealthRecordTable } from '../../health-record/components/HealthRecordTable';
+import { HealthRecordPage } from '../../health-record/components/HealthRecordPage';
 
 type DataIndex = keyof IReceivingCardDetail;
 
@@ -173,7 +173,7 @@ export const MedicalExaminationPage = () => {
         {
             key: '4',
             label: `Bệnh án`,
-            children: <HealthRecordTable />
+            children: <HealthRecordPage patient={patient}/>
         }
       ];
 

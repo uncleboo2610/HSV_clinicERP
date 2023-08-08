@@ -41,7 +41,7 @@ export class Staff {
     position: string;
 
     @OneToMany(() => MedicalReport, (mR) => mR.staff)
-    medical_report: MedicalReport[];
+    medicalReport: MedicalReport[];
 
     @ManyToOne(() => Department, (dept) => dept.staff)
     department: Department;
