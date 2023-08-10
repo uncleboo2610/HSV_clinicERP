@@ -38,7 +38,7 @@ export class PrescriptionService {
     ) {
         const patient = await this.patientRepository.findOneBy({ id: patientId });
         const medicalReport = await this.medicalReportRepository.findOneBy({ id: medicalReportId });
-
+        
         if (!patient || !medicalReport) {
             throw new HttpException('Not found', HttpStatus.NOT_FOUND);
         };

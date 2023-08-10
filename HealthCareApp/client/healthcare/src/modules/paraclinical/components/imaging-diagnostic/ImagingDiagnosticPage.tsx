@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Table, { ColumnsType } from 'antd/es/table';
 import { Row, Col, Divider } from 'antd';
 import { ImagingDiagnosticForm } from './form/ImagingDiagnosticForm';
-import useStaffTicket from '../../../staff/hooks/useStaffTicket';
+import useStaffTicket from '../../../medical-examination/staff-ticket/hooks/useStaffTicket';
 import { IStaffTicket } from '../../../medical-examination/medical-report/models';
 
 export const ImagingDiagnosticPage = () => {

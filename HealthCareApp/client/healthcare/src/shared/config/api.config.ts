@@ -19,6 +19,7 @@ export const apiEndpoints = {
         GetDepartment: `${apiBaseUrl}/department/get-departments`,
     },
     MedicalReport: {
+        GetMedicalReport: `${apiBaseUrl}/medical-report/get-medical-reports`,
         AddMedicalReport: `${apiBaseUrl}/medical-report/create-medical-report`,
     },
     Paraclinical: {
@@ -28,6 +29,7 @@ export const apiEndpoints = {
         getStaffTicket: `${apiBaseUrl}/staff/get-staff-tickets`,
         getProfile: `${apiBaseUrl}/staff/get-profile`,
         createStaffTicket: `${apiBaseUrl}/staff/create-staff-ticket`,
+        createStaffTicketDetail: `${apiBaseUrl}/staff/create-staff-ticket-detail`,
     },
     TypeService: {
         getTypeService: `${apiBaseUrl}/type-service/get-type-services`,

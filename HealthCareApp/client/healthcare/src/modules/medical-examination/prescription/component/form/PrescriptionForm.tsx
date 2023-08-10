@@ -36,7 +36,7 @@ export const PrescriptionForm = (props: any) => {
         }
         prescriptionService.createPrescriptionDetail(data)
             .then(() => {
-                socket.emit('newPrescriptionDetail', prescriptionId)
+                socket.emit('newPrescriptionDetail', {to: socket.id, data: prescriptionId})
                 formRef.current?.resetFields();
             })
             .catch((e) => {

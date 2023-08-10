@@ -5,7 +5,7 @@ import { MedicalExaminationForm } from './form/MedicalExaminationForm';
 import { SearchOutlined } from '@ant-design/icons';
 import { FilterConfirmProps } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
-import { StaffTicketForm } from './form/StaffTicketForm';
+import { StaffTicketForm } from '../../staff-ticket/components/StaffTicketForm';
 import useReceivingCard from '../../../patients/hooks/useReceivingCard';
 import { IReceivingCardDetail, IPatient } from '../../../patients/models';
 import { PrescriptionPage } from '../../prescription/component/PrescriptionPage';
@@ -121,14 +121,14 @@ export const MedicalExaminationPage = () => {
         },
         {
           title: 'Tên bệnh nhân',
-          dataIndex: 'patientName',
-          key: 'patientName',
-          ...getColumnSearchProps('patientName')
+          dataIndex: 'name',
+          key: 'name',
+          ...getColumnSearchProps('name')
         },
         {
           title: 'Mã bệnh nhân',
-          dataIndex: 'patientId',
-          key: 'patientId'
+          dataIndex: 'id',
+          key: 'id'
         },
         {
             title: 'Khoa khám bệnh',
@@ -139,9 +139,8 @@ export const MedicalExaminationPage = () => {
       
     const dataReceivingCard: IReceivingCardDetail[] = data.map((receivingCardDetail: any, i) => ({
         key: i + 1,
-        id: receivingCardDetail.id,
-        patientName: receivingCardDetail.patient.name,
-        patientId: receivingCardDetail.patient.id,
+        name: receivingCardDetail.patient.name,
+        id: receivingCardDetail.patient.id,
         departmentName: receivingCardDetail.department.departmentName
     }))
       

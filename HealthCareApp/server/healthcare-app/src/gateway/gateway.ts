@@ -17,7 +17,7 @@ import { Repository } from "typeorm";
 export class MyGateWay implements OnModuleInit {
     constructor(
         @InjectRepository(ReceivingCardDetail) private receivingCardDetailRepository: Repository<ReceivingCardDetail>,
-        @InjectRepository(Patient) private receivingPatientRepository: Repository<Patient>,
+        @InjectRepository(Patient) private patientRepository: Repository<Patient>,
         @InjectRepository(StaffTicket) private staffTicketRepository: Repository<StaffTicket>,
         @InjectRepository(Prescription) private prescriptionRepository: Repository<Prescription>,
         @InjectRepository(MedicalReport) private medicalReportRepository: Repository<MedicalReport>,
@@ -40,7 +40,7 @@ export class MyGateWay implements OnModuleInit {
 
     @SubscribeMessage('newPatient')
     async onNewPatient() {
-        const data = await this.receivingPatientRepository.find();
+        const data = await this.patientRepository.find();
         this.server.emit('onPatient', {
             content: data
         })
@@ -54,32 +54,56 @@ export class MyGateWay implements OnModuleInit {
         })
     }
 
+
+    //except other users
     @SubscribeMessage('newPrescriptionDetail')
-    async onPrescriptionDetail(@MessageBody() body: number) {
+    async onPrescriptionDetail(@MessageBody() body: any) {
         const data = await this.prescriptionRepository.findOne({ 
-            where: {id: body},
+            where: {id: body.data},
             relations: ['prescriptionDetail.drug', 'patient', 'medicalReport']
         });
-        this.server.emit('onPrescriptionDetail', {
+        this.server.to(body.to).emit('onPrescriptionDetail', {
             content: data
         })
     }
 
-    @SubscribeMessage('newPrescription')
-    async onPrescription(@MessageBody() body: string) {
-        const data = await this.receivingPatientRepository.findOne({ 
-            where: {id: body},
-            relations: ['prescription.prescriptionDetail', 'prescription.medicalReport.staff.department']
+    @SubscribeMessage('newHealthRecord')
+    async onHealthRecord(@MessageBody() body: any) {
+        const data = await this.patientRepository.findOne({ 
+            where: {id: body.data},
+            relations: ['prescription.prescriptionDetail', 'prescription.medicalReport.staff.department', 'medicalReport']
         });
-        this.server.emit('onPrescription', {
+        this.server.to(body.to).emit('onHealthRecord', {
             content: data
         })
     }
 
-    @SubscribeMessage('newMedicalReportById')
-    async onMedicalReportById(@MessageBody() body: string) {
-        const data = await this.medicalReportRepository.findOneBy({id: body})
-        this.server.emit('onMedicalReport', {
+    @SubscribeMessage('checkHealthRecordDetail')
+    async onHealthRecordDetail(@MessageBody() body: any) {
+        const data = await this.prescriptionRepository.findOne({
+            where: {id: body.data},
+            relations: ['prescriptionDetail.drug'],
+        })
+        this.server.to(body.to).emit('onCheckHealthRecordDetail', {
+            content: data
+        })
+    }
+
+    @SubscribeMessage('newMedicalReport')
+    async onMedicalReportById(@MessageBody() body: any) {
+        const data = await this.medicalReportRepository.find({ relations: ['patient'] })
+        this.server.to(body.to).emit('onMedicalReport', {
+            content: data
+        })
+    }
+
+    @SubscribeMessage('newStaffTicketDetail')
+    async onNewStaffTicketDetail(@MessageBody() body: any) {
+        const data = await this.staffTicketRepository.findOne({
+            where: { id: body.data },
+            relations: ['patient', 'staffTicketDetail.typeService']
+        });
+        this.server.to(body.to).emit('onStaffTicketDetail', {
             content: data
         })
     }

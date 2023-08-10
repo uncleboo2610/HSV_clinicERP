@@ -20,3 +20,9 @@ export class StaffTicketDto {
     note: string;
     patientId: string;
 }
+
+export class StaffTicketDetailDto {
+    note: string;
+    staffTicketId: number;
+    typeServiceId: number[];
+}

@@ -8,10 +8,13 @@ import { StaffTicket } from 'src/entities/staff-ticket.entity';
 import { Patient } from 'src/entities/patient.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
+import { StaffTicketDetail } from 'src/entities/staff-ticket-detail.entity';
+import { TypeService } from 'src/entities/type-service.entity';
 
 @Module({
   imports: [ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([Staff, Department, StaffTicket, Patient
+    TypeOrmModule.forFeature([
+      Staff, Department, StaffTicket, Patient, StaffTicketDetail, TypeService
   ]),
   JwtModule.register({
     global: true,

@@ -23,6 +23,7 @@ class PrescriptionService {
     createPrescription(data: any) {
         return httpClient.post(
             apiEndpoints.Prescription.createPrescription,
+            data
         );
     }
 

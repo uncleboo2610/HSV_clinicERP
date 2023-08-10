@@ -10,14 +10,14 @@ export const MedicalExaminationForm = (props: any) => {
 
     const handleSubmit = (value: any) => {
         const data = {
-            patientId: props?.patient?.patientId,
+            patientId: props?.patient?.id,
             staffId: value.staffId,
             diagnostic: value.diagnostic,
             reExaminationDate: value.reExaminationDate,
         };
         medicalExaminationService.createMedicalExamination(data)
             .then((e) => {
-                socket.emit('newMedicalReportById', e.data.id);
+                socket.emit('newMedicalReport', { to: socket.id });
                 BasicNotification(
                     "success",
                     "Success",
@@ -46,14 +46,14 @@ export const MedicalExaminationForm = (props: any) => {
             label="Mã bệnh nhân"
             name="patientId"
         >
-            <div>{props?.patient?.patientId}</div>
+            <div>{props?.patient?.id}</div>
         </Form.Item>
 
         <Form.Item
             label="Tên bệnh nhân"
             name="patientName"
         >
-            <div>{props?.patient?.patientName}</div>
+            <div>{props?.patient?.name}</div>
         </Form.Item>
 
         <Form.Item

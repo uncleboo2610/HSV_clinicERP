@@ -1,6 +1,7 @@
-import { useState, useEffect, useContext } from "react";
-import { WebsocketContext } from "../../../contexts/WebSocketContext";
-import { staffService } from "../services/staff.service";
+import { useState, useContext, useEffect } from "react";
+import { WebsocketContext } from "../../../../contexts/WebSocketContext";
+import { staffService } from "../../../staff/services/staff.service";
+import { staffTicketService } from "../services/staffTicket.service";
 
 export default function useStaffTicket() {
     const [data, setData] = useState([]);
@@ -20,7 +21,7 @@ export default function useStaffTicket() {
     }, []);
 
     useEffect(() => {
-        staffService.getStaffTicket()
+        staffTicketService.getStaffTicket()
             .then((res) => {
                 setData(res.data)
             })

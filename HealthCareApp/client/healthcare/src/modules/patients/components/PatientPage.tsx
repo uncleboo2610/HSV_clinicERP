@@ -10,6 +10,7 @@ import Highlighter from 'react-highlight-words';
 import usePatient from '../hooks/usePatient';
 import ModalReceivingCardForm, { RefObject } from './form/ModalReceivingCardFrom';
 import { WebsocketContext } from '../../../contexts/WebSocketContext';
+import { HealthRecordPage } from '../../medical-examination/health-record/components/HealthRecordPage';
   
 type DataIndex = keyof IPatient;
 
@@ -18,6 +19,7 @@ export const PatientPage = () => {
     const child = useRef<RefObject>(null);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
+    const [patient, setPatient] = useState<[]>([])
     const searchInput = useRef<InputRef>(null);
     const socket = useContext(WebsocketContext);
 
@@ -258,10 +260,25 @@ export const PatientPage = () => {
         },
     ];
 
+    const rowSelection = {
+        onChange: (selectedRowKeys: React.Key[], selectedRows: IPatient[]) => {
+            selectedRows.map((p: any) => {
+                return setPatient(p);
+            });
+        },
+    };
+
   return (
-    <Table 
-        columns={columnsPatient} 
-        dataSource={dataPatient} 
-    />
+    <>
+        <Table 
+            rowSelection={{
+                type: 'radio',
+                ...rowSelection,
+            }}
+            columns={columnsPatient} 
+            dataSource={dataPatient} 
+        />
+        <HealthRecordPage patient={patient}/>
+    </>
   )
 }

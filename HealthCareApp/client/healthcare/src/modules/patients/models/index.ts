@@ -18,8 +18,7 @@ export interface IReceivingCard {
 }
 
 export interface IReceivingCardDetail {
+    name: string;
     id: string;
-    patientName: string;
-    patientId: string;
     departmentName: string;
 }

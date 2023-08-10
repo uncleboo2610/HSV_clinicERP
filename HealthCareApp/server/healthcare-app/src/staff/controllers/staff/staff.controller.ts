@@ -1,5 +1,5 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Req, Headers } from '@nestjs/common';
-import { StaffDto, StaffTicketDto } from 'src/staff/dtos/Staff.dto';
+import { StaffDto, StaffTicketDetailDto, StaffTicketDto } from 'src/staff/dtos/Staff.dto';
 import { StaffService } from 'src/staff/services/staff/staff.service';
 import { Request } from 'express';
 
@@ -37,6 +37,11 @@ export class StaffController {
     @Post('create-staff-ticket')
     createStaffTicket(@Body() staffTicketDto: StaffTicketDto) {
         return this.staffService.createStaffTicket(staffTicketDto, staffTicketDto.patientId);
+    }
+
+    @Post('create-staff-ticket-detail')
+    createStaffTicketDetail(@Body() staffTicketDto: StaffTicketDetailDto) {
+        return this.staffService.createStaffTicketDetail(staffTicketDto.typeServiceId, staffTicketDto.staffTicketId);
     }
 
     @Put('update-staff/:id')

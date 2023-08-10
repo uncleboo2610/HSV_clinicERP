@@ -1,37 +1,25 @@
-import { DownOutlined } from '@ant-design/icons';
-import { TableColumnsType, Badge, Space, Dropdown, Table } from 'antd';
-import React from 'react'
-import usePrescription from '../../prescription/hook/usePrescription';
+import { TableColumnsType, Table, Modal } from 'antd';
+import React, { useContext, useState } from 'react'
 import { IHealthRecord } from '../models';
-  
-interface ExpandedDataType {
-    key: React.Key;
-    date: string;
-    name: string;
-    upgradeNum: string;
-}
+import useHealthRecord from '../hooks/useHealthRecord';
+import { HealthRecordDetail } from './HealthRecordDetail';
+import { WebsocketContext } from '../../../../contexts/WebSocketContext';
 
 export const HealthRecordTable = () => {
-    const [data] = usePrescription();
-    console.log(data)
+    const socket = useContext(WebsocketContext);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [data] = useHealthRecord();
 
-    const expandedRowRender = (record: any) => {
-        const columns: TableColumnsType<ExpandedDataType> = [
-            { title: 'Date', dataIndex: 'date', key: 'date' },
-            { title: 'Name', dataIndex: 'name', key: 'name' },
-            { title: 'Upgrade Status', dataIndex: 'upgradeNum', key: 'upgradeNum' },
-        ];
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
     
-        const data = [];
-        for (let i = 0; i < 3; ++i) {
-            data.push({
-                key: i.toString(),
-                date: '2014-12-24 23:12:00',
-                name: record.key,
-                upgradeNum: 'Upgraded: 56',
-            });
-        }
-        return <Table columns={columns} dataSource={data} pagination={false} rowKey={(record) => record.key}/>;
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    
+    const handleCancel = () => {
+        setIsModalOpen(false);
     };
     
     const columnsPrescription: TableColumnsType<IHealthRecord> = [
@@ -54,10 +42,27 @@ export const HealthRecordTable = () => {
     <>
         <Table
             columns={columnsPrescription}
-            expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
             dataSource={dataPrescription}
-            rowKey={(record) => record.key}
+            onRow={(record, rowIndex) => {
+                return {
+                onClick: event => {
+
+                }, // click row
+                onDoubleClick: event => {
+                    showModal();
+                    socket.emit('checkHealthRecordDetail', {to: socket.id, data: record.id});
+                }, // double click row
+            }}}
         />
+        <Modal 
+            title="Toa thuốc" 
+            open={isModalOpen} 
+            onOk={handleOk} 
+            onCancel={handleCancel} 
+            style={{minWidth: '1300px'}}
+        >
+            <HealthRecordDetail />
+        </Modal>
     </>
   )
 }

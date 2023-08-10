@@ -8,6 +8,8 @@ import { StaffParams, StaffTicketParams } from 'src/staff/utils/types';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { StaffTicketDetail } from 'src/entities/staff-ticket-detail.entity';
+import { TypeService } from 'src/entities/type-service.entity';
 
 @Injectable()
 export class StaffService {
@@ -16,6 +18,8 @@ export class StaffService {
         @InjectRepository(Staff) private staffRepository: Repository<Staff>,
         @InjectRepository(Department) private departmentRepository: Repository<Department>,
         @InjectRepository(StaffTicket) private staffTicketRepository: Repository<StaffTicket>,
+        @InjectRepository(StaffTicketDetail) private staffTicketDetailRepository: Repository<StaffTicketDetail>,
+        @InjectRepository(TypeService) private typeServiceRepository: Repository<TypeService>,
         @InjectRepository(Patient) private patientRepository: Repository<Patient>,
         private readonly jwtService: JwtService,
     ) {}
@@ -25,7 +29,7 @@ export class StaffService {
     }
 
     getStaffTickets() {
-        return this.staffTicketRepository.find({ relations: ['patient'] });
+        return this.staffTicketRepository.find({ relations: ['patient', 'staffTicketDetail.typeService'] });
     }
 
     async getProfile(header: any) {
@@ -64,6 +68,22 @@ export class StaffService {
         });
         
         return this.staffTicketRepository.save(newStaffTicket);
+    }
+
+    async createStaffTicketDetail(typeServiceId: number[], staffTicketId: number) {
+        const staffTicket = await this.staffTicketRepository.findOneBy({ id: staffTicketId });
+        typeServiceId.map(async (id) => {
+            const typeService = await this.typeServiceRepository.findOneBy({ id: id });
+    
+            const newStaffTicketDetail = this.staffTicketDetailRepository.create({
+                staffTicket,
+                typeService,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            });
+            
+            return this.staffTicketDetailRepository.save(newStaffTicketDetail);
+        })
     }
 
     async updateStaff(

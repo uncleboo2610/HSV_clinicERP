@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Patient } from "./patient.entity";
+import { StaffTicketDetail } from "./staff-ticket-detail.entity";
 
 @Entity('staff_ticket')
 export class StaffTicket {
@@ -11,6 +12,9 @@ export class StaffTicket {
 
     @ManyToOne(() => Patient)
     patient: Patient;
+
+    @OneToMany(() => StaffTicketDetail, (staffTicketDetail) => staffTicketDetail.staffTicket)
+    staffTicketDetail: StaffTicketDetail;
 
     @CreateDateColumn()
     createdAt: Date;

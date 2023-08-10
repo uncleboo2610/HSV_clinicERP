@@ -10,27 +10,22 @@ import { PrescriptionPdfForm } from './form/PrescriptionPdfForm';
 import { useReactToPrint } from 'react-to-print';
 import usePrescriptionDetail from '../hook/usePrescriptionDetail';
 import { WebsocketContext } from '../../../../contexts/WebSocketContext';
+import useMedicalReport from '../../medical-report/hooks/useMedicalReport';
+
+export interface IMedicalReport {
+    id: string;
+    patientId: string;
+    patientName: string
+    diagnostic: string;
+    reExaminationDate: Date;
+}
 
 export const PrescriptionPage = (props: any) => {
     const [presrcriptionId, setPresrcriptionId] = useState();
-    const [ data, patient, medicalReport ] = usePrescriptionDetail();
+    const [medicalReport, setMedicalReport] = useState<IMedicalReport>();
+    const [ data, patient ] = usePrescriptionDetail();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const[medicalReportId, setMedicalReportId] = useState();
-    const socket = useContext(WebsocketContext);
-
-    useEffect(() => {
-        socket.on('connect', () => {
-        });
-
-        socket.on('onMedicalReport', (newMessage) => {
-            setMedicalReportId(newMessage.content);
-        });
-
-        return () => {
-        socket.off('connect');
-        socket.off('onMedicalReport');
-        };
-    }, []);
+    const [medicalReportData] = useMedicalReport();
 
     const componentPDF = useRef(null);
     const generatePDF = useReactToPrint({
@@ -102,19 +97,10 @@ export const PrescriptionPage = (props: any) => {
         note: prescriptionDetail?.note
     }));
 
-    const rowSelection = {
-        onChange: (selectedRowKeys: React.Key[], selectedRows: IPrescriptionDetail[]) => {
-            // selectedRows.map((values) => {
-                // setValue(values);
-            // })
-            console.log(selectedRows)
-        },
-    };
-
     const onCreatingPrescription = () => {
         prescriptionService.createPrescription({
-            patientId: props?.patient?.patientId,
-            medicalReportId: medicalReportId
+            patientId: medicalReport?.patientId,
+            medicalReportId: medicalReport?.id
         })
             .then((e :any) => {
                 BasicNotification(
@@ -134,8 +120,69 @@ export const PrescriptionPage = (props: any) => {
             })
     }
 
+    const columnsMedicalReport: ColumnsType<IMedicalReport> = [
+        {
+            title: 'STT',
+            width: 50,
+            dataIndex: 'key',
+            key: 'key',
+        },
+        {
+            title: 'Mã bệnh nhân',
+            dataIndex: 'patientId',
+            key: 'patientId',
+        },
+        {
+            title: 'Tên bệnh nhân',
+            dataIndex: 'patientName',
+            key: 'patientName',
+        },
+        {
+          title: 'Chẩn đoán',
+          dataIndex: 'diagnostic',
+          key: 'diagnostic',
+        },
+        {
+            title: 'Ngày tái khám',
+            dataIndex: 'reExaminationDate',
+            key: 'reExaminationDate',
+        }
+    ];
+      
+    const dataMedicalReport: IMedicalReport[] = medicalReportData?.map((medicalReport: any, i) => ({
+        key: i + 1,
+        id: medicalReport.id,
+        patientId: medicalReport?.patient?.id,
+        patientName: medicalReport?.patient?.name,
+        diagnostic: medicalReport.diagnostic,
+        reExaminationDate: medicalReport.reExaminationDate
+    }))
+
+    const rowSelectionMedicalReport = {
+        onChange: (selectedRowKeys: React.Key[], selectedRows: IMedicalReport[]) => {
+            selectedRows.map((m: any) => {
+                setMedicalReport(m);
+            });
+        },
+    };
+
   return (
     <>
+        <Row>
+            <Col span={'16'}>
+                <Table
+                    rowSelection={{
+                        type: 'radio',
+                        ...rowSelectionMedicalReport,
+                    }}
+                    columns={columnsMedicalReport}
+                    dataSource={dataMedicalReport}
+                    size='small'
+                />
+                
+                <Divider />
+            </Col>
+        </Row>
         <Row>
             <Space>
                 <Button type="primary" onClick={onCreatingPrescription}>Tạo toa thuốc</Button>
@@ -152,12 +199,12 @@ export const PrescriptionPage = (props: any) => {
         <Row style={{marginTop: '1rem'}}>
             <Col span={10}>
                 <div>
-                    <span>Mã bệnh nhân: {props?.patient?.patientId}</span>
+                    <span>Mã bệnh nhân: {medicalReport?.patientId}</span>
                 </div>
             </Col>
             <Col span={14}>
                 <div>
-                    <span>Họ tên bệnh nhân: {props?.patient?.patientName}</span>
+                    <span>Họ tên bệnh nhân: {medicalReport?.patientName}</span>
                 </div>
             </Col>
         </Row>
@@ -167,10 +214,6 @@ export const PrescriptionPage = (props: any) => {
         <Divider />
         <Row style={{marginTop: '1rem'}}>
             <Table
-                rowSelection={{
-                    type: 'radio',
-                    ...rowSelection,
-                }}
                 columns={columnsPrescriptionDetail}
                 dataSource={dataPrescriptionDetail}
                 style={{minWidth: '900px'}}
