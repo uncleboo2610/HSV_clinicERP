@@ -82,7 +82,7 @@ export const ModalReceivingCardForm = (props: Props, ref: Ref<RefObject>) => {
                 >
                     <Select
                         showSearch
-                        placeholder="Select a person"
+                        placeholder="Select department"
                         optionFilterProp="children"
                         options={optionDepartment}
                     />

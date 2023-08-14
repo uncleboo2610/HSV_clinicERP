@@ -8,6 +8,9 @@ export class TypeService {
     @Column()
     serviceName: string;
 
+    @Column()
+    servicePrice: number;
+
     @CreateDateColumn()
     createdAt: Date;
 

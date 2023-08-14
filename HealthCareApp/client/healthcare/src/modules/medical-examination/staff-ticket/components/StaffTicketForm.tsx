@@ -47,17 +47,17 @@ export const StaffTicketForm = (props: any) => {
     const optionTypeService = dataTypeService.map((typeService, index) => ({
         value: typeService.id,
         label: typeService.serviceName,
-    }))
+    }));
 
   return (
     <>
         <Row>
-            <Col span={12}>
+            <Col span={24}>
                 <Form
                     name="staffticket"
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
-                    style={{ maxWidth: 600 }}
+                    style={{ maxWidth: 900 }}
                     onFinish={handleSubmit}
                 >
                     <Form.Item
@@ -74,44 +74,46 @@ export const StaffTicketForm = (props: any) => {
                         <div>{props?.patient?.name}</div>
                     </Form.Item>
 
-                    {/* <Form.Item
-                        label="Bác sĩ"
-                        name="staffId"
-                        rules={[{ required: true, message: 'Please input staffId!' }]}
-                    >
-                        <Input />
-                    </Form.Item> */}
+                    <Row>
+                        <Col span={8}>
+                            <Form.Item
+                                name="typeService"
+                                label="Dịch vụ"
+                                rules={[{ required: true, message: `Please input department!` }]}
+                            >
+                                <Select
+                                    mode="multiple"
+                                    showSearch
+                                    placeholder="Select a department"
+                                    optionFilterProp="children"
+                                    options={optionTypeService}
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item
+                                label="Ghi chú"
+                                name="note"
+                                rules={[{ required: true, message: 'Please input your note!' }]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                                <Button type="primary" htmlType="submit">
+                                    Lưu Ticket
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                    </Row>
 
-                    <Form.Item
-                        name="typeService"
-                        label="Dịch vụ"
-                        rules={[{ required: true, message: `Please input department!` }]}
-                    >
-                        <Select
-                            mode="multiple"
-                            showSearch
-                            placeholder="Select a department"
-                            optionFilterProp="children"
-                            options={optionTypeService}
-                        />
-                    </Form.Item>
 
-                    <Form.Item
-                        label="Ghi chú"
-                        name="note"
-                        rules={[{ required: true, message: 'Please input your note!' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <Button type="primary" htmlType="submit">
-                            Lưu Ticket
-                        </Button>
-                    </Form.Item>
                 </Form>
             </Col>
-            <Col span={12}>
+        </Row>
+        <Row>
+            <Col span={24}>
                 <StaffTicketTable />
             </Col>
         </Row>

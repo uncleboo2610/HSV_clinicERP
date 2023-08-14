@@ -1,8 +1,8 @@
 import { useContext, useRef, useState } from 'react';
-import { Button, Input, InputRef, Space, Table, Tooltip } from 'antd';
+import { Button, Input, InputRef, Row, Space, Table, Tooltip } from 'antd';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import { IPatient } from '../models';
-import { DeleteOutlined, EditOutlined, IdcardOutlined, SearchOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, IdcardOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
 import { patientsService } from '../services/patients.service';
 import { BasicNotification } from '../../../shared/components/BasicNotification';
 import { FilterConfirmProps } from 'antd/es/table/interface';
@@ -229,14 +229,14 @@ export const PatientPage = () => {
             render: (_, record) => (
                 <>
                     <Space>
-                        <Tooltip title={'Tạo thẻ tiếp nhận'}>
+                        {/* <Tooltip title={'Tạo thẻ tiếp nhận'}>
                             <IdcardOutlined
                                 style={{ fontSize: "1.2rem", color: "green" }}
                                 onClick={() => {
                                     child.current?.openModal(record);
                                 }} 
                             />
-                        </Tooltip>
+                        </Tooltip> */}
                         <Tooltip title={'Chỉnh sửa'}>
                             <EditOutlined
                                 style={{ fontSize: "1.2rem", color: "orange" }}
@@ -253,7 +253,7 @@ export const PatientPage = () => {
                                 }}
                             />
                         </Tooltip>
-                        <ModalReceivingCardForm ref={child} submitModalForm={submitForm} />
+                        {/* <ModalReceivingCardForm ref={child} submitModalForm={submitForm} /> */}
                     </Space>
                 </>
             ),
@@ -268,16 +268,37 @@ export const PatientPage = () => {
         },
     };
 
+    const onReceiving = () => {
+        // socket.emit('newHealthRecord', {to: socket.id, data: props?.patient?.id})
+        child.current?.openModal(patient);
+    };
+
   return (
     <>
-        <Table 
-            rowSelection={{
-                type: 'radio',
-                ...rowSelection,
-            }}
-            columns={columnsPatient} 
-            dataSource={dataPatient} 
-        />
+        <Row>
+            <Space>
+                <Button 
+                    type="primary" 
+                    onClick={() => {
+                        child.current?.openModal(patient);
+                    }}
+                >
+                    Tạo phiếu tiếp nhận
+                </Button>
+                <Button icon={<UploadOutlined />} >In</Button>
+                <ModalReceivingCardForm ref={child} submitModalForm={submitForm} />
+            </Space>
+        </Row>
+        <Row style={{marginTop: '1rem', marginBottom: '1rem'}}>
+            <Table 
+                rowSelection={{
+                    type: 'radio',
+                    ...rowSelection,
+                }}
+                columns={columnsPatient} 
+                dataSource={dataPatient} 
+            />
+        </Row>
         <HealthRecordPage patient={patient}/>
     </>
   )
