@@ -1,4 +1,5 @@
 export type PrescriptionDetailParams = {
+    drugName: string;
     morningDose: number;
     afternoonDose: number;
     eveningDose: number;

@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Drug } from 'src/entities/drug.entity';
 import { MedicalReport } from 'src/entities/medical-report.entity';
 import { Patient } from 'src/entities/patient.entity';
 import { PrescriptionDetail } from 'src/entities/prescription-detail.entity';
@@ -15,6 +16,7 @@ export class PrescriptionService {
         @InjectRepository(PrescriptionDetail) private prescriptionDetailRepository: Repository<PrescriptionDetail>,
         @InjectRepository(Patient) private patientRepository: Repository<Patient>,
         @InjectRepository(MedicalReport) private medicalReportRepository: Repository<MedicalReport>,
+        @InjectRepository(Drug) private drugRepository: Repository<Drug>,
     ) {}
 
     getPrescriptions() {
@@ -53,14 +55,27 @@ export class PrescriptionService {
         return this.prescriptionRepository.save(newPrescription);
     }
 
-    async createPrescriptionDetail(prescriptionDetailData: PrescriptionDetailParams, prescriptionId: number, drugId: number) {
+    async createPrescriptionDetail(prescriptionDetailData: PrescriptionDetailParams[], prescriptionId: number) {
         const prescription = await this.prescriptionRepository.findOneBy({ id: prescriptionId });
-        const drug = await this.prescriptionRepository.findOneBy({ id: drugId })
+        
+        prescriptionDetailData.map(async (data) => {
+            const drug = await this.drugRepository.findOne({
+                where: { drugName: data.drugName }
+            });
+            const newData = {
+                morningDose: data.morningDose,
+                afternoonDose: data.afternoonDose,
+                eveningDose: data.eveningDose,
+                quantity: data.quantity,
+                note: data.note
+            }
             const newPrescriptionDetail = this.prescriptionDetailRepository.create({
-                ...prescriptionDetailData,
+                ...newData,
                 prescription,
                 drug,
             });
-        return this.prescriptionDetailRepository.save(newPrescriptionDetail);
+            
+            return this.prescriptionDetailRepository.save(newPrescriptionDetail);
+        })
     }
 }

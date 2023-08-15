@@ -1,9 +1,7 @@
 import { Space, Input, Button, Form, InputNumber, Select, FormInstance } from 'antd';
 import React, { Ref, forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
 import useDrug from '../../../../drug/hooks/useDrug';
-import { prescriptionService } from '../../services/prescription.service';
 import { WebsocketContext } from '../../../../../contexts/WebSocketContext';
-import { BasicNotification } from '../../../../../shared/components/BasicNotification';
 
 export interface RefObject {
     showForm: () => void;
@@ -20,9 +18,7 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
     const [prescriptionId, setPresrcriptionId] = useState(null);
     const {submitForm} = props
 
-    function showForm() {
-        console.log('ok');
-    }
+    function showForm() {}
 
     const handleSubmitForm = (values: any) => {
         submitForm(values);
@@ -30,42 +26,13 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
 
     useImperativeHandle(ref, () => ({ showForm }));
 
-    // useEffect(() => {
-    //     setPresrcriptionId(props.id);
-    // }, [props.id])
-
     const optionDrug = drugData.map((drug, index) => ({
-        value: drug.id,
+        value: drug.drugName,
         label: drug.drugName,
     }));
     
     const onReset = () => {
         formRef.current?.resetFields();
-    };
-
-    const onFinish = (value: any) => {
-        const data = {
-            morningDose: value.morningDose,
-            afternoonDose: value.afternoonDose,
-            eveningDose: value.eveningDose,
-            quantity: value.quantity,
-            note: value.note,
-            drugId: value.drugId,
-            prescriptionId: prescriptionId
-        }
-        prescriptionService.createPrescriptionDetail(data)
-            .then(() => {
-                socket.emit('newPrescriptionDetail', {to: socket.id, data: prescriptionId})
-                formRef.current?.resetFields();
-            })
-            .catch((e) => {
-                BasicNotification(
-                    "error",
-                    "Error",
-                    "Fail !",
-                );
-                console.log(e);
-            })
     };
 
   return (
@@ -79,7 +46,7 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
         >
             <Space.Compact block>
                 <Form.Item
-                    name='drugId'
+                    name='drugName'
                 >
                     <Select
                         showSearch

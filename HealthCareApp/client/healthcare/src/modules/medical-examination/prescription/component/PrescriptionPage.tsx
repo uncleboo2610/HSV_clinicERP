@@ -8,7 +8,6 @@ import { BasicNotification } from '../../../../shared/components/BasicNotificati
 import { PrescriptionPdfForm } from './form/PrescriptionPdfForm';
 import { useReactToPrint } from 'react-to-print';
 import usePrescriptionDetail from '../hook/usePrescriptionDetail';
-import { WebsocketContext } from '../../../../contexts/WebSocketContext';
 import useMedicalReport from '../../medical-report/hooks/useMedicalReport';
 import PrescriptionForm, { RefObject } from './form/PrescriptionForm';
 
@@ -21,12 +20,15 @@ export interface IMedicalReport {
 }
 
 export const PrescriptionPage = (props: any) => {
-    const [presrcriptionId, setPresrcriptionId] = useState();
+    const [drug, setDrug] = useState<IPrescriptionDetail[]>([])
     const [medicalReport, setMedicalReport] = useState<IMedicalReport>();
-    const [ data, patient ] = usePrescriptionDetail();
+    const [count, setCount] = useState(0);
+    const [data, patient] = usePrescriptionDetail();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [medicalReportData] = useMedicalReport();
     const child = useRef<RefObject>(null);
+
+    const [ dataPrescriptionDetail, setDataPrescriptionDetail ] = useState<IPrescriptionDetail[]>(data);
 
     const componentPDF = useRef(null);
     const generatePDF = useReactToPrint({
@@ -86,30 +88,23 @@ export const PrescriptionPage = (props: any) => {
         }
     ];
 
-    const dataPrescriptionDetail: IPrescriptionDetail[] = data?.map((prescriptionDetail: any, i) => ({
-        key: i + 1,
-        id: prescriptionDetail?.id,
-        drugName: prescriptionDetail?.drug.drugName,
-        drugId: prescriptionDetail?.drugId,
-        morningDose: prescriptionDetail?.morningDose,
-        afternoonDose: prescriptionDetail?.afternoonDose,
-        eveningDose: prescriptionDetail?.eveningDose,
-        quantity: prescriptionDetail?.quantity,
-        note: prescriptionDetail?.note
-    }));
-
     const onCreatingPrescription = () => {
         prescriptionService.createPrescription({
             patientId: medicalReport?.patientId,
             medicalReportId: medicalReport?.id
         })
             .then((e :any) => {
-                BasicNotification(
-                    "success",
-                    "Success",
-                    "Đã tạo mã thành công !",
-                );
-                setPresrcriptionId(e.data.id)
+                prescriptionService.createPrescriptionDetail({
+                    prescriptionId: e.data.id,
+                    drug: drug
+                })
+                    .then(() => {
+                        BasicNotification(
+                            "success",
+                            "Success",
+                            "Đã tạo toa thuốc thành công !",
+                        );
+                    }).catch((e) => console.log(e))
             })
             .catch((e: any) => {
                 BasicNotification(
@@ -168,8 +163,25 @@ export const PrescriptionPage = (props: any) => {
     };
 
     const submitForm = (values: any) => {
-        console.log(values)
-    }
+        const newData = {
+                key: count + 1,
+                drugName: values?.drugName,
+                morningDose: values?.morningDose,
+                afternoonDose: values?.afternoonDose,
+                eveningDose: values?.eveningDose,
+                quantity: values?.quantity,
+                note: values?.note
+        };
+        setDataPrescriptionDetail([...dataPrescriptionDetail, newData]);
+        setCount(count + 1);
+    };
+
+    // rowSelection object indicates the need for row selection
+    const rowSelection = {
+        onChange: (selectedRowKeys: React.Key[], selectedRows: IPrescriptionDetail[]) => {
+            setDrug(selectedRows);
+        },
+    };
 
   return (
     <>
@@ -219,6 +231,9 @@ export const PrescriptionPage = (props: any) => {
         <Divider />
         <Row style={{marginTop: '1rem'}}>
             <Table
+                rowSelection={{
+                    ...rowSelection,
+                }}
                 columns={columnsPrescriptionDetail}
                 dataSource={dataPrescriptionDetail}
                 style={{minWidth: '900px'}}
