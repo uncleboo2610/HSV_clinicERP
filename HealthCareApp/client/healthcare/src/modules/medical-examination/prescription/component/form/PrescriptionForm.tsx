@@ -1,19 +1,38 @@
 import { Space, Input, Button, Form, InputNumber, Select, FormInstance } from 'antd';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Ref, forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
 import useDrug from '../../../../drug/hooks/useDrug';
 import { prescriptionService } from '../../services/prescription.service';
 import { WebsocketContext } from '../../../../../contexts/WebSocketContext';
 import { BasicNotification } from '../../../../../shared/components/BasicNotification';
 
-export const PrescriptionForm = (props: any) => {
+export interface RefObject {
+    showForm: () => void;
+}
+
+interface Props {
+    submitForm: (value: any) => void
+}
+
+export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
     const formRef = React.useRef<FormInstance>(null);
     const socket = useContext(WebsocketContext)
     const [drugData] = useDrug();
     const [prescriptionId, setPresrcriptionId] = useState(null);
+    const {submitForm} = props
 
-    useEffect(() => {
-        setPresrcriptionId(props.id);
-    }, [props.id])
+    function showForm() {
+        console.log('ok');
+    }
+
+    const handleSubmitForm = (values: any) => {
+        submitForm(values);
+    };
+
+    useImperativeHandle(ref, () => ({ showForm }));
+
+    // useEffect(() => {
+    //     setPresrcriptionId(props.id);
+    // }, [props.id])
 
     const optionDrug = drugData.map((drug, index) => ({
         value: drug.id,
@@ -50,11 +69,10 @@ export const PrescriptionForm = (props: any) => {
     };
 
   return (
-    <>
         <Form
             name="complex-form"
             ref={formRef}
-            onFinish={onFinish}
+            onFinish={handleSubmitForm}
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             style={{ maxWidth: 900 }}
@@ -105,7 +123,8 @@ export const PrescriptionForm = (props: any) => {
                 >                
                     <Input style={{ width: 'calc(100% - 500px)', height: '32px' }} placeholder='Ghi chú' />
                 </Form.Item>
-                <Button type="primary" htmlType="submit" disabled={prescriptionId ? false : true}>
+                {/* <Button type="primary" htmlType="submit" disabled={prescriptionId ? false : true}> */}
+                <Button type="primary" htmlType="submit" >
                     Thêm
                 </Button>
                 <Button htmlType="button" onClick={onReset}>
@@ -113,6 +132,7 @@ export const PrescriptionForm = (props: any) => {
                 </Button>
             </Space.Compact>
         </Form>
-    </>
   )
 }
+
+export default forwardRef(PrescriptionForm);

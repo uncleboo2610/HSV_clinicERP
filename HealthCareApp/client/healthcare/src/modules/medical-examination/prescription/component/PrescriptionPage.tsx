@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { PrescriptionForm } from './form/PrescriptionForm'
 import { Button, Col, Divider, Modal, Row, Space, Table, Upload } from 'antd'
 import { IPrescriptionDetail } from '../models';
 import { ColumnsType } from 'antd/es/table';
@@ -11,6 +10,7 @@ import { useReactToPrint } from 'react-to-print';
 import usePrescriptionDetail from '../hook/usePrescriptionDetail';
 import { WebsocketContext } from '../../../../contexts/WebSocketContext';
 import useMedicalReport from '../../medical-report/hooks/useMedicalReport';
+import PrescriptionForm, { RefObject } from './form/PrescriptionForm';
 
 export interface IMedicalReport {
     id: string;
@@ -26,6 +26,7 @@ export const PrescriptionPage = (props: any) => {
     const [ data, patient ] = usePrescriptionDetail();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [medicalReportData] = useMedicalReport();
+    const child = useRef<RefObject>(null);
 
     const componentPDF = useRef(null);
     const generatePDF = useReactToPrint({
@@ -166,6 +167,10 @@ export const PrescriptionPage = (props: any) => {
         },
     };
 
+    const submitForm = (values: any) => {
+        console.log(values)
+    }
+
   return (
     <>
         <Row>
@@ -209,7 +214,7 @@ export const PrescriptionPage = (props: any) => {
             </Col>
         </Row>
         <Row style={{marginTop: '1rem'}}>
-            <PrescriptionForm id={presrcriptionId} />
+            <PrescriptionForm ref={child.current?.showForm} submitForm={submitForm} />
         </Row>
         <Divider />
         <Row style={{marginTop: '1rem'}}>
