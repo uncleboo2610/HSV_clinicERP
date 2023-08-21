@@ -3,7 +3,7 @@ import { apiEndpoints } from "../../../shared/config/api.config";
 
 class PatientsService {
     getPatients() {
-        return httpClient.get(apiEndpoints.Patient.GetPatients);
+        return httpClient.get(apiEndpoints.Patient.GetPatient);
     }
 
     getPatientById(data: any) {

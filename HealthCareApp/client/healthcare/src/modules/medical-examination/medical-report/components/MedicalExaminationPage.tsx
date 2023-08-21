@@ -174,7 +174,7 @@ export const MedicalExaminationPage = () => {
             label: `Bệnh án`,
             children: <HealthRecordPage patient={patient}/>
         }
-      ];
+    ];
 
   return (
     <div>

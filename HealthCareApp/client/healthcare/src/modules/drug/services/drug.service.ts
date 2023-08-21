@@ -3,10 +3,10 @@ import { apiEndpoints } from "../../../shared/config/api.config";
 
 class DrugService {
     getDrug() {
-        return httpClient.get(apiEndpoints.Drug.getDrug);
+        return httpClient.get(apiEndpoints.Drug.GetDrug);
     }
     createDrug(data: any) {
-        return httpClient.post(apiEndpoints.Drug.createDrug, data);
+        return httpClient.post(apiEndpoints.Drug.AddDrug, data);
     }
 }
 

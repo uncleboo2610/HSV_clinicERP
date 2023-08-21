@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm"
 import { MedicalReport } from "./medical-report.entity";
 import { Prescription } from "./prescription.entity";
+import { ParaclinicalReport } from "./paraclinical-report.entity";
 
 @Entity('patient')
 export class Patient {
@@ -36,6 +37,9 @@ export class Patient {
 
     @OneToMany(() => Prescription, (prescription) => prescription.patient)
     prescription: Prescription[];
+
+    @OneToMany(() => ParaclinicalReport, (paraclinicalReport) => paraclinicalReport.patient)
+    paraclinicalReport: ParaclinicalReport[];
 
     @CreateDateColumn()
     createdAt: Date;

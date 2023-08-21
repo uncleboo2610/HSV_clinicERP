@@ -2,42 +2,60 @@ import { Button, Form, Input, Select } from 'antd';
 import useTypeService from '../../../hooks/useTypeSerivce';
 import { paraclinicalService } from '../../../services/paraclinical.service';
 import { BasicNotification } from '../../../../../shared/components/BasicNotification';
+import { Ref, forwardRef, useImperativeHandle } from 'react';
 
-export const ImagingDiagnosticForm = (props: any) => {
+export interface RefObject {
+    showForm: () => void;
+}
+
+interface Props {
+    submitForm: (value: any) => void
+}
+
+export const ImaginingDiagnosticForm = (props: Props, ref: Ref<RefObject>) => {
+    const {submitForm} = props
     const [dataTypeService] = useTypeService();
+
+    function showForm() {}
+
+    useImperativeHandle(ref, () => ({ showForm }));
 
     const optionTypeService = dataTypeService.map((service, index) => ({
         value: service.id,
         label: service.serviceName,
     }));
 
-    const handleSubmit = (value: any) => {
-        const data = {
-            note: value.note,
-            paraclinicalDiagnostic: value.note,
-            resultSample: value.resultSample,
-            staffId: value.staffId,
-            typeServiceId: value.typeServiceId,
-            staffTicketId: props.ticket.id   
-        };
-
-        paraclinicalService.createParaclinical(data)
-            .then(() => {
-                BasicNotification(
-                    "success",
-                    "Success",
-                    "Đã lưu báo cáo cận lâm sàng thành công !",
-                )
-            })
-            .catch((e) => {
-                BasicNotification(
-                    "error",
-                    "Error",
-                    "Failed to update data !",
-                );
-                console.log(e);
-            });
+    const handleSubmitForm = (values: any) => {
+        submitForm(values);
     };
+
+    // const handleSubmit = (value: any) => {
+    //     const data = {
+    //         note: value.note,
+    //         paraclinicalDiagnostic: value.note,
+    //         resultSample: value.resultSample,
+    //         staffId: value.staffId,
+    //         typeServiceId: value.typeServiceId,
+    //         staffTicketId: props.ticket.id   
+    //     };
+
+    //     paraclinicalService.createParaclinicalReport(data)
+    //         .then(() => {
+    //             BasicNotification(
+    //                 "success",
+    //                 "Success",
+    //                 "Đã lưu báo cáo cận lâm sàng thành công !",
+    //             )
+    //         })
+    //         .catch((e) => {
+    //             BasicNotification(
+    //                 "error",
+    //                 "Error",
+    //                 "Failed to update data !",
+    //             );
+    //             console.log(e);
+    //         });
+    // };
 
   return (
     <Form
@@ -45,22 +63,8 @@ export const ImagingDiagnosticForm = (props: any) => {
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 600 }}
-        onFinish={handleSubmit}
+        onFinish={handleSubmitForm}
     >
-        <Form.Item
-            label="Mã bệnh nhân"
-            name="patientId"
-        >
-            <div>{props?.ticket?.patientId}</div>
-        </Form.Item>
-
-        <Form.Item
-            label="Tên bệnh nhân"
-            name="patientName"
-        >
-            <div>{props?.ticket?.patientName}</div>
-        </Form.Item>
-
         <Form.Item
             label="Loại dịch vụ"
             name="typeServiceId"
@@ -114,3 +118,5 @@ export const ImagingDiagnosticForm = (props: any) => {
     </Form>
   )
 }
+
+export default forwardRef(ImaginingDiagnosticForm);

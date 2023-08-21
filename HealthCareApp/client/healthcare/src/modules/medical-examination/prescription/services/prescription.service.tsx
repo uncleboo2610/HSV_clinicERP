@@ -3,33 +3,33 @@ import { apiEndpoints } from "../../../../shared/config/api.config";
 
 class PrescriptionService {
     getPrescriptions() {
-        return httpClient.get(apiEndpoints.Prescription.getPrescription);
+        return httpClient.get(apiEndpoints.Prescription.GetPrescription);
     }
 
     getPrescriptionById(data: any) {
         return httpClient.get(
-            apiEndpoints.Prescription.getPrescriptionById,
+            apiEndpoints.Prescription.GetPrescriptionById,
             data,
         );
     }
 
     getPrescriptionDetails(id: any) {
         return httpClient.get(
-            apiEndpoints.Prescription.getPrescriptionDetail,
+            apiEndpoints.Prescription.GetPrescriptionDetail,
             id
         );
     }
 
     createPrescription(data: any) {
         return httpClient.post(
-            apiEndpoints.Prescription.createPrescription,
+            apiEndpoints.Prescription.AddPrescription,
             data
         );
     }
 
     createPrescriptionDetail(data: any) {
         return httpClient.post(
-            apiEndpoints.Prescription.createPrescriptionDetail,
+            apiEndpoints.Prescription.AddPrescriptionDetail,
             data,
         );
     }

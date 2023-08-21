@@ -5,20 +5,20 @@ class StaffTicketService {
     
     getStaffTicket() {
         return httpClient.get(
-            apiEndpoints.Staff.getStaffTicket,
+            apiEndpoints.Staff.GetStaffTicket,
             );
         }
 
     createStaffTicket(data: any) {
         return httpClient.post(
-            apiEndpoints.Staff.createStaffTicket,
+            apiEndpoints.Staff.AddStaffTicket,
             data
         );
     }
 
     createStaffTicketDetail(data: any) {
         return httpClient.post(
-            apiEndpoints.Staff.createStaffTicketDetail,
+            apiEndpoints.Staff.AddStaffTicketDetail,
             data
         );
     }

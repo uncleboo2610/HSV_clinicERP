@@ -15,19 +15,22 @@ export class ParaclinicalService {
         @InjectRepository(ParaclinicalReport) private paraclinicalReportRepository: Repository<ParaclinicalReport>,
         @InjectRepository(StaffTicket) private staffTicketRepository: Repository<StaffTicket>,
         @InjectRepository(Staff) private staffRepository: Repository<Staff>,
-        @InjectRepository(TypeService) private typeServiceRepository: Repository<TypeService>
+        @InjectRepository(TypeService) private typeServiceRepository: Repository<TypeService>,
+        @InjectRepository(Patient) private patientRepository: Repository<Patient>
     ) {}
 
     getParaclinicalReports() {
-        return this.paraclinicalReportRepository.find();
+        return this.paraclinicalReportRepository.find({ relations: ['staffTicket.patient', 'staff', 'typeService'] });
     }
 
     async createParaclinicalReport(
         paraclinicalReport: ParaclinicalReportParams, 
+        patientId: string,
         staffId: string, 
         typeServiceId: number,
         staffTicketId: number
     ) {
+        const patient = await this.patientRepository.findOneBy({ id: patientId });
         const staff = await this.staffRepository.findOneBy({ id: staffId });
         const typeService = await this.typeServiceRepository.findOneBy({ id: typeServiceId });
         const staffTicket = await this.staffTicketRepository.findOneBy({ id: staffTicketId });
@@ -38,6 +41,7 @@ export class ParaclinicalService {
 
         const newParaclinicalReport = this.paraclinicalReportRepository.create({
             ...paraclinicalReport,
+            patient,
             staff,
             typeService,
             staffTicket,

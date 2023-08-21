@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, Prim
 import { Staff } from "./staff.entity";
 import { TypeService } from "./type-service.entity";
 import { StaffTicket } from "./staff-ticket.entity";
+import { Patient } from "./patient.entity";
 
 @Entity('paraclinical_report')
 export class ParaclinicalReport {
@@ -26,6 +27,9 @@ export class ParaclinicalReport {
 
     @ManyToOne(() => TypeService)
     typeService: TypeService;
+
+    @ManyToOne(() => Patient, (patient) => patient.paraclinicalReport)
+    patient: Patient;
 
     @CreateDateColumn()
     createdAt: Date;

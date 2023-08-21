@@ -20,6 +20,7 @@ export class ParaclinicalController {
     ) {
         return this.paraclinicalService.createParaclinicalReport(
             paraclinicalReportDto, 
+            paraclinicalReportDto.patientId,
             paraclinicalReportDto.staffId,
             paraclinicalReportDto.typeServiceId,
             paraclinicalReportDto.staffTicketId

@@ -18,17 +18,29 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { PrescriptionModule } from './prescription/prescription.module';
 import { DrugModule } from './drug/drug.module';
+import { Department } from './entities/department.entity';
+import { Drug } from './entities/drug.entity';
+import { ParaclinicalReport } from './entities/paraclinical-report.entity';
+import { Prescription } from './entities/prescription.entity';
+import { PrescriptionDetail } from './entities/prescription-detail.entity';
+import { ReceivingCard } from './entities/receiving-card.entity';
+import { ReceivingCardDetail } from './entities/receiving-card-detail.entity';
+import { StaffTicketDetail } from './entities/staff-ticket-detail.entity';
+import { TypeService } from './entities/type-service.entity';
+import { ImaginingDiagnostic } from './entities/imagining-diagnostic';
+import { ImaginingDiagnosticModule } from './image/imagining-diagnostic/imagining-diagnostic.module';
 
-@Module({
-  imports: [ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-    type: 'mssql',
+const healthcare_image = TypeOrmModule.forRoot({
+  name: 'healthcare_image',
+  type: 'mssql',
       host: process.env.DATABASE_HOST,
       port: 1433,
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      entities: [Staff, Patient, MedicalReport],
+      database: 'healthcare_image',
+      entities: [
+        ImaginingDiagnostic
+      ],
       synchronize: true,
       autoLoadEntities: true,
       options: {
@@ -38,8 +50,58 @@ import { DrugModule } from './drug/drug.module';
         validateConnection: false,
         trustServerCertificate: true,
       },
-  }), PatientsModule, MedicalReportModule, StaffModule, DepartmentModule, ReceivingCardModule, StaffModule, GatewayModule, TypeServiceModule, StaffTicket, ParaclinicalModule, AuthModule, PrescriptionModule, DrugModule],
-  controllers: [AppController],
-  providers: [AppService],
+})
+
+@Module({
+  imports: [ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: 'mssql',
+      host: process.env.DATABASE_HOST,
+      port: 1433,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+      entities: [
+        Staff, 
+        Patient, 
+        MedicalReport, 
+        Department, 
+        Drug, 
+        ParaclinicalReport, 
+        Prescription, 
+        PrescriptionDetail, 
+        ReceivingCard, 
+        ReceivingCardDetail, 
+        StaffTicketDetail, 
+        StaffTicket, 
+        TypeService
+      ],
+      synchronize: true,
+      autoLoadEntities: true,
+      options: {
+        encrypt: true,
+      },
+      extra: {
+        validateConnection: false,
+        trustServerCertificate: true,
+      },
+    }), 
+    healthcare_image,
+      PatientsModule, 
+      MedicalReportModule, 
+      StaffModule, 
+      DepartmentModule, 
+      ReceivingCardModule, 
+      StaffModule, 
+      GatewayModule, 
+      TypeServiceModule, 
+      StaffTicket, 
+      ParaclinicalModule, 
+      AuthModule, 
+      PrescriptionModule, 
+      DrugModule, ImaginingDiagnosticModule, 
+    ],
+    controllers: [AppController],
+    providers: [AppService],
 })
 export class AppModule {}

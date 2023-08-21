@@ -6,7 +6,7 @@ class StaffService {
     getProfile() {
         const user = authService.getToken();
         return httpClient.get(
-            apiEndpoints.Staff.getProfile,
+            apiEndpoints.Staff.GetProfile,
             { headers: {"token" : `${user}`} }
         );
     }

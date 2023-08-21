@@ -5,10 +5,10 @@ import { HomePage } from './modules/HomePage';
 import { PatientPage } from './modules/patients/components/PatientPage';
 import { ReceivingPatientPage } from './modules/patients/components/ReceivingPatientPage';
 import { BloodTestPage } from './modules/paraclinical/components/blood-test/BloodTestPage';
-import { ImagingDiagnosticPage } from './modules/paraclinical/components/imaging-diagnostic/ImagingDiagnosticPage';
 import { LogInPage } from './modules/auth/components/LogInPage';
 import { AuthChecker } from './modules/auth/layouts/AuthChecker';
 import { MedicalExaminationPage } from './modules/medical-examination/medical-report/components/MedicalExaminationPage';
+import { ImagingDiagnosticPage } from './modules/paraclinical/components/imagining-diagnostic/components/ImaginingDiagnosticPage';
 
 function App() {
   return (

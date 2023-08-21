@@ -1,7 +1,6 @@
 import { Space, Input, Button, Form, InputNumber, Select, FormInstance } from 'antd';
-import React, { Ref, forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
+import React, { Ref, forwardRef, useImperativeHandle } from 'react';
 import useDrug from '../../../../drug/hooks/useDrug';
-import { WebsocketContext } from '../../../../../contexts/WebSocketContext';
 
 export interface RefObject {
     showForm: () => void;
@@ -13,9 +12,7 @@ interface Props {
 
 export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
     const formRef = React.useRef<FormInstance>(null);
-    const socket = useContext(WebsocketContext)
     const [drugData] = useDrug();
-    const [prescriptionId, setPresrcriptionId] = useState(null);
     const {submitForm} = props
 
     function showForm() {}

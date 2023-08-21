@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import Table, { ColumnsType } from 'antd/es/table';
-import { Row, Col, Divider } from 'antd';
-import { ImagingDiagnosticForm } from './form/ImagingDiagnosticForm';
-import useStaffTicket from '../../../medical-examination/staff-ticket/hooks/useStaffTicket';
-import { IStaffTicket } from '../../../medical-examination/medical-report/models';
+import { Col, Divider, Row, Table, Tabs, TabsProps } from 'antd';
+import { ColumnsType } from 'antd/es/table';
+import { useState } from 'react';
+import { IStaffTicket } from '../../../../medical-examination/medical-report/models';
+import useStaffTicket from '../../../../medical-examination/staff-ticket/hooks/useStaffTicket';
+import { ImaginingDiagnosticPageInfo } from './ImaginingDiagnosticPageInfo';
+import { ImaginingDiagnosticRecordPage } from './imagining-diagnostic-record/ImaginingDiagnosticRecordPage';
 
 export const ImagingDiagnosticPage = () => {
     const [data] = useStaffTicket();
@@ -49,11 +50,27 @@ export const ImagingDiagnosticPage = () => {
             })
         },
     };
+    const onChange = (key: string) => {
+        console.log(key);
+    };
+
+    const items: TabsProps['items'] = [
+        {
+            key: '1',
+            label: `Thông tin chẩn đoán hình ảnh`,
+            children: <ImaginingDiagnosticPageInfo ticket={value} />,
+        },
+        {
+            key: '2',
+            label: `Lịch sử cận lâm sàng`,
+            children: <ImaginingDiagnosticRecordPage ticket={value} />,
+        },
+    ];
     
   return (
-    <div>
+    <>
         <Row>
-            <Col span={'16'}>
+            <Col span={16}>
                 <Table
                     rowSelection={{
                         type: 'radio',
@@ -63,15 +80,13 @@ export const ImagingDiagnosticPage = () => {
                     dataSource={dataStaffTicket}
                     size='small'
                 />
-                
                 <Divider />
             </Col>
         </Row>
-        <Row>
-            <Col span={'24'}>
-                <ImagingDiagnosticForm ticket={value}/>
-            </Col>
-        </Row>
-    </div>
+        <Tabs 
+            defaultActiveKey="1" 
+            items={items}
+        />
+    </>
   )
 }

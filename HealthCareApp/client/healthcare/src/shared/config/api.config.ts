@@ -5,7 +5,7 @@ export const apiEndpoints = {
         LogIn: `${apiBaseUrl}/auth/login`,
     },
     Patient: {
-        GetPatients: `${apiBaseUrl}/patients/get-patients`,
+        GetPatient: `${apiBaseUrl}/patients/get-patients`,
         GetPatientById: `${apiBaseUrl}/patients/get-patient-by-id`,
         AddPatient: `${apiBaseUrl}/patients/create-patient`
     },
@@ -23,26 +23,33 @@ export const apiEndpoints = {
         AddMedicalReport: `${apiBaseUrl}/medical-report/create-medical-report`,
     },
     Paraclinical: {
-        AddParaclinic: `${apiBaseUrl}/paraclinical/create-paraclinical-report`,
+        GetParaclinicalReport: `${apiBaseUrl}/paraclinical/get-paraclinical-reports`,
+        AddParaclinicalReport: `${apiBaseUrl}/paraclinical/create-paraclinical-report`,
     },
     Staff: {
-        getStaffTicket: `${apiBaseUrl}/staff/get-staff-tickets`,
-        getProfile: `${apiBaseUrl}/staff/get-profile`,
-        createStaffTicket: `${apiBaseUrl}/staff/create-staff-ticket`,
-        createStaffTicketDetail: `${apiBaseUrl}/staff/create-staff-ticket-detail`,
+        GetStaffTicket: `${apiBaseUrl}/staff/get-staff-tickets`,
+        GetProfile: `${apiBaseUrl}/staff/get-profile`,
+        AddStaffTicket: `${apiBaseUrl}/staff/create-staff-ticket`,
+        AddStaffTicketDetail: `${apiBaseUrl}/staff/create-staff-ticket-detail`,
     },
     TypeService: {
-        getTypeService: `${apiBaseUrl}/type-service/get-type-services`,
+        GetTypeService: `${apiBaseUrl}/type-service/get-type-services`,
     },
     Prescription: {
-        getPrescription: `${apiBaseUrl}/prescription/get-prescriptions`,
-        getPrescriptionById: `${apiBaseUrl}/prescription/get-prescription-by-id`,
-        getPrescriptionDetail: `${apiBaseUrl}/prescription/get-prescription-details`,
-        createPrescription: `${apiBaseUrl}/prescription/create-prescription`,
-        createPrescriptionDetail: `${apiBaseUrl}/prescription/create-prescription-detail`,
+        GetPrescription: `${apiBaseUrl}/prescription/get-prescriptions`,
+        GetPrescriptionById: `${apiBaseUrl}/prescription/get-prescription-by-id`,
+        GetPrescriptionDetail: `${apiBaseUrl}/prescription/get-prescription-details`,
+        AddPrescription: `${apiBaseUrl}/prescription/create-prescription`,
+        AddPrescriptionDetail: `${apiBaseUrl}/prescription/create-prescription-detail`,
     },
     Drug: {
-        getDrug: `${apiBaseUrl}/drug/get-drugs`,
-        createDrug: `${apiBaseUrl}/dug/create-drug`,
+        GetDrug: `${apiBaseUrl}/drug/get-drugs`,
+        AddDrug: `${apiBaseUrl}/dug/create-drug`,
+    },
+    Image: {
+        ImaginingDiagnostic: {
+            GetImaginingDiagnosticImages: `${apiBaseUrl}/imagining-diagnostic/get-imagining-diagnostic-images`,
+            AddImaginingDiagnosticImages: `${apiBaseUrl}/imagining-diagnostic/create-imagining-diagnostic-image`,
+        }
     }
 }

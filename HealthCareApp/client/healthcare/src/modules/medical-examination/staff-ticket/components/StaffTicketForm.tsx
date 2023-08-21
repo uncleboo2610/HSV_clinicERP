@@ -79,7 +79,7 @@ export const StaffTicketForm = (props: any) => {
                             <Form.Item
                                 name="typeService"
                                 label="Dịch vụ"
-                                rules={[{ required: true, message: `Please input department!` }]}
+                                rules={[{ required: true, message: `Please input a service!` }]}
                             >
                                 <Select
                                     mode="multiple"
