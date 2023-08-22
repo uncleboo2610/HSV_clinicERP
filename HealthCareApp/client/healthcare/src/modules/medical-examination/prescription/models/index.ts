@@ -24,4 +24,5 @@ export interface IPrescriptionDetail {
     morningDose: number;
     afternoonDose: number;
     eveningDose: number;
+    quantity: number;
 }

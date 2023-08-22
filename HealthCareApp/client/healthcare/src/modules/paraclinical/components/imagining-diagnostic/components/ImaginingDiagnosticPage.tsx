@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { IStaffTicket } from '../../../../medical-examination/medical-report/models';
 import useStaffTicket from '../../../../medical-examination/staff-ticket/hooks/useStaffTicket';
 import { ImaginingDiagnosticPageInfo } from './ImaginingDiagnosticPageInfo';
-import { ImaginingDiagnosticRecordPage } from './imagining-diagnostic-record/ImaginingDiagnosticRecordPage';
+import { ImaginingDiagnosticRecordTable } from './imagining-diagnostic-record/ImaginingDiagnosticRecordTable';
 
 export const ImagingDiagnosticPage = () => {
     const [data] = useStaffTicket();
@@ -50,9 +50,6 @@ export const ImagingDiagnosticPage = () => {
             })
         },
     };
-    const onChange = (key: string) => {
-        console.log(key);
-    };
 
     const items: TabsProps['items'] = [
         {
@@ -63,7 +60,7 @@ export const ImagingDiagnosticPage = () => {
         {
             key: '2',
             label: `Lịch sử cận lâm sàng`,
-            children: <ImaginingDiagnosticRecordPage ticket={value} />,
+            children: <ImaginingDiagnosticRecordTable ticket={value} />,
         },
     ];
     

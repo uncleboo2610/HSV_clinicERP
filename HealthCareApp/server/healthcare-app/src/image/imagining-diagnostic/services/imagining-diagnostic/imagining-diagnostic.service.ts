@@ -13,6 +13,12 @@ export class ImaginingDiagnosticService {
         return this.imaginingDiagnositcRepository.find();
     }
 
+    getImaginingDiagnosticByParaclinicalReportId(paraclinicalReportId: string) {
+        return this.imaginingDiagnositcRepository.find({
+            where: {paraclinicalReportId: paraclinicalReportId}
+        });
+    }
+
     createImaginingDiagnostic(paraclinicalReportId: string, imageUrl: string[]) {
         imageUrl.map((url: string) => {
             const newData = {

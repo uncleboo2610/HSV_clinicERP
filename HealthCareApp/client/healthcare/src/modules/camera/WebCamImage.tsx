@@ -1,7 +1,6 @@
 import Table, { ColumnsType } from "antd/es/table";
 import { useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
-import useParaclinicalReport from "../paraclinical/hooks/useParaclinicalReport";
 import { imaginingDiagnosticService } from "../paraclinical/components/imagining-diagnostic/services/imagining-diagnostic.service";
 // import "./styles.css";
 

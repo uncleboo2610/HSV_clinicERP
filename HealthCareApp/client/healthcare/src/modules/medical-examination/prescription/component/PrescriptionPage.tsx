@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button, Col, Divider, Modal, Row, Space, Table, Upload } from 'antd'
 import { IPrescriptionDetail } from '../models';
-import { ColumnsType } from 'antd/es/table';
 import { prescriptionService } from '../services/prescription.service';
 import { UploadOutlined } from '@ant-design/icons';
 import { BasicNotification } from '../../../../shared/components/BasicNotification';
 import { PrescriptionPdfForm } from './form/PrescriptionPdfForm';
 import { useReactToPrint } from 'react-to-print';
-import usePrescriptionDetail from '../hook/usePrescriptionDetail';
-import useMedicalReport from '../../medical-report/hooks/useMedicalReport';
 import PrescriptionForm, { RefObject } from './form/PrescriptionForm';
+import { usePrescriptionMedicalReportTableColumn } from './PrescriptionMedicalReportTable.column';
+import { usePrescriptionDetailTableColumn } from './PrescriptionDetailTable.column';
 
 export interface IMedicalReport {
     id: string;
@@ -20,15 +19,19 @@ export interface IMedicalReport {
 }
 
 export const PrescriptionPage = (props: any) => {
+    const [dataPrescriptionId, setDataPrescriptionId] = useState();
+    const [dataPrescription, setDataPrescription] = useState();
+    const [patient, setPatient] = useState();
+    const [count, setCount] = useState(0);
     const [drug, setDrug] = useState<IPrescriptionDetail[]>([])
     const [medicalReport, setMedicalReport] = useState<IMedicalReport>();
-    const [count, setCount] = useState(0);
-    const [data, patient] = usePrescriptionDetail();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [medicalReportData] = useMedicalReport();
     const child = useRef<RefObject>(null);
 
-    const [ dataPrescriptionDetail, setDataPrescriptionDetail ] = useState<IPrescriptionDetail[]>(data);
+    const medicalReportTableResult = usePrescriptionMedicalReportTableColumn();
+    const prescriptionDetailTableResult = usePrescriptionDetailTableColumn();
+
+    const [ dataPrescriptionDetail, setDataPrescriptionDetail ] = useState<IPrescriptionDetail[]>([]);
 
     const componentPDF = useRef(null);
     const generatePDF = useReactToPrint({
@@ -38,6 +41,12 @@ export const PrescriptionPage = (props: any) => {
 
     const showModal = () => {
         setIsModalOpen(true);
+        prescriptionService.getPrescriptionById({id: dataPrescriptionId})
+            .then((e) => {
+                setDataPrescription(e.data.prescriptionDetail);
+                setPatient(e.data.patient);
+            })
+            .catch((e) => console.log(e))
     };
 
     const handleOk = () => {
@@ -49,56 +58,18 @@ export const PrescriptionPage = (props: any) => {
         setIsModalOpen(false);
     };
 
-    const columnsPrescriptionDetail: ColumnsType<IPrescriptionDetail> = [
-        {
-            title: 'STT',
-            width: 50,
-            dataIndex: 'key',
-            key: 'key',
-        },
-        {
-          title: 'Tên thuốc',
-          dataIndex: 'drugName',
-          key: 'drugName',
-        },
-        {
-          title: 'Liều sáng',
-          dataIndex: 'morningDose',
-          key: 'morningDose'
-        },
-        {
-            title: 'Liều trưa',
-            dataIndex: 'afternoonDose',
-            key: 'afternoonDose'
-        },
-        {
-            title: 'Liều tối',
-            dataIndex: 'eveningDose',
-            key: 'eveningDose'
-        },
-        {
-            title: 'Số lượng',
-            dataIndex: 'quantity',
-            key: 'quantity'
-        },
-        {
-            title: 'Ghi chú',
-            dataIndex: 'note',
-            key: 'note'
-        }
-    ];
-
     const onCreatingPrescription = () => {
         prescriptionService.createPrescription({
             patientId: medicalReport?.patientId,
             medicalReportId: medicalReport?.id
         })
-            .then((e :any) => {
-                prescriptionService.createPrescriptionDetail({
-                    prescriptionId: e.data.id,
-                    drug: drug
-                })
-                    .then(() => {
+        .then((e :any) => {
+            setDataPrescriptionId(e.data.id);
+            prescriptionService.createPrescriptionDetail({
+                prescriptionId: e.data.id,
+                drug: drug
+            })
+            .then((res) => {
                         BasicNotification(
                             "success",
                             "Success",
@@ -114,45 +85,7 @@ export const PrescriptionPage = (props: any) => {
                 );
                 console.log(e)
             })
-    }
-
-    const columnsMedicalReport: ColumnsType<IMedicalReport> = [
-        {
-            title: 'STT',
-            width: 50,
-            dataIndex: 'key',
-            key: 'key',
-        },
-        {
-            title: 'Mã bệnh nhân',
-            dataIndex: 'patientId',
-            key: 'patientId',
-        },
-        {
-            title: 'Tên bệnh nhân',
-            dataIndex: 'patientName',
-            key: 'patientName',
-        },
-        {
-          title: 'Chẩn đoán',
-          dataIndex: 'diagnostic',
-          key: 'diagnostic',
-        },
-        {
-            title: 'Ngày tái khám',
-            dataIndex: 'reExaminationDate',
-            key: 'reExaminationDate',
-        }
-    ];
-      
-    const dataMedicalReport: IMedicalReport[] = medicalReportData?.map((medicalReport: any, i) => ({
-        key: i + 1,
-        id: medicalReport.id,
-        patientId: medicalReport?.patient?.id,
-        patientName: medicalReport?.patient?.name,
-        diagnostic: medicalReport.diagnostic,
-        reExaminationDate: medicalReport.reExaminationDate
-    }))
+    };
 
     const rowSelectionMedicalReport = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: IMedicalReport[]) => {
@@ -192,8 +125,8 @@ export const PrescriptionPage = (props: any) => {
                         type: 'radio',
                         ...rowSelectionMedicalReport,
                     }}
-                    columns={columnsMedicalReport}
-                    dataSource={dataMedicalReport}
+                    columns={medicalReportTableResult["columns"]}
+                    dataSource={medicalReportTableResult["data"]}
                     size='small'
                 />
                 
@@ -207,7 +140,7 @@ export const PrescriptionPage = (props: any) => {
                     <Button icon={<UploadOutlined />} onClick={showModal}>In toa</Button>
                     <Modal style={{minWidth: '1300px'}} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                         <div ref={componentPDF}>
-                            <PrescriptionPdfForm prescription={data} patient={patient} medicalReport={medicalReport}/>
+                            <PrescriptionPdfForm prescription={dataPrescription} patient={patient} medicalReport={medicalReport}/>
                         </div>
                     </Modal>
                 </>
@@ -234,7 +167,7 @@ export const PrescriptionPage = (props: any) => {
                 rowSelection={{
                     ...rowSelection,
                 }}
-                columns={columnsPrescriptionDetail}
+                columns={prescriptionDetailTableResult["columns"]}
                 dataSource={dataPrescriptionDetail}
                 style={{minWidth: '900px'}}
             />

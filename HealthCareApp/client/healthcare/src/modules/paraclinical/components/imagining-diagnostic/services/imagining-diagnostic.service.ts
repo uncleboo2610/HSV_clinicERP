@@ -6,6 +6,10 @@ class ImaginingDiagnosticService {
         return httpClient.get(apiEndpoints.Image.ImaginingDiagnostic.GetImaginingDiagnosticImages);
     }
 
+    getImaginingDiagnosticImagesById(data: any) {
+        return httpClient.get(apiEndpoints.Image.ImaginingDiagnostic.GetImaginingDiagnosticImagesById, data);
+    }
+
     createImaginingDiagnosticImage(data: any) {
         return httpClient.post(apiEndpoints.Image.ImaginingDiagnostic.AddImaginingDiagnosticImages, data);
     }

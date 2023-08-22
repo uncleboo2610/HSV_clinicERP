@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ImaginingDiagnosticService } from '../../services/imagining-diagnostic/imagining-diagnostic.service';
-import { ImaginingDiagnosticDto } from '../../dtos/ImaginingDiagnostic';
+import { ImaginingDiagnosticByIdDto, ImaginingDiagnosticDto } from '../../dtos/ImaginingDiagnostic';
 
 @Controller('imagining-diagnostic')
 export class ImaginingDiagnosticController {
@@ -12,6 +12,13 @@ export class ImaginingDiagnosticController {
     @Get('get-imagining-diagnostic-images')
     getImaginingDiagnostic() {
         return this.imaginingDiagnosticService.getImaginingDiagnostic();
+    }
+
+    @Get('get-imagining-diagnostic-images-by-id')
+    getImaginingDiagnosticByParaclinicalReportId(
+        @Body() imaginingDiagnosticByIdDto: ImaginingDiagnosticByIdDto
+    ) {
+        return this.imaginingDiagnosticService.getImaginingDiagnosticByParaclinicalReportId(imaginingDiagnosticByIdDto.paraclinicalReportId);
     }
 
     @Post('create-imagining-diagnostic-image')

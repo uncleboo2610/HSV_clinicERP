@@ -17,7 +17,10 @@ export class PatientsService {
     }
 
     getPatientById(patientId: string) {
-        return this.patientRepository.findOneBy({ id: patientId })
+        return this.patientRepository.findOne({
+            where: { id: patientId },
+            relations: ['medicalReport', 'paraclinicalReport.staff', 'paraclinicalReport.patient']
+        })
     }
 
     createPatient(patientDetails: CreatePatientDto) {

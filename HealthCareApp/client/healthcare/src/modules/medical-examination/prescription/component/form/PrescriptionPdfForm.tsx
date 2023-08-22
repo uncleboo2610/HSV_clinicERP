@@ -1,13 +1,13 @@
 import { Table, Button, Col, Row } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { IPrescriptionDetail } from '../../models';
-import usePrescriptionDetail from '../../hook/usePrescriptionDetail';
 import { useEffect, useState } from 'react';
 import { IPatient } from '../../../../patients/models';
 import { IMedicalReport } from '../../../medical-report/models';
+import Title from 'antd/es/typography/Title';
 
 export const PrescriptionPdfForm = (props: any) => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<IPrescriptionDetail[]>([]);
     const [patient, setPatient] = useState<IPatient>();
     const [medicalReport, setMedicalReport] = useState<IMedicalReport>();
 
@@ -72,6 +72,7 @@ export const PrescriptionPdfForm = (props: any) => {
   return (
     <>
         <div style={{padding: '50px'}}>
+            <Title level={2} style={{textAlign: 'center'}}>ĐƠN THUỐC BHYT</Title>
             <Row style={{marginTop: '1rem'}}>
                 <Col span={10}>
                     <div>
