@@ -16,6 +16,7 @@ export class PrescriptionDetailDto {
 export class PrescriptionDto {
     patientId: string;
     medicalReportId: string;
+    typePrescriptionId: number;
 }
 
 export class PrescriptionByIdDto {

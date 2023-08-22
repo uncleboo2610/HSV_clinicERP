@@ -30,7 +30,7 @@ export class PrescriptionController {
     createPrescription(
         @Body() prescriptionDto: PrescriptionDto
     ) {
-        return this.prescriptionService.createPrescription(prescriptionDto.patientId, prescriptionDto.medicalReportId);
+        return this.prescriptionService.createPrescription(prescriptionDto.patientId, prescriptionDto.medicalReportId, prescriptionDto.typePrescriptionId);
     }
 
     @Post('create-prescription-detail')

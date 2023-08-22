@@ -29,6 +29,7 @@ import { StaffTicketDetail } from './entities/staff-ticket-detail.entity';
 import { TypeService } from './entities/type-service.entity';
 import { ImaginingDiagnostic } from './entities/imagining-diagnostic';
 import { ImaginingDiagnosticModule } from './image/imagining-diagnostic/imagining-diagnostic.module';
+import { TypePrescription } from './entities/type-prescription.entity';
 
 const healthcare_image = TypeOrmModule.forRoot({
   name: 'healthcare_image',
@@ -74,7 +75,8 @@ const healthcare_image = TypeOrmModule.forRoot({
         ReceivingCardDetail, 
         StaffTicketDetail, 
         StaffTicket, 
-        TypeService
+        TypeService,
+        TypePrescription
       ],
       synchronize: true,
       autoLoadEntities: true,

@@ -9,6 +9,7 @@ import { useReactToPrint } from 'react-to-print';
 import PrescriptionForm, { RefObject } from './form/PrescriptionForm';
 import { usePrescriptionMedicalReportTableColumn } from './PrescriptionMedicalReportTable.column';
 import { usePrescriptionDetailTableColumn } from './PrescriptionDetailTable.column';
+import Checkbox, { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 export interface IMedicalReport {
     id: string;
@@ -22,6 +23,7 @@ export const PrescriptionPage = (props: any) => {
     const [dataPrescriptionId, setDataPrescriptionId] = useState();
     const [dataPrescription, setDataPrescription] = useState();
     const [patient, setPatient] = useState();
+    const [typePrescription, setTypePrescription] = useState<boolean>(false);
     const [count, setCount] = useState(0);
     const [drug, setDrug] = useState<IPrescriptionDetail[]>([])
     const [medicalReport, setMedicalReport] = useState<IMedicalReport>();
@@ -61,7 +63,8 @@ export const PrescriptionPage = (props: any) => {
     const onCreatingPrescription = () => {
         prescriptionService.createPrescription({
             patientId: medicalReport?.patientId,
-            medicalReportId: medicalReport?.id
+            medicalReportId: medicalReport?.id,
+            typePrescriptionId: !typePrescription ? 1 : 2 
         })
         .then((e :any) => {
             setDataPrescriptionId(e.data.id);
@@ -84,7 +87,7 @@ export const PrescriptionPage = (props: any) => {
                     "Fail !",
                 );
                 console.log(e)
-            })
+            });
     };
 
     const rowSelectionMedicalReport = {
@@ -116,6 +119,10 @@ export const PrescriptionPage = (props: any) => {
         },
     };
 
+    const onChange = (e: CheckboxChangeEvent) => {
+        setTypePrescription(e.target.checked);
+      };
+
   return (
     <>
         <Row>
@@ -143,6 +150,7 @@ export const PrescriptionPage = (props: any) => {
                             <PrescriptionPdfForm prescription={dataPrescription} patient={patient} medicalReport={medicalReport}/>
                         </div>
                     </Modal>
+                    <Checkbox onChange={onChange}>Toa dịch vụ</Checkbox>
                 </>
             </Space>
         </Row>

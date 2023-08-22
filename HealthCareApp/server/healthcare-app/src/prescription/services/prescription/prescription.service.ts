@@ -5,6 +5,7 @@ import { MedicalReport } from 'src/entities/medical-report.entity';
 import { Patient } from 'src/entities/patient.entity';
 import { PrescriptionDetail } from 'src/entities/prescription-detail.entity';
 import { Prescription } from 'src/entities/prescription.entity';
+import { TypePrescription } from 'src/entities/type-prescription.entity';
 import { PrescriptionDetailParams } from 'src/prescription/utils/types';
 import { Repository } from 'typeorm';
 
@@ -17,10 +18,11 @@ export class PrescriptionService {
         @InjectRepository(Patient) private patientRepository: Repository<Patient>,
         @InjectRepository(MedicalReport) private medicalReportRepository: Repository<MedicalReport>,
         @InjectRepository(Drug) private drugRepository: Repository<Drug>,
+        @InjectRepository(TypePrescription) private typePrescriptionRepository: Repository<TypePrescription>,
     ) {}
 
     getPrescriptions() {
-        return this.prescriptionRepository.find({ relations: ['prescriptionDetail.drug', 'patient'] });
+        return this.prescriptionRepository.find({ relations: ['prescriptionDetail.drug', 'patient', 'typePrescription'] });
     }
 
     getPrescriptionById(id: number) {
@@ -36,10 +38,12 @@ export class PrescriptionService {
 
     async createPrescription(
         patientId: string,
-        medicalReportId: string
+        medicalReportId: string,
+        typePrescriptionId: number,
     ) {
         const patient = await this.patientRepository.findOneBy({ id: patientId });
         const medicalReport = await this.medicalReportRepository.findOneBy({ id: medicalReportId });
+        const typePrescription = await this.typePrescriptionRepository.findOneBy({ id: typePrescriptionId });
         
         if (!patient || !medicalReport) {
             throw new HttpException('Not found', HttpStatus.NOT_FOUND);
@@ -48,6 +52,7 @@ export class PrescriptionService {
         const newPrescription = this.prescriptionRepository.create({
             medicalReport,
             patient,
+            typePrescription,
             createdAt: new Date(),
             updatedAt: new Date()
         });
