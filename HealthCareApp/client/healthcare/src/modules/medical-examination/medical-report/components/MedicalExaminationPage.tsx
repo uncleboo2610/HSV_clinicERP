@@ -1,12 +1,7 @@
-import { Divider, Table, Button, Row, Col, Input, Space, InputRef, Tabs, TabsProps } from 'antd';
-import { ColumnType, ColumnsType } from 'antd/es/table';
-import { useRef, useState } from 'react';
+import { Divider, Table, Row, Col, Tabs, TabsProps } from 'antd';
+import { useState } from 'react';
 import { MedicalExaminationForm } from './form/MedicalExaminationForm';
-import { SearchOutlined } from '@ant-design/icons';
-import { FilterConfirmProps } from 'antd/es/table/interface';
-import Highlighter from 'react-highlight-words';
 import { StaffTicketForm } from '../../staff-ticket/components/StaffTicketForm';
-import useReceivingCard from '../../../patients/hooks/useReceivingCard';
 import { IReceivingCardDetail, IPatient } from '../../../patients/models';
 import { PrescriptionPage } from '../../prescription/component/PrescriptionPage';
 import { HealthRecordPage } from '../../health-record/components/HealthRecordPage';

@@ -1,6 +1,7 @@
-import { Space, Input, Button, Form, InputNumber, Select, FormInstance } from 'antd';
-import React, { Ref, forwardRef, useImperativeHandle } from 'react';
+import { Space, Input, Button, Form, InputNumber, Select, FormInstance, Modal, Table } from 'antd';
+import React, { Ref, forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import useDrug from '../../../../drug/hooks/useDrug';
+import useMedicineStorage from '../../../../medical-storage/hooks/useMedicineStorage';
 
 export interface RefObject {
     showForm: () => void;
@@ -11,9 +12,12 @@ interface Props {
 }
 
 export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
-    const formRef = React.useRef<FormInstance>(null);
+    const formRef = useRef<FormInstance>(null);
+    const [medicineStorageData] = useMedicineStorage();
     const [drugData] = useDrug();
     const {submitForm} = props
+
+    console.log(medicineStorageData)
 
     function showForm() {}
 
@@ -32,6 +36,29 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
         formRef.current?.resetFields();
     };
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    // rowSelection object indicates the need for row selection
+    const rowSelection = {
+        // onChange: (selectedRowKeys: React.Key[], selectedRows: IReceivingCardDetail[]) => {
+        //     selectedRows.map((p: any) => {
+        //         // setPatient(p)
+        //     });
+        // },
+    };
+
   return (
         <Form
             name="complex-form"
@@ -41,22 +68,31 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
             wrapperCol={{ span: 16 }}
             style={{ maxWidth: 900 }}
         >
-            <Space.Compact block>
+            <Space direction="horizontal" style={{marginBottom: '1rem'}}>
                 <Form.Item
                     name='drugName'
+                    noStyle
                 >
-                    <Select
-                        showSearch
-                        style={{ width: '200px' }}
-                        placeholder="Drug"
-                        optionFilterProp="children"
-                        filterOption={(input, option) => (option?.label ?? '').includes(input)}
-                        filterSort={(optionA, optionB) =>
-                        (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
-                        }
-                        options={optionDrug}
-                    />
+                    <Input style={{ width: '200px' }} placeholder='Ghi chú' value={'123'}/>
+                    <>
+                        <Button style={{marginLeft: '1rem'}} onClick={showModal}>
+                            Xem thuốc
+                        </Button>
+                        <Modal title="Kho thuốc" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                            <Table
+                                rowSelection={{
+                                    type: 'radio',
+                                    ...rowSelection,
+                                }}
+                                // columns={resultTable['columns']}
+                                // dataSource={resultTable['data']}
+                                size='small'
+                            />
+                        </Modal>
+                    </>
                 </Form.Item>
+            </Space>
+            <Space.Compact block>
                 <Form.Item
                     name='morningDose'
                     noStyle
@@ -87,7 +123,6 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
                 >                
                     <Input style={{ width: 'calc(100% - 500px)', height: '32px' }} placeholder='Ghi chú' />
                 </Form.Item>
-                {/* <Button type="primary" htmlType="submit" disabled={prescriptionId ? false : true}> */}
                 <Button type="primary" htmlType="submit" >
                     Thêm
                 </Button>
