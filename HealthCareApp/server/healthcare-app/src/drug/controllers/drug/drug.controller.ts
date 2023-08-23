@@ -18,6 +18,6 @@ export class DrugController {
     createDrug(
         @Body() drugDto: DrugDto
     ) {
-        return this.drugService.createDrug(drugDto);
+        return this.drugService.createDrug(drugDto, 1, drugDto.typeDrugId);
     }
 }

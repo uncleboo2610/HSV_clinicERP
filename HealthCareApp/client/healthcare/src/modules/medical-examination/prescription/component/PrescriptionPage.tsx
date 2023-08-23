@@ -20,7 +20,7 @@ export interface IMedicalReport {
 }
 
 export const PrescriptionPage = (props: any) => {
-    const [dataPrescriptionId, setDataPrescriptionId] = useState();
+    const [dataPrescriptionId, setDataPrescriptionId] = useState<number>(0);
     const [dataPrescription, setDataPrescription] = useState();
     const [patient, setPatient] = useState();
     const [typePrescription, setTypePrescription] = useState<boolean>(false);
@@ -28,12 +28,12 @@ export const PrescriptionPage = (props: any) => {
     const [drug, setDrug] = useState<IPrescriptionDetail[]>([])
     const [medicalReport, setMedicalReport] = useState<IMedicalReport>();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [ dataPrescriptionDetail, setDataPrescriptionDetail ] = useState<IPrescriptionDetail[]>([]);
+    
     const child = useRef<RefObject>(null);
-
     const medicalReportTableResult = usePrescriptionMedicalReportTableColumn();
     const prescriptionDetailTableResult = usePrescriptionDetailTableColumn();
 
-    const [ dataPrescriptionDetail, setDataPrescriptionDetail ] = useState<IPrescriptionDetail[]>([]);
 
     const componentPDF = useRef(null);
     const generatePDF = useReactToPrint({
@@ -43,21 +43,12 @@ export const PrescriptionPage = (props: any) => {
 
     const showModal = () => {
         setIsModalOpen(true);
-        prescriptionService.getPrescriptionById({id: dataPrescriptionId})
+        prescriptionService.getPrescriptionById(dataPrescriptionId)
             .then((e) => {
                 setDataPrescription(e.data.prescriptionDetail);
                 setPatient(e.data.patient);
             })
             .catch((e) => console.log(e))
-    };
-
-    const handleOk = () => {
-        generatePDF()
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
     };
 
     const onCreatingPrescription = () => {
@@ -78,6 +69,7 @@ export const PrescriptionPage = (props: any) => {
                             "Success",
                             "Đã tạo toa thuốc thành công !",
                         );
+                        setDataPrescriptionDetail([]);
                     }).catch((e) => console.log(e))
             })
             .catch((e: any) => {
@@ -145,7 +137,17 @@ export const PrescriptionPage = (props: any) => {
                 <Button type="primary" onClick={onCreatingPrescription}>Tạo toa thuốc</Button>
                 <>
                     <Button icon={<UploadOutlined />} onClick={showModal}>In toa</Button>
-                    <Modal style={{minWidth: '1300px'}} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                    <Modal 
+                        style={{minWidth: '1300px'}} 
+                        open={isModalOpen} 
+                        onOk={() => {
+                            generatePDF()
+                            setIsModalOpen(false);
+                        }} 
+                        onCancel={() => 
+                            setIsModalOpen(false)
+                        }
+                    >
                         <div ref={componentPDF}>
                             <PrescriptionPdfForm prescription={dataPrescription} patient={patient} medicalReport={medicalReport}/>
                         </div>

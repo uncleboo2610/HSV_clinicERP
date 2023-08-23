@@ -9,12 +9,14 @@ import { useReactToPrint } from 'react-to-print';
 import { ImaginingDiagnosticReportPdf } from './ImaginingDiagnosticReportPdf';
 
 export const ImaginingDiagnosticRecordTable = (props: any) => {
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalPdfOpen, setIsModalPdfOpen] = useState(false);
     const [dataDetail, setDataDetail] = useState<[]>([]);
     const [dataDetailPdf, setDataDetailPdf] = useState<[]>([]);
     const [paraclinicalReportId, setParaclinicalReportId] = useState<string>();
     const [paraclinicalReport, setParaclinicalReport] = useState<IImaginingDiagnosticRecord>();
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
     const [data, setData] = useState<IImaginingDiagnosticRecord[]>([]);
 
@@ -27,7 +29,8 @@ export const ImaginingDiagnosticRecordTable = (props: any) => {
     const onCheck = () => {
         patientsService.getPatientById(props?.ticket?.patientId)
             .then((res) => {
-                setData(res.data.paraclinicalReport)
+                setData(res.data.paraclinicalReport);
+                setSelectedRowKeys([])
             })
             .catch((e) => console.log(e));
     };
@@ -45,9 +48,7 @@ export const ImaginingDiagnosticRecordTable = (props: any) => {
     };
 
     const showModalPdf = () => {
-        imaginingDiagnosticService.getImaginingDiagnosticImagesById({
-            paraclinicalReportId: paraclinicalReportId
-        }).then((res) => {
+        imaginingDiagnosticService.getImaginingDiagnosticImagesById(paraclinicalReportId).then((res) => {
             setDataDetailPdf(res.data);
         }).catch((e) => console.log(e));
         setIsModalPdfOpen(true);
@@ -62,13 +63,17 @@ export const ImaginingDiagnosticRecordTable = (props: any) => {
         setIsModalPdfOpen(false);
     };
 
+    const onSelectChange = (newSelectedRowKeys: React.Key[], selectedRows: IImaginingDiagnosticRecord[]) => {
+        selectedRows.map((report) => {
+            setParaclinicalReportId(report.id);
+            setParaclinicalReport(report);
+        });
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
+
     const rowSelection = {
-        onChange: (selectedRowKeys: React.Key[], selectedRows: IImaginingDiagnosticRecord[]) => {
-            selectedRows.map((report) => {
-                setParaclinicalReportId(report.id);
-                setParaclinicalReport(report);
-            })
-        },
+        selectedRowKeys,
+        onChange: onSelectChange,
     };
     
     const columnsRecord: TableColumnsType<IImaginingDiagnosticRecord> = [
@@ -115,9 +120,7 @@ export const ImaginingDiagnosticRecordTable = (props: any) => {
             onRow={(record, rowIndex) => {
                 return {
                 onDoubleClick: event => {
-                    imaginingDiagnosticService.getImaginingDiagnosticImagesById({
-                        paraclinicalReportId: record.id
-                    }).then((res) => {
+                    imaginingDiagnosticService.getImaginingDiagnosticImagesById(record.id).then((res) => {
                         setDataDetail(res.data);
                     }).catch((e) => console.log(e));
                     showModal();

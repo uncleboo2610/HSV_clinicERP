@@ -20,5 +20,5 @@ export class PrescriptionDto {
 }
 
 export class PrescriptionByIdDto {
-    id: number;
+    dataPrescriptionId: number;
 }

@@ -6,10 +6,9 @@ class PrescriptionService {
         return httpClient.get(apiEndpoints.Prescription.GetPrescription);
     }
 
-    getPrescriptionById(data: any) {
+    getPrescriptionById(id: any) {
         return httpClient.get(
-            apiEndpoints.Prescription.GetPrescriptionById,
-            data,
+            apiEndpoints.Prescription.GetPrescriptionById + id,
         );
     }
 

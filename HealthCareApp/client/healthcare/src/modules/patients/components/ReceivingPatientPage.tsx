@@ -223,23 +223,6 @@ export const ReceivingPatientPage = () => {
             </Col>
         </Row>
 
-
-        {/* <Form.Item
-            name="agreement"
-            valuePropName="checked"
-            rules={[
-            {
-                validator: (_, value) =>
-                value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
-            },
-            ]}
-            {...tailFormItemLayout}
-        >
-            <Checkbox>
-            I have read the <a href="">agreement</a>
-            </Checkbox>
-        </Form.Item> */}
-
         <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
                 Đăng ký

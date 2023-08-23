@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DrugDto } from 'src/drug/dtos/Drug.dto';
 import { Drug } from 'src/entities/drug.entity';
+import { MedicalStorage } from 'src/entities/medical-storage.entity';
+import { TypeDrug } from 'src/entities/type-drug.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -9,15 +11,22 @@ export class DrugService {
 
     constructor(
         @InjectRepository(Drug) private drugRepository: Repository<Drug>,
+        @InjectRepository(MedicalStorage) private medicalStorageRepository: Repository<MedicalStorage>,
+        @InjectRepository(TypeDrug) private typeDrugRepository: Repository<TypeDrug>,
     ) {}
 
     getDrugs() {
         return this.drugRepository.find({});
     }
 
-    createDrug(drugData: DrugDto) {
+    async createDrug(drugData: DrugDto, medicalStorageId: number, typeDrugId: number) {
+        const medicalStorage = await this.medicalStorageRepository.findOneBy({id: medicalStorageId});
+        const typeDrug = await this.typeDrugRepository.findOneBy({id: typeDrugId});
+
         const newDrug = this.drugRepository.create({
             ...drugData,
+            medicalStorage,
+            typeDrug,
             createdAt: new Date(),
             updatedAt: new Date()
         });

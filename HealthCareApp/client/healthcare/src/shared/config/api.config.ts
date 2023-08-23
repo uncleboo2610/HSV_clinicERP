@@ -6,7 +6,7 @@ export const apiEndpoints = {
     },
     Patient: {
         GetPatient: `${apiBaseUrl}/patients/get-patients`,
-        GetPatientById: `${apiBaseUrl}/patients/get-patient-by-id`,
+        GetPatientById: `${apiBaseUrl}/patients/get-patient-by-id/`,
         AddPatient: `${apiBaseUrl}/patients/create-patient`
     },
     ReceivingCard: {
@@ -37,7 +37,7 @@ export const apiEndpoints = {
     },
     Prescription: {
         GetPrescription: `${apiBaseUrl}/prescription/get-prescriptions`,
-        GetPrescriptionById: `${apiBaseUrl}/prescription/get-prescription-by-id`,
+        GetPrescriptionById: `${apiBaseUrl}/prescription/get-prescription-by-id/`,
         GetPrescriptionDetail: `${apiBaseUrl}/prescription/get-prescription-details`,
         AddPrescription: `${apiBaseUrl}/prescription/create-prescription`,
         AddPrescriptionDetail: `${apiBaseUrl}/prescription/create-prescription-detail`,
@@ -49,7 +49,7 @@ export const apiEndpoints = {
     Image: {
         ImaginingDiagnostic: {
             GetImaginingDiagnosticImages: `${apiBaseUrl}/imagining-diagnostic/get-imagining-diagnostic-images`,
-            GetImaginingDiagnosticImagesById: `${apiBaseUrl}/imagining-diagnostic/get-imagining-diagnostic-images-by-id`,
+            GetImaginingDiagnosticImagesById: `${apiBaseUrl}/imagining-diagnostic/get-imagining-diagnostic-images-by-id/`,
             AddImaginingDiagnosticImages: `${apiBaseUrl}/imagining-diagnostic/create-imagining-diagnostic-image`,
         }
     }

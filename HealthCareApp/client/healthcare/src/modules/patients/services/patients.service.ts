@@ -6,10 +6,9 @@ class PatientsService {
         return httpClient.get(apiEndpoints.Patient.GetPatient);
     }
 
-    getPatientById(data: any) {
+    getPatientById(id: any) {
         return httpClient.get(
-            apiEndpoints.Patient.GetPatientById,
-            data,
+            apiEndpoints.Patient.GetPatientById + id,
         );
     }
 

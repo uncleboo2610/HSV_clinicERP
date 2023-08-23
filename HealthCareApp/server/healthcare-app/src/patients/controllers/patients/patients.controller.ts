@@ -12,11 +12,11 @@ export class PatientsController {
         return this.patientService.getPatients();
     }
 
-    @Get('get-patient-by-id')
+    @Get('get-patient-by-id/:id')
     getPatientById(
-        @Body() patientDto: GetPatientByIdDto
+        @Param('id') patientId: string
     ) {
-        return this.patientService.getPatientById(patientDto.patientId);
+        return this.patientService.getPatientById(patientId);
     }
 
     @Post('create-patient')

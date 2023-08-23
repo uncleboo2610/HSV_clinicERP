@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PrescriptionByIdDto, PrescriptionDetailDto, PrescriptionDto } from 'src/prescription/dtos/Prescription.dto';
 import { PrescriptionService } from 'src/prescription/services/prescription/prescription.service';
 
@@ -14,11 +14,11 @@ export class PrescriptionController {
         return this.prescriptionService.getPrescriptions();
     }
 
-    @Get('get-prescription-by-id')
+    @Get('get-prescription-by-id/:id')
     getPrescriptionById(
-        @Body() prescriptionDto: PrescriptionByIdDto
+        @Param('id') id: number
     ) {
-        return this.prescriptionService.getPrescriptionById(prescriptionDto.id);
+        return this.prescriptionService.getPrescriptionById(id);
     }
 
     @Get('get-prescription-details')

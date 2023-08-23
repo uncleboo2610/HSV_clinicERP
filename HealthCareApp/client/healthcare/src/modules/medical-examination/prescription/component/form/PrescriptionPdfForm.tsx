@@ -11,13 +11,13 @@ export const PrescriptionPdfForm = (props: any) => {
     const [patient, setPatient] = useState<IPatient>();
     const [medicalReport, setMedicalReport] = useState<IMedicalReport>();
 
+    
     useEffect(() => {
         setData(props.prescription);
         setPatient(props.patient);
         setMedicalReport(props.medicalReport);
-        console.log(props)
     }, [props])
-            
+    
     const columnsPrescriptionDetail: ColumnsType<IPrescriptionDetail> = [
         {
             title: 'STT',
