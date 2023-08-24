@@ -169,7 +169,7 @@ export const PrescriptionPage = (props: any) => {
             </Col>
         </Row>
         <Row style={{marginTop: '1rem'}}>
-            <PrescriptionForm ref={child.current?.showForm} submitForm={submitForm} />
+            <PrescriptionForm ref={child.current?.showForm} submitForm={submitForm} typePrescription={typePrescription} />
         </Row>
         <Divider />
         <Row style={{marginTop: '1rem'}}>

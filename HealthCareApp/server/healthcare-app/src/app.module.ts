@@ -31,8 +31,8 @@ import { ImaginingDiagnostic } from './entities/imagining-diagnostic';
 import { ImaginingDiagnosticModule } from './image/imagining-diagnostic/imagining-diagnostic.module';
 import { TypePrescription } from './entities/type-prescription.entity';
 import { TypeDrug } from './entities/type-drug.entity';
-import { MedicalStorage } from './entities/medical-storage.entity';
-import { MedicalStorageModule } from './medical-storage/medical-storage.module';
+import { MedicineStorage } from './entities/medicine-storage.entity';
+import { MedicineStorageModule } from './medicine-storage/medicine-storage.module';
 
 const healthcare_image = TypeOrmModule.forRoot({
   name: 'healthcare_image',
@@ -69,7 +69,7 @@ const healthcare_image = TypeOrmModule.forRoot({
         Staff, 
         Patient, 
         MedicalReport,
-        MedicalStorage,
+        MedicineStorage,
         Department, 
         Drug, 
         ParaclinicalReport, 
@@ -106,7 +106,7 @@ const healthcare_image = TypeOrmModule.forRoot({
       ParaclinicalModule, 
       AuthModule, 
       PrescriptionModule, 
-      DrugModule, ImaginingDiagnosticModule, MedicalStorageModule, 
+      DrugModule, ImaginingDiagnosticModule, MedicineStorageModule, 
     ],
     controllers: [AppController],
     providers: [AppService],

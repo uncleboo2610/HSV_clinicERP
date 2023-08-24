@@ -60,19 +60,18 @@ export const StaffTicketForm = (props: any) => {
                     style={{ maxWidth: 900 }}
                     onFinish={handleSubmit}
                 >
-                    <Form.Item
-                        label="Mã bệnh nhân"
-                        name="patientId"
-                    >
-                        <div>{props?.patient?.id}</div>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Tên bệnh nhân"
-                        name="patientName"
-                    >
-                        <div>{props?.patient?.name}</div>
-                    </Form.Item>
+                    <Row style={{marginTop: '1rem', marginBottom: '1rem'}}>
+                        <Col span={14}>
+                            <div>
+                                <span>Mã bệnh nhân: {props?.patient?.id}</span>
+                            </div>
+                        </Col>
+                        <Col span={10}>
+                            <div>
+                                <span>Họ tên bệnh nhân: {props?.patient?.name}</span>
+                            </div>
+                        </Col>
+                    </Row>
 
                     <Row>
                         <Col span={8}>

@@ -1,4 +1,4 @@
-import { Button, DatePicker, Form, Input } from 'antd'
+import { Button, Col, DatePicker, Form, Input, Row } from 'antd'
 import { BasicNotification } from '../../../../../shared/components/BasicNotification';
 import { medicalExaminationService } from '../../services/medical-examination.service';
 import { useContext } from 'react';
@@ -36,25 +36,24 @@ export const MedicalExaminationForm = (props: any) => {
 
   return (
     <Form
-        name="medicalexamination"
+        name="medicalexamination-form"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 600 }}
         onFinish={handleSubmit}
     >
-        <Form.Item
-            label="Mã bệnh nhân"
-            name="patientId"
-        >
-            <div>{props?.patient?.id}</div>
-        </Form.Item>
-
-        <Form.Item
-            label="Tên bệnh nhân"
-            name="patientName"
-        >
-            <div>{props?.patient?.name}</div>
-        </Form.Item>
+        <Row style={{marginTop: '1rem', marginBottom: '1rem'}}>
+            <Col span={14}>
+                <div>
+                    <span>Mã bệnh nhân: {props?.patient?.id}</span>
+                </div>
+            </Col>
+            <Col span={10}>
+                <div>
+                    <span>Họ tên bệnh nhân: {props?.patient?.name}</span>
+                </div>
+            </Col>
+        </Row>
 
         <Form.Item
             label="Bác sĩ"

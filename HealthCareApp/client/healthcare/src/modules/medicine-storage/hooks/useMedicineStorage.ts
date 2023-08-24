@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { medicalStoragesService } from "../services/medical-storage.service";
+import { medicineStoragesService } from "../services/medicine-storage.service";
 
 export default function useMedicineStorage() {
     const [data, setData] = useState<[]>([]);
 
     useEffect(() => {
-        medicalStoragesService.getMedicalStorageById(1)
+        medicineStoragesService.getMedicineStorage()
             .then((res) => {
                 setData(res.data)
             })
-            .catch((error) => console.log(error))
+            .catch((e: any) => console.log(e))
     }, [])
 
     return [data] as const;

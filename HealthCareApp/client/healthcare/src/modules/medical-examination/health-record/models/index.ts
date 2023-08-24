@@ -6,8 +6,3 @@ export interface IHealthRecord {
     reExaminationDate: Date;
     createdAt: Date;
 }
-
-// export interface IHealthRecord {
-//     id: number;
-//     createdAt: Date;
-// }

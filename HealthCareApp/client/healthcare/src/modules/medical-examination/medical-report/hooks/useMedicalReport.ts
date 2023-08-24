@@ -12,7 +12,6 @@ export default function useMedicalReport() {
 
         socket.on('onMedicalReport', (newMessage) => {
             setMedicalReportData(newMessage.content);
-            console.log(newMessage.content)
         });
 
         return () => {

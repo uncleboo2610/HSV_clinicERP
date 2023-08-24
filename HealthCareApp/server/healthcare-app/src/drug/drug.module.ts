@@ -4,11 +4,10 @@ import { DrugController } from './controllers/drug/drug.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Drug } from 'src/entities/drug.entity';
 import { Prescription } from 'src/entities/prescription.entity';
-import { MedicalStorage } from 'src/entities/medical-storage.entity';
 import { TypeDrug } from 'src/entities/type-drug.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Drug, Prescription, MedicalStorage, TypeDrug])],
+  imports: [TypeOrmModule.forFeature([Drug, Prescription, TypeDrug])],
   providers: [DrugService],
   controllers: [DrugController]
 })
