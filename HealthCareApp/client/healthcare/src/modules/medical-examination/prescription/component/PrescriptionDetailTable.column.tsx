@@ -1,5 +1,4 @@
 import { ColumnsType } from 'antd/es/table';
-import React from 'react'
 import { IPrescriptionDetail } from '../models';
 
 export const usePrescriptionDetailTableColumn= () => {

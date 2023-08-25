@@ -45,9 +45,6 @@ export const HealthRecordTable = () => {
             dataSource={dataPrescription}
             onRow={(record, rowIndex) => {
                 return {
-                onClick: event => {
-
-                }, // click row
                 onDoubleClick: event => {
                     showModal();
                     socket.emit('checkHealthRecordDetail', {to: socket.id, data: record.id});

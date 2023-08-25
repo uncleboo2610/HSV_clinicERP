@@ -35,11 +35,6 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
     };
 
     useImperativeHandle(ref, () => ({ showForm }));
-
-    // const optionDrug = drugData.map((drug, index) => ({
-    //     value: drug.drugName,
-    //     label: drug.drugName,
-    // }));
     
     const onReset = () => {
         formRef.current?.resetFields();
@@ -90,16 +85,7 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
         typeDrugId: medicine?.drug?.typeDrug?.id,
         typeDrugName: medicine?.drug?.typeDrug?.typeDrugName,
         quantity: medicine.quantity,
-    }))
-
-    // rowSelection object indicates the need for row selection
-    const rowSelection = {
-        // onChange: (selectedRowKeys: React.Key[], selectedRows: IReceivingCardDetail[]) => {
-        //     selectedRows.map((p: any) => {
-        //         // setPatient(p)
-        //     });
-        // },
-    };
+    }));
 
     const checkPrescription = (record: IMedicineStorage, i: any) => {
         console.log(typePrescription)
