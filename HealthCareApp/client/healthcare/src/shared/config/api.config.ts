@@ -38,6 +38,9 @@ export const apiEndpoints = {
     TypeService: {
         GetTypeService: `${apiBaseUrl}/type-service/get-type-services`,
     },
+    TypeSolution: {
+        GetTypeSolution: `${apiBaseUrl}/type-solution/get-type-solutions`,
+    },
     Prescription: {
         GetPrescription: `${apiBaseUrl}/prescription/get-prescriptions`,
         GetPrescriptionById: `${apiBaseUrl}/prescription/get-prescription-by-id/`,

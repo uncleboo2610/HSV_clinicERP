@@ -3,4 +3,5 @@ export class MedicalReportDto {
     reExaminationDate: Date;
     diagnostic: string;
     staffId: string;
+    typeSolutionId: number[];
 }

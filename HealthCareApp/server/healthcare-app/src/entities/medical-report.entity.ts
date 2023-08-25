@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm"
 import { Patient } from "./patient.entity";
 import { Staff } from "./staff.entity";
+import { TypeSolution } from "./type-solution.entity";
 
 @Entity('medical_report')
 export class MedicalReport {
@@ -18,6 +19,10 @@ export class MedicalReport {
 
     @ManyToOne(() => Staff, (staff) => staff.medicalReport)
     staff: Staff;
+
+    @ManyToMany(() => TypeSolution)
+    @JoinTable()
+    typeSolution: TypeSolution[];
 
     @CreateDateColumn()
     createdAt: Date;

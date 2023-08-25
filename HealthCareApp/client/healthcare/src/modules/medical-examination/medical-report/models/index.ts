@@ -9,3 +9,8 @@ export interface IMedicalReport {
     diagnostic: string;
     reExaminationDate: string;
 }
+
+export interface ITypeSolution {
+    id: number;
+    solutionName: string;
+}

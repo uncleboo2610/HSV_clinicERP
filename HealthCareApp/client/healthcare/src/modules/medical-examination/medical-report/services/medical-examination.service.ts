@@ -12,6 +12,11 @@ class MedicalExaminationService {
             data,
         );
     }
+
+    //typeSolution
+    getTypeSolution() {
+        return httpClient.get(apiEndpoints.TypeSolution.GetTypeSolution);
+    }
 }
 
 export const medicalExaminationService = new MedicalExaminationService();

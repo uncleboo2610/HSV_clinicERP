@@ -1,12 +1,14 @@
-import { Button, Col, DatePicker, Form, Input, Row } from 'antd'
+import { Button, Col, DatePicker, Form, Input, Row, Select } from 'antd'
 import { BasicNotification } from '../../../../../shared/components/BasicNotification';
 import { medicalExaminationService } from '../../services/medical-examination.service';
 import { useContext } from 'react';
 import { WebsocketContext } from '../../../../../contexts/WebSocketContext';
+import useTypeSolution from '../../hooks/useTypeSolution';
 
 
 export const MedicalExaminationForm = (props: any) => {
     const socket = useContext(WebsocketContext);
+    const [data] = useTypeSolution();
 
     const handleSubmit = (value: any) => {
         const data = {
@@ -14,6 +16,7 @@ export const MedicalExaminationForm = (props: any) => {
             staffId: value.staffId,
             diagnostic: value.diagnostic,
             reExaminationDate: value.reExaminationDate,
+            typeSolutionId: value.typeSolutionId
         };
         medicalExaminationService.createMedicalExamination(data)
             .then((e) => {
@@ -33,6 +36,11 @@ export const MedicalExaminationForm = (props: any) => {
                 console.log(e);
             });
     };
+
+    const optionTypeSolution = data.map((typeSolution, index) => ({
+        value: typeSolution.id,
+        label: typeSolution.solutionName,
+    }));
 
   return (
     <Form
@@ -77,6 +85,20 @@ export const MedicalExaminationForm = (props: any) => {
             rules={[{ required: true, message: 'Please input check-up date!' }]}
         >
             <DatePicker />
+        </Form.Item>
+
+        <Form.Item
+            name="typeSolutionId"
+            label="Cách giải quyết"
+            rules={[{ required: true, message: `Please input a service!` }]}
+        >
+            <Select
+                mode="multiple"
+                showSearch
+                placeholder="Select a solutiond"
+                optionFilterProp="children"
+                options={optionTypeSolution}
+            />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

@@ -83,7 +83,7 @@ export const StaffTicketForm = (props: any) => {
                                 <Select
                                     mode="multiple"
                                     showSearch
-                                    placeholder="Select a department"
+                                    placeholder="Select a solution"
                                     optionFilterProp="children"
                                     options={optionTypeService}
                                 />
