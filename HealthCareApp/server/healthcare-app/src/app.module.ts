@@ -35,6 +35,8 @@ import { MedicineStorage } from './entities/medicine-storage.entity';
 import { MedicineStorageModule } from './medicine-storage/medicine-storage.module';
 import { TypeSolution } from './entities/type-solution.entity';
 import { TypeSolutionModule } from './type-solution/type-solution.module';
+import { ICD } from './entities/ICD.entity';
+import { IcdModule } from './icd/icd.module';
 
 const healthcare_image = TypeOrmModule.forRoot({
   name: 'healthcare_image',
@@ -84,7 +86,8 @@ const healthcare_image = TypeOrmModule.forRoot({
         TypeService,
         TypePrescription,
         TypeDrug,
-        TypeSolution
+        TypeSolution,
+        ICD
       ],
       synchronize: true,
       autoLoadEntities: true,
@@ -109,7 +112,7 @@ const healthcare_image = TypeOrmModule.forRoot({
       ParaclinicalModule, 
       AuthModule, 
       PrescriptionModule, 
-      DrugModule, ImaginingDiagnosticModule, MedicineStorageModule, TypeSolutionModule, 
+      DrugModule, ImaginingDiagnosticModule, MedicineStorageModule, TypeSolutionModule, IcdModule, 
     ],
     controllers: [AppController],
     providers: [AppService],

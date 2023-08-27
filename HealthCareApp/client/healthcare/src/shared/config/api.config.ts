@@ -58,5 +58,8 @@ export const apiEndpoints = {
             GetImaginingDiagnosticImagesById: `${apiBaseUrl}/imagining-diagnostic/get-imagining-diagnostic-images-by-id/`,
             AddImaginingDiagnosticImages: `${apiBaseUrl}/imagining-diagnostic/create-imagining-diagnostic-image`,
         }
+    },
+    Icd: {
+        GetIcd: `${apiBaseUrl}/icd/get-icd`,
     }
 }
