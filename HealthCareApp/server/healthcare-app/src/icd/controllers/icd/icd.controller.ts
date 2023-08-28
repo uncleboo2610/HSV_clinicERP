@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { IcdService } from 'src/icd/services/icd/icd.service';
 
 @Controller('icd')
@@ -13,10 +13,12 @@ export class IcdController {
         return this.icdService.getIcd();
     }
 
-    @Get('get-icd-by-id/:alphabetId')
+    @Get('get-icd-by-id/:IcdId')
     getIcdById(
-        @Param('startId') alphabetId: string,
+        @Param('IcdId') IcdId: string,
+        @Query('limit') limit: number = 1000,
+        @Query('page') page: number = 1,
     ) {
-        return this.icdService.getIcdById(alphabetId);
+        return this.icdService.getIcdById(IcdId);
     }
 }
