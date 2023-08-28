@@ -11,11 +11,15 @@ export class IcdService {
     ) {}
 
     getIcd() {
-        // return this.icdRepository.createQueryBuilder('DM_ICD').select().offset(0).limit(100).getRawMany();
         return this.icdRepository.find()
     }
-
-    getIcdPagination() {
-        
+    
+    getIcdById(alphabetId) {
+        return this.icdRepository
+            .createQueryBuilder('DM_ICD')
+            .select()
+            .where('DM_ICD.ICD_id like :startId', {startId: `${alphabetId}%`})
+            .limit(1000)
+            .getRawMany()
     }
 }
