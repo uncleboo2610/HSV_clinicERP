@@ -4,8 +4,8 @@ import { ColumnType, ColumnsType } from 'antd/es/table';
 import { FilterConfirmProps } from 'antd/es/table/interface';
 import React, { useRef, useState } from 'react'
 import Highlighter from 'react-highlight-words';
-import useReceivingCard from '../../../patients/hooks/useReceivingCard';
-import { IPatient, IReceivingCardDetail } from '../../../patients/models';
+import useReceivingCard from '../patients/hooks/useReceivingCard';
+import { IPatient, IReceivingCardDetail } from '../patients/models';
 
 type DataIndex = keyof IReceivingCardDetail;
 

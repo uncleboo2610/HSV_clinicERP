@@ -1,40 +1,28 @@
 import { Button, Col, DatePicker, Form, Input, Row, Select } from 'antd'
 import { BasicNotification } from '../../../../../shared/components/BasicNotification';
 import { medicalExaminationService } from '../../services/medical-examination.service';
-import { useContext } from 'react';
+import { Ref, forwardRef, useContext, useImperativeHandle } from 'react';
 import { WebsocketContext } from '../../../../../contexts/WebSocketContext';
 import useTypeSolution from '../../hooks/useTypeSolution';
 
+export interface RefObjectMR {
+    openForm: (data: any) => void;
+}
 
-export const MedicalExaminationForm = (props: any) => {
-    const socket = useContext(WebsocketContext);
+interface Props {
+    submitModalForm: (value: any) => void;
+}
+
+export const MedicalReportForm = (props: Props, ref: Ref<RefObjectMR>) => {
+    const { submitModalForm } = props;
     const [data] = useTypeSolution();
 
-    const handleSubmit = (value: any) => {
-        const data = {
-            patientId: props?.patient?.id,
-            staffId: value.staffId,
-            diagnostic: value.diagnostic,
-            reExaminationDate: value.reExaminationDate,
-            typeSolutionId: value.typeSolutionId
-        };
-        medicalExaminationService.createMedicalExamination(data)
-            .then((e) => {
-                socket.emit('newMedicalReport', { to: socket.id });
-                BasicNotification(
-                    "success",
-                    "Success",
-                    "Đã lưu giấy khám bệnh thành công !",
-                )
-            })
-            .catch((e) => {
-                BasicNotification(
-                    "error",
-                    "Error",
-                    "Failed to update data !",
-                );
-                console.log(e);
-            });
+    const openForm = () => {}
+
+    useImperativeHandle(ref, () => ({ openForm }));
+
+    const handleSubmit = (values: any) => {
+        submitModalForm(values);
     };
 
     const optionTypeSolution = data.map((typeSolution, index) => ({
@@ -50,19 +38,6 @@ export const MedicalExaminationForm = (props: any) => {
         style={{ maxWidth: 600 }}
         onFinish={handleSubmit}
     >
-        <Row style={{marginTop: '1rem', marginBottom: '1rem'}}>
-            <Col span={14}>
-                <div>
-                    <span>Mã bệnh nhân: {props?.patient?.id}</span>
-                </div>
-            </Col>
-            <Col span={10}>
-                <div>
-                    <span>Họ tên bệnh nhân: {props?.patient?.name}</span>
-                </div>
-            </Col>
-        </Row>
-
         <Form.Item
             label="Bác sĩ"
             name="staffId"
@@ -109,3 +84,5 @@ export const MedicalExaminationForm = (props: any) => {
     </Form>
   )
 }
+
+export default forwardRef(MedicalReportForm)

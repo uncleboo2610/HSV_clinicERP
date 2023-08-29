@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { Patient } from "./patient.entity";
 import { Staff } from "./staff.entity";
 import { TypeSolution } from "./type-solution.entity";
+import { ICD } from "./ICD.entity";
 
 @Entity('medical_report')
 export class MedicalReport {
@@ -14,6 +15,9 @@ export class MedicalReport {
     @Column()
     diagnostic: string;
 
+    @ManyToOne(() => ICD)
+    diseaseIcd: ICD;
+
     @ManyToOne(() => Patient, (patient) => patient.medicalReport)
     patient: Patient;
 
@@ -23,6 +27,10 @@ export class MedicalReport {
     @ManyToMany(() => TypeSolution)
     @JoinTable()
     typeSolution: TypeSolution[];
+
+    @ManyToMany(() => ICD)
+    @JoinTable()
+    comorbidity: ICD[];
 
     @CreateDateColumn()
     createdAt: Date;

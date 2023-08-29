@@ -1,11 +1,12 @@
 import { Divider, Table, Row, Col, Tabs, TabsProps } from 'antd';
 import { useState } from 'react';
-import { MedicalExaminationForm } from './form/MedicalExaminationForm';
-import { StaffTicketForm } from '../../staff-ticket/components/StaffTicketForm';
-import { IReceivingCardDetail, IPatient } from '../../../patients/models';
-import { PrescriptionPage } from '../../prescription/component/PrescriptionPage';
-import { HealthRecordPage } from '../../health-record/components/HealthRecordPage';
+import { StaffTicketForm } from './staff-ticket/components/StaffTicketForm';
+import { IReceivingCardDetail, IPatient } from '../patients/models';
+import { PrescriptionPage } from './prescription/component/PrescriptionPage';
+import { HealthRecordPage } from './health-record/components/HealthRecordPage';
 import { useReceivingCardTableColumn } from './ReceivingCardTable.column';
+import { MedicalReportForm } from './medical-report/components/form/MedicalReportForm';
+import { MedicalReportPage } from './medical-report/components/MedicalReportPage';
 
 type DataIndex = keyof IReceivingCardDetail;
 
@@ -26,7 +27,7 @@ export const MedicalExaminationPage = () => {
         {
           key: '1',
           label: `Phiếu khám bệnh`,
-          children: <MedicalExaminationForm patient={patient} />,
+          children: <MedicalReportPage patient={patient} />,
         },
         {
           key: '2',

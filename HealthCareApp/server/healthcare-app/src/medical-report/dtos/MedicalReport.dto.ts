@@ -4,4 +4,6 @@ export class MedicalReportDto {
     diagnostic: string;
     staffId: string;
     typeSolutionId: number[];
+    diseaseIcd: string;
+    comorbidityId: string[]
 }

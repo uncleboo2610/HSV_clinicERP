@@ -7,7 +7,7 @@ import { ReceivingPatientPage } from './modules/patients/components/ReceivingPat
 import { BloodTestPage } from './modules/paraclinical/components/blood-test/BloodTestPage';
 import { LogInPage } from './modules/auth/components/LogInPage';
 import { AuthChecker } from './modules/auth/layouts/AuthChecker';
-import { MedicalExaminationPage } from './modules/medical-examination/medical-report/components/MedicalExaminationPage';
+import { MedicalExaminationPage } from './modules/medical-examination/MedicalExaminationPage';
 import { ImagingDiagnosticPage } from './modules/paraclinical/components/imagining-diagnostic/components/ImaginingDiagnosticPage';
 
 function App() {

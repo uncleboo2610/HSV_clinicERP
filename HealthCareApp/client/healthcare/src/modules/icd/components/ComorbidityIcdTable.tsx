@@ -5,7 +5,7 @@ import { Button, Form, Modal, Select } from 'antd';
 import { IIcd } from '../models';
 import { useIcdTableColumn } from './IcdTable.column';
 
-export interface RefObject {
+export interface RefObjectComorbidityIcd {
     openModal: (data: any) => void;
 }
 
@@ -13,7 +13,7 @@ interface Props {
     submitModalForm: (value: any) => void;
 }
 
-export const IcdTable = (props: Props, ref: Ref<RefObject>) => {
+export const ComorbidityIcdTable = (props: Props, ref: Ref<RefObjectComorbidityIcd>) => {
     const { submitModalForm } = props;
     
     const [data, setData] = useState<IIcd[]>([]);
@@ -106,4 +106,4 @@ export const IcdTable = (props: Props, ref: Ref<RefObject>) => {
   )
 }
 
-export default forwardRef(IcdTable)
+export default forwardRef(ComorbidityIcdTable)
