@@ -60,6 +60,6 @@ export const apiEndpoints = {
         }
     },
     Icd: {
-        GetIcd: `${apiBaseUrl}/icd/get-icd`,
+        GetIcdById: `${apiBaseUrl}/icd/get-icd-by-id/`,
     }
 }

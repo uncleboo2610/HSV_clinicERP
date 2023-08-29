@@ -14,11 +14,11 @@ export class IcdService {
         return this.icdRepository.find()
     }
     
-    getIcdById(alphabetId) {
+    getIcdById(groupId) {
         return this.icdRepository
             .createQueryBuilder('DM_ICD')
             .select()
-            .where('DM_ICD.ICD_id like :startId', {startId: `${alphabetId}%`})
+            .where('DM_ICD.MaICD like :groupId', {groupId: `${groupId}%`})
             .limit(1000)
             .getRawMany()
     }

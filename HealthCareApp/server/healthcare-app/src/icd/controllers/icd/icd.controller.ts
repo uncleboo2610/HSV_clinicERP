@@ -13,10 +13,10 @@ export class IcdController {
         return this.icdService.getIcd();
     }
 
-    @Get('get-icd-by-id/:alphabetId')
+    @Get('get-icd-by-id/:groupId')
     getIcdById(
-        @Param('startId') alphabetId: string,
+        @Param('groupId') groupId: string,
     ) {
-        return this.icdService.getIcdById(alphabetId);
+        return this.icdService.getIcdById(groupId);
     }
 }
