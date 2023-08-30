@@ -31,12 +31,12 @@ import { ImaginingDiagnostic } from './entities/imagining-diagnostic';
 import { ImaginingDiagnosticModule } from './image/imagining-diagnostic/imagining-diagnostic.module';
 import { TypePrescription } from './entities/type-prescription.entity';
 import { TypeDrug } from './entities/type-drug.entity';
-import { MedicineStorage } from './entities/medicine-storage.entity';
-import { MedicineStorageModule } from './medicine-storage/medicine-storage.module';
+import { PharmaceuticalWarehouse } from './entities/pharmaceutical-warehouse.entity';
 import { TypeSolution } from './entities/type-solution.entity';
 import { TypeSolutionModule } from './type-solution/type-solution.module';
 import { ICD } from './entities/ICD.entity';
 import { IcdModule } from './icd/icd.module';
+import { PharmaceuticalWarehouseModule } from './pharmaceutical-warehouse/pharmaceutical-warehouse.module';
 
 const healthcare_image = TypeOrmModule.forRoot({
   name: 'healthcare_image',
@@ -73,9 +73,9 @@ const healthcare_image = TypeOrmModule.forRoot({
         Staff, 
         Patient, 
         MedicalReport,
-        MedicineStorage,
         Department, 
         Drug, 
+        PharmaceuticalWarehouse,
         ParaclinicalReport, 
         Prescription, 
         PrescriptionDetail, 
@@ -112,7 +112,7 @@ const healthcare_image = TypeOrmModule.forRoot({
       ParaclinicalModule, 
       AuthModule, 
       PrescriptionModule, 
-      DrugModule, ImaginingDiagnosticModule, MedicineStorageModule, TypeSolutionModule, IcdModule, 
+      DrugModule, ImaginingDiagnosticModule, TypeSolutionModule, IcdModule, PharmaceuticalWarehouseModule, 
     ],
     controllers: [AppController],
     providers: [AppService],

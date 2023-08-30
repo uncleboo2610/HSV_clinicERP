@@ -1,4 +1,4 @@
-import { UserOutlined, LaptopOutlined, NotificationOutlined, AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined, NotificationOutlined, AppstoreOutlined, MailOutlined, SettingOutlined, ContainerOutlined } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
@@ -29,9 +29,13 @@ const items: MenuItem[] = [
     getItem('Khám bệnh', 'sub2', <AppstoreOutlined />, [
         getItem('Phiếu khám bệnh', '/medical-examination'),
     ]),
-    getItem('Cận lâm sàng', 'sub4', <SettingOutlined />, [
+    getItem('Cận lâm sàng', 'sub3', <SettingOutlined />, [
         getItem('Chẩn đoán hình ảnh', '/imaging-diagnostic'),
         getItem('Xét nghiệm máu', '/blood-test'),
+    ]),
+    getItem('Kho', 'sub4', <ContainerOutlined />, [
+        getItem('Kho thuốc', '/pharmaceutical-warehouse'),
+        // getItem('Xét nghiệm máu', '/blood-test'),
     ]),
 ];
 

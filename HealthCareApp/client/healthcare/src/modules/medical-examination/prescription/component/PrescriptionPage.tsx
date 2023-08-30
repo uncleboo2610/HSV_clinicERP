@@ -92,13 +92,14 @@ export const PrescriptionPage = (props: any) => {
 
     const submitForm = (values: any) => {
         const newData = {
-                key: count + 1,
-                drugName: values?.drugName,
-                morningDose: values?.morningDose,
-                afternoonDose: values?.afternoonDose,
-                eveningDose: values?.eveningDose,
-                quantity: values?.quantity,
-                note: values?.note
+            key: count + 1,
+            pharmaceuticalWarehouseId: values?.pharmaceuticalWarehouseId,
+            drugName: values?.drugName,
+            morningDose: values?.morningDose,
+            afternoonDose: values?.afternoonDose,
+            eveningDose: values?.eveningDose,
+            quantity: values?.quantity,
+            note: values?.note
         };
         setDataPrescriptionDetail([...dataPrescriptionDetail, newData]);
         setCount(count + 1);

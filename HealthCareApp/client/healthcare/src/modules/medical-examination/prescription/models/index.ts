@@ -17,7 +17,7 @@ export interface IPrescriptionDetail {
     quantity: number;
 }
 
-export interface IMedicineStorage {
+export interface IPharmaceuticalWarehouse {
     id: number;
     drugId: number;
     drugName: string;

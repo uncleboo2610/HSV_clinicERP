@@ -6,6 +6,7 @@ export class PrescriptionDetailDrugDto {
     quantity: number;
     note: string;
     drugName: string;
+    pharmaceuticalWarehouseId: number;
 }
 
 export class PrescriptionDetailDto {

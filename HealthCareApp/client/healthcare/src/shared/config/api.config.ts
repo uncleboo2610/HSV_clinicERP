@@ -22,8 +22,8 @@ export const apiEndpoints = {
         GetMedicalReport: `${apiBaseUrl}/medical-report/get-medical-reports`,
         AddMedicalReport: `${apiBaseUrl}/medical-report/create-medical-report`,
     },
-    MedicineStorage: {
-        GetMedicineStorage: `${apiBaseUrl}/medicine-storage/get-medicine-storages`,
+    PharmaceuticalWarehouse: {
+        GetPharmaceuticalWarehousee: `${apiBaseUrl}/pharmaceutical-warehouse/get-pharmaceutical-warehouses`,
     },
     Paraclinical: {
         GetParaclinicalReport: `${apiBaseUrl}/paraclinical/get-paraclinical-reports`,

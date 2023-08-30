@@ -1,7 +1,7 @@
 import { Space, Input, Button, Form, InputNumber, Select, FormInstance, Modal, Table } from 'antd';
 import React, { Ref, forwardRef, useImperativeHandle, useRef, useState } from 'react';
-import useMedicineStorage from '../../../../medicine-storage/hooks/useMedicineStorage';
-import { IMedicineStorage } from '../../models';
+import usePharmaceuticalWarehouse from '../../../../pharmaceutical-warehouse/hooks/usePharmaceuticalWarehouse';
+import { IPharmaceuticalWarehouse } from '../../models';
 import { ColumnsType } from 'antd/es/table';
 import '../../styles/styles.css';
 
@@ -16,8 +16,9 @@ interface Props {
 
 export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
     const formRef = useRef<FormInstance>(null);
-    const [medicineStorageData] = useMedicineStorage();
+    const [pharmaceuticalWarehouseData] = usePharmaceuticalWarehouse();
     const [drugName, setDrugName] = useState<any>()
+    const [pharmaceuticalWarehouseId, setPharmaceuticalWarehouseId] = useState<any>()
     const {submitForm, typePrescription} = props;
 
     function showForm() {}
@@ -25,6 +26,7 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
     const handleSubmitForm = (values: any) => {
         const data = {
             note: values.note,
+            pharmaceuticalWarehouseId: pharmaceuticalWarehouseId,
             drugName: drugName,
             morningDose: values.morningDose,
             afternoonDose: values.afternoonDose,
@@ -54,7 +56,7 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
         setIsModalOpen(false);
     };
 
-    const columnsMedicineStorage: ColumnsType<IMedicineStorage> = [
+    const columnsPharmaceuticalWarehouse: ColumnsType<IPharmaceuticalWarehouse> = [
         {
             title: 'Mã thuốc',
             dataIndex: 'drugId',
@@ -77,7 +79,7 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
         }
     ];
       
-    const dataMedicineStorage: IMedicineStorage[] = medicineStorageData?.map((medicine: any, i) => ({
+    const dataPharmaceuticalWarehouse: IPharmaceuticalWarehouse[] = pharmaceuticalWarehouseData?.map((medicine: any, i) => ({
         key: i + 1,
         id: medicine.id,
         drugId: medicine?.drug?.id,
@@ -87,8 +89,7 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
         quantity: medicine.quantity,
     }));
 
-    const checkPrescription = (record: IMedicineStorage, i: any) => {
-        console.log(typePrescription)
+    const checkPrescription = (record: IPharmaceuticalWarehouse, i: any) => {
         if (typePrescription) {
             if (record.typeDrugId === 1) {
                 return 'disabled-row'
@@ -121,14 +122,15 @@ export const PrescriptionForm = (props: Props, ref: Ref<RefObject>) => {
                     </Button>
                     <Modal title="Kho thuốc" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                         <Table
-                            columns={columnsMedicineStorage}
-                            dataSource={dataMedicineStorage}
+                            columns={columnsPharmaceuticalWarehouse}
+                            dataSource={dataPharmaceuticalWarehouse}
                             size='small'
                             rowClassName={checkPrescription}
                             onRow={(record, rowIndex) => {
                                 return {
                                 onDoubleClick: event => {
                                     setDrugName(record.drugName);
+                                    setPharmaceuticalWarehouseId(record.id);
                                     handleCancel();
                                 }, // double click row
                             }}}

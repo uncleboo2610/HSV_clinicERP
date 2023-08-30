@@ -1,8 +1,8 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Drug } from "./drug.entity";
 
-@Entity('medicine_storage')
-export class MedicineStorage {
+@Entity('pharmaceutical_warehouse')
+export class PharmaceuticalWarehouse {
     @PrimaryGeneratedColumn()
     id: number;
     

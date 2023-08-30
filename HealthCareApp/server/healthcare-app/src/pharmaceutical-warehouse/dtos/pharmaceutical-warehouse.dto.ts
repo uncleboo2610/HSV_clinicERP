@@ -1,4 +1,4 @@
-export class MedicineStorageDto {
+export class PharmaceuticalWarehouseDto {
     quantity: number;
     drugId: number;
 }

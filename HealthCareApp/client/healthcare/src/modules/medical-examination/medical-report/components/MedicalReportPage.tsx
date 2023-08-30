@@ -95,6 +95,7 @@ export const MedicalReportPage = (props: any) => {
                             onClick={() => {
                                 childIcd.current?.openModal(childIcd);
                             }}
+                            style={{marginTop: '1rem'}}
                         >
                             Chọn bệnh chính
                         </Button>
@@ -102,7 +103,7 @@ export const MedicalReportPage = (props: any) => {
                     </>
                 </Card>
             </Row>
-            <Row>
+            <Row style={{marginTop: '1rem'}}>
                 <Col span={24}>
                     <>
                         <Button
@@ -121,7 +122,7 @@ export const MedicalReportPage = (props: any) => {
                         Reset
                     </Button>
                 </Col>
-                <Col span={24}>
+                <Col span={24} style={{marginTop: '1rem'}}>
                     <Table
                         rowSelection={{
                             ...rowSelection,

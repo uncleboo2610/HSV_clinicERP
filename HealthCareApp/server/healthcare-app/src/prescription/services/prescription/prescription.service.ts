@@ -2,12 +2,14 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Drug } from 'src/entities/drug.entity';
 import { MedicalReport } from 'src/entities/medical-report.entity';
+import { PharmaceuticalWarehouse } from 'src/entities/pharmaceutical-warehouse.entity';
 import { Patient } from 'src/entities/patient.entity';
 import { PrescriptionDetail } from 'src/entities/prescription-detail.entity';
 import { Prescription } from 'src/entities/prescription.entity';
 import { TypePrescription } from 'src/entities/type-prescription.entity';
 import { PrescriptionDetailParams } from 'src/prescription/utils/types';
 import { Repository } from 'typeorm';
+import { PharmaceuticalWarehouseService } from 'src/pharmaceutical-warehouse/services/pharmaceutical-warehouse/pharmaceutical-warehouse.service';
 
 @Injectable()
 export class PrescriptionService {
@@ -19,6 +21,9 @@ export class PrescriptionService {
         @InjectRepository(MedicalReport) private medicalReportRepository: Repository<MedicalReport>,
         @InjectRepository(Drug) private drugRepository: Repository<Drug>,
         @InjectRepository(TypePrescription) private typePrescriptionRepository: Repository<TypePrescription>,
+        @InjectRepository(PharmaceuticalWarehouse) private pharmaceuticalWarehouseRepository: Repository<PharmaceuticalWarehouse>,
+
+        private pharmaceuticalWarehouseService: PharmaceuticalWarehouseService
     ) {}
 
     getPrescriptions() {
@@ -79,6 +84,8 @@ export class PrescriptionService {
                 prescription,
                 drug,
             });
+
+            await this.pharmaceuticalWarehouseService.updatePharmaceuticalWarehouseByPrescription(data.quantity, data.pharmaceuticalWarehouseId);
             
             return this.prescriptionDetailRepository.save(newPrescriptionDetail);
         })
