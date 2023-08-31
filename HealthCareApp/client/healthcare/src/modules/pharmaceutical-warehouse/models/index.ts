@@ -6,11 +6,11 @@ export interface IMedicineTable {
     quantity: number
 }
 
-export interface PharmaceuticalGoodsReceipt {
+export interface IPharmaceuticalWarehouse {
     drugName: string,
+    drugId: number,
     price: number,
     unit: string,
-    typeDrugId: number,
     typeDrugName: string,
     quantity: number
 }
