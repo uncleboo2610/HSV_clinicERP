@@ -14,6 +14,11 @@ export class DrugController {
         return this.drugService.getDrugs();
     }
 
+    @Get('get-type-drugs')
+    getTypeDrugs() {
+        return this.drugService.getTypeDrugs();
+    }
+
     @Post('create-drug')
     createDrug(
         @Body() drugDto: DrugDto

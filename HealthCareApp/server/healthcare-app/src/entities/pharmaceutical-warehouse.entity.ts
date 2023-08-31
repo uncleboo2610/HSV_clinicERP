@@ -1,9 +1,9 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Drug } from "./drug.entity";
 
 @Entity('pharmaceutical_warehouse')
 export class PharmaceuticalWarehouse {
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     id: number;
     
     @OneToOne(() => Drug)

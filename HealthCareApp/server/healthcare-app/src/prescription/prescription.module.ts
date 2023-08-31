@@ -10,10 +10,21 @@ import { MedicalReport } from 'src/entities/medical-report.entity';
 import { TypePrescription } from 'src/entities/type-prescription.entity';
 import { PharmaceuticalWarehouse } from 'src/entities/pharmaceutical-warehouse.entity';
 import { PharmaceuticalWarehouseService } from 'src/pharmaceutical-warehouse/services/pharmaceutical-warehouse/pharmaceutical-warehouse.service';
+import { DrugService } from 'src/drug/services/drug/drug.service';
+import { TypeDrug } from 'src/entities/type-drug.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Prescription, PrescriptionDetail, Drug, Patient, MedicalReport, TypePrescription, PharmaceuticalWarehouse])],
+  imports: [TypeOrmModule.forFeature([
+    Prescription, 
+    PrescriptionDetail, 
+    Drug, 
+    Patient, 
+    MedicalReport, 
+    TypePrescription, 
+    PharmaceuticalWarehouse, 
+    TypeDrug
+  ])],
   controllers: [PrescriptionController],
-  providers: [PrescriptionService, PharmaceuticalWarehouseService]
+  providers: [PrescriptionService, PharmaceuticalWarehouseService, DrugService]
 })
 export class PrescriptionModule {}

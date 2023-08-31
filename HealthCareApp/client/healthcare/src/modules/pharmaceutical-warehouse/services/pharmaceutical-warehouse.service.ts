@@ -7,6 +7,12 @@ class PharmaceuticalWarehouseService {
             apiEndpoints.PharmaceuticalWarehouse.GetPharmaceuticalWarehousee,
         );
     }
+    createPharmaceuticalWarehouse(data: any) {
+        return httpClient.post(
+            apiEndpoints.PharmaceuticalWarehouse.AddPharmaceuticalWarehousee,
+            data
+        );
+    }
 }
 
 export const pharmaceuticalWarehouseService = new PharmaceuticalWarehouseService();

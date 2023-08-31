@@ -1,5 +1,5 @@
 import { Row, Col, Table } from 'antd';
-import ImaginingDiagnosticForm, { RefObject } from '../form/ImaginingDiagnosticForm';
+import ImaginingDiagnosticForm, { RefObject } from './form/ImaginingDiagnosticForm';
 import { ColumnsType } from 'antd/es/table';
 import { useState, useRef } from 'react';
 import Webcam from 'react-webcam';

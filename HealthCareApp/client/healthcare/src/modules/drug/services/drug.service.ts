@@ -5,6 +5,9 @@ class DrugService {
     getDrug() {
         return httpClient.get(apiEndpoints.Drug.GetDrug);
     }
+    getTypeDrug() {
+        return httpClient.get(apiEndpoints.Drug.GetTypeDrug);
+    }
     createDrug(data: any) {
         return httpClient.post(apiEndpoints.Drug.AddDrug, data);
     }

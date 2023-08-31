@@ -17,6 +17,10 @@ export class DrugService {
         return this.drugRepository.find({});
     }
 
+    getTypeDrugs() {
+        return this.typeDrugRepository.find({});
+    }
+
     async createDrug(drugData: DrugDto, typeDrugId: number) {
         const typeDrug = await this.typeDrugRepository.findOneBy({id: typeDrugId});
 

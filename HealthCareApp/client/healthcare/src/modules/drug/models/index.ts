@@ -4,3 +4,8 @@ export interface IDrug {
     price: number;
     unit: string;
 }
+
+export interface ITypeDrug {
+    id: number;
+    typeDrugName: string;
+}

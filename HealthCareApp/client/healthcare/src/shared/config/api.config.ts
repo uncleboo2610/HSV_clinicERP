@@ -24,6 +24,7 @@ export const apiEndpoints = {
     },
     PharmaceuticalWarehouse: {
         GetPharmaceuticalWarehousee: `${apiBaseUrl}/pharmaceutical-warehouse/get-pharmaceutical-warehouses`,
+        AddPharmaceuticalWarehousee: `${apiBaseUrl}/pharmaceutical-warehouse/create-pharmaceutical-goods-receipt`,
     },
     Paraclinical: {
         GetParaclinicalReport: `${apiBaseUrl}/paraclinical/get-paraclinical-reports`,
@@ -50,7 +51,8 @@ export const apiEndpoints = {
     },
     Drug: {
         GetDrug: `${apiBaseUrl}/drug/get-drugs`,
-        AddDrug: `${apiBaseUrl}/dug/create-drug`,
+        GetTypeDrug: `${apiBaseUrl}/drug/get-type-drugs`,
+        AddDrug: `${apiBaseUrl}/drug/create-drug`,
     },
     Image: {
         ImaginingDiagnostic: {

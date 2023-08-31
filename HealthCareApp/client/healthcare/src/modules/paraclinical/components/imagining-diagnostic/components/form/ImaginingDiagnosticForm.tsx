@@ -1,7 +1,5 @@
 import { Button, Form, Input, Select } from 'antd';
-import useTypeService from '../../../hooks/useTypeSerivce';
-import { paraclinicalService } from '../../../services/paraclinical.service';
-import { BasicNotification } from '../../../../../shared/components/BasicNotification';
+import useTypeService from '../../../../hooks/useTypeSerivce';
 import { Ref, forwardRef, useImperativeHandle } from 'react';
 
 export interface RefObject {
@@ -28,34 +26,6 @@ export const ImaginingDiagnosticForm = (props: Props, ref: Ref<RefObject>) => {
     const handleSubmitForm = (values: any) => {
         submitForm(values);
     };
-
-    // const handleSubmit = (value: any) => {
-    //     const data = {
-    //         note: value.note,
-    //         paraclinicalDiagnostic: value.note,
-    //         resultSample: value.resultSample,
-    //         staffId: value.staffId,
-    //         typeServiceId: value.typeServiceId,
-    //         staffTicketId: props.ticket.id   
-    //     };
-
-    //     paraclinicalService.createParaclinicalReport(data)
-    //         .then(() => {
-    //             BasicNotification(
-    //                 "success",
-    //                 "Success",
-    //                 "Đã lưu báo cáo cận lâm sàng thành công !",
-    //             )
-    //         })
-    //         .catch((e) => {
-    //             BasicNotification(
-    //                 "error",
-    //                 "Error",
-    //                 "Failed to update data !",
-    //             );
-    //             console.log(e);
-    //         });
-    // };
 
   return (
     <Form

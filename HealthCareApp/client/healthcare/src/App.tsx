@@ -4,11 +4,12 @@ import { MainLayout } from './shared/layout/MainLayout';
 import { HomePage } from './modules/HomePage';
 import { PatientPage } from './modules/patients/components/PatientPage';
 import { ReceivingPatientPage } from './modules/patients/components/ReceivingPatientPage';
-import { BloodTestPage } from './modules/paraclinical/components/blood-test/BloodTestPage';
 import { LogInPage } from './modules/auth/components/LogInPage';
 import { AuthChecker } from './modules/auth/layouts/AuthChecker';
 import { MedicalExaminationPage } from './modules/medical-examination/MedicalExaminationPage';
 import { ImagingDiagnosticPage } from './modules/paraclinical/components/imagining-diagnostic/components/ImaginingDiagnosticPage';
+import { BloodTestPage } from './modules/paraclinical/components/blood-test/component/BloodTestPage';
+import { PharmaceuticalWarehousePage } from './modules/pharmaceutical-warehouse/components/PharmaceuticalWarehousePage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path='/medical-examination' element={<MedicalExaminationPage />} />
             <Route path='/imaging-diagnostic' element={<ImagingDiagnosticPage />} />
             <Route path='/blood-test' element={<BloodTestPage />} />
+            <Route path='/pharmaceutical-warehouse' element={<PharmaceuticalWarehousePage />} />
           </Route>
         </Route>
       </Routes>
