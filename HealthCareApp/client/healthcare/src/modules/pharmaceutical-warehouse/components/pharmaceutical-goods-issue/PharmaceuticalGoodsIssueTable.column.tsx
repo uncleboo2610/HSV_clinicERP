@@ -2,7 +2,7 @@ import { ColumnsType } from 'antd/es/table';
 import React from 'react'
 import { IMedicineTable } from '../../models';
 
-export const usePharmaceuticalGoodsReceiptTableColumn = () => {
+export const usePharmaceuticalGoodsIssueTableColumn = () => {
     const columnsPharmaceuticalGoodsReceipt: ColumnsType<IMedicineTable> = [
         {
             title: 'STT',

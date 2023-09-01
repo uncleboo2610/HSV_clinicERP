@@ -6,7 +6,7 @@ import { IIcd } from '../models';
 import { useIcdTableColumn } from './IcdTable.column';
 
 export interface RefObject {
-    openModal: (data: any) => void;
+    openModal: () => void;
 }
 
 interface Props {
@@ -49,7 +49,7 @@ export const IcdTable = (props: Props, ref: Ref<RefObject>) => {
         setIsModalOpen(false);
     };
     
-    function openModal(data: any) {
+    function openModal() {
         setIsModalOpen(true);
     };
 

@@ -11,3 +11,8 @@ export class PharmaceuticalGoodsReceiptDto {
     typeDrugId: number;
     quantity: number;
 }
+
+export class PharmaceuticalGoodsIssueDto {
+    drugId: number;
+    quantity: number;
+}

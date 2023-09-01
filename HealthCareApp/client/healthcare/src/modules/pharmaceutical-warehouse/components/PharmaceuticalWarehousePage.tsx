@@ -1,7 +1,9 @@
 import React from 'react'
-import { TabsProps, Tabs } from 'antd';
-import { PharmaceuticalGoodsReceiptPage } from './pharmaceutical-goods-receipt/PharmaceuticalGoodsReceiptPage';
 import { PharmaceuticalWareHouseInfoPage } from './pharmaceutical-warehouse-info/PharmaceuticalWareHouseInfoPage';
+import { TabsProps, Tabs } from 'antd';
+import { PharmaceuticalGoodsIssuePage } from './pharmaceutical-goods-issue/PharmaceuticalGoodsIssuePage';
+import { PharmaceuticalGoodsReceiptPage } from './pharmaceutical-goods-receipt/PharmaceuticalGoodsReceiptPage';
+
 export const PharmaceuticalWarehousePage = () => {
     const items: TabsProps['items'] = [
         {
@@ -12,7 +14,7 @@ export const PharmaceuticalWarehousePage = () => {
         {
           key: '2',
           label: `Xuất kho`,
-          // children: <StaffTicketForm />,
+          children: <PharmaceuticalGoodsIssuePage />,
         },
         {
             key: '3',

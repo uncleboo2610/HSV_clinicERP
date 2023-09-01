@@ -2,7 +2,7 @@ import React, { Ref, forwardRef, useImperativeHandle, useRef, useState } from 'r
 import useTypeDrug from '../../../../drug/hooks/useTypeDrug'
 import { Button, Form, Input, InputNumber, Select, Space } from 'antd';
 import { ContainerOutlined } from '@ant-design/icons';
-import PharmaceuticalGoodsReceiptInfoTableForm, { RefObjectTable } from './PharmaceuticalGoodsReceiptInfoTableForm';
+import PharmaceuticalGoodsIssueInfoTableForm, { RefObjectTable } from './PharmaceuticalGoodsIssueInfoTableForm';
 
 export interface RefObject {
     showForm: () => void;
@@ -11,12 +11,12 @@ export interface RefObject {
 interface Props {
     submitForm: (value: any) => void
     clearTable: () => void
-    onCreatingPharmaceuticalGoodsReceipt: (value: any) => void
+    onCreatingPharmaceuticalGoodsIssue: (value: any) => void
 }
 
-export const PharmaceuticalGoodsReceiptForm = (props: Props, ref: Ref<RefObject>) => {
+export const PharmaceuticalGoodsIssueForm = (props: Props, ref: Ref<RefObject>) => {
     const child = useRef<RefObjectTable>(null);
-    const {submitForm, onCreatingPharmaceuticalGoodsReceipt, clearTable} = props;
+    const {submitForm, onCreatingPharmaceuticalGoodsIssue, clearTable} = props;
     const [dataTypeDrug] = useTypeDrug();
     const [form] = Form.useForm();
 
@@ -31,6 +31,7 @@ export const PharmaceuticalGoodsReceiptForm = (props: Props, ref: Ref<RefObject>
 
     const handleSubmitTable = (values: any) => {
         form.setFieldsValue({
+            drugId: values.drugId,
             drugName: values.drugName,
             price: values.price,
             unit: values.unit,
@@ -44,12 +45,12 @@ export const PharmaceuticalGoodsReceiptForm = (props: Props, ref: Ref<RefObject>
     };
 
     const handleCreatingPharmaceuticalGoodsReceipt = (values: any) => {
-        onCreatingPharmaceuticalGoodsReceipt(values);
+        onCreatingPharmaceuticalGoodsIssue(values);
     };
 
   return (
     <Form
-        name="PharmaceuticalGoodsReceived"
+        name="PharmaceuticalGoodsIssue"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 600 }}
@@ -61,7 +62,15 @@ export const PharmaceuticalGoodsReceiptForm = (props: Props, ref: Ref<RefObject>
             name="drugName"
             rules={[{ required: true, message: `Please input drug's name!` }]}
         >
-            <Input />
+            <Input disabled />
+        </Form.Item>
+
+        <Form.Item
+            label="Mã thuốc"
+            name="drugId"
+            rules={[{ required: true, message: `Please input drug's name!` }]}
+        >
+            <Input disabled />
         </Form.Item>
 
         <Form.Item
@@ -73,6 +82,7 @@ export const PharmaceuticalGoodsReceiptForm = (props: Props, ref: Ref<RefObject>
                 showSearch
                 optionFilterProp="children"
                 options={optionTypeDrug}
+                disabled 
             />
         </Form.Item>
 
@@ -81,7 +91,7 @@ export const PharmaceuticalGoodsReceiptForm = (props: Props, ref: Ref<RefObject>
             name="unit"
             rules={[{ required: true, message: `Please input drug's unit!` }]}
         >
-            <Input />
+            <Input disabled />
         </Form.Item>
 
         <Form.Item
@@ -89,11 +99,11 @@ export const PharmaceuticalGoodsReceiptForm = (props: Props, ref: Ref<RefObject>
             name="price"
             rules={[{ required: true, message: `Please input drug's price!` }]}
         >
-            <InputNumber type='number' />
+            <InputNumber type='number' disabled />
         </Form.Item>
 
         <Form.Item
-            label="Số lượng nhập kho"
+            label="Số lượng xuất kho"
             name="quantity"
             rules={[{ required: true, message: `Please input drug's quantity!` }]}
         >
@@ -102,7 +112,7 @@ export const PharmaceuticalGoodsReceiptForm = (props: Props, ref: Ref<RefObject>
 
         <Space wrap style={{width: '100%', justifyContent: 'center', marginBottom: '24px'}}>
             <Button onClick={handleCreatingPharmaceuticalGoodsReceipt} >
-                Nhập kho
+                Xuất kho
             </Button>
             <Button onClick={clearTable}>
                 Xóa bảng
@@ -122,10 +132,10 @@ export const PharmaceuticalGoodsReceiptForm = (props: Props, ref: Ref<RefObject>
                 }}
                 
             />
-            <PharmaceuticalGoodsReceiptInfoTableForm ref={child} submitTable={handleSubmitTable}/>
+            <PharmaceuticalGoodsIssueInfoTableForm ref={child} submitTable={handleSubmitTable}/>
         </Space>
     </Form>
   )
 }
 
-export default forwardRef(PharmaceuticalGoodsReceiptForm)
+export default forwardRef(PharmaceuticalGoodsIssueForm)

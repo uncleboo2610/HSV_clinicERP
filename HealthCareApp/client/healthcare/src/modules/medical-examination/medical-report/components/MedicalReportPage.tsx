@@ -93,7 +93,7 @@ export const MedicalReportPage = (props: any) => {
                     <>
                         <Button
                             onClick={() => {
-                                childIcd.current?.openModal(childIcd);
+                                childIcd.current?.openModal();
                             }}
                             style={{marginTop: '1rem'}}
                         >

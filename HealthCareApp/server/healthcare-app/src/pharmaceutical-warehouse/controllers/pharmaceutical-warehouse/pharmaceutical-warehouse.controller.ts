@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { PharmaceuticalGoodsReceiptDto, PharmaceuticalWarehouseDto } from 'src/pharmaceutical-warehouse/dtos/pharmaceutical-warehouse.dto';
+import { Body, Controller, Get, Post, Put } from '@nestjs/common';
+import { PharmaceuticalGoodsIssueDto, PharmaceuticalGoodsReceiptDto, PharmaceuticalWarehouseDto } from 'src/pharmaceutical-warehouse/dtos/pharmaceutical-warehouse.dto';
 import { PharmaceuticalWarehouseService } from 'src/pharmaceutical-warehouse/services/pharmaceutical-warehouse/pharmaceutical-warehouse.service';
 
 @Controller('pharmaceutical-warehouse')
@@ -16,9 +16,16 @@ export class PharmaceuticalWarehouseController {
     }
 
     @Post('create-pharmaceutical-goods-receipt')
-    createPharmaceuticalGoodsGoodsReceipt(
-        @Body() pharmaceuticalGoodsReceipthouseDto: PharmaceuticalGoodsReceiptDto[]
+    createPharmaceuticalGoodsReceipt(
+        @Body() pharmaceuticalGoodsReceiptDto: PharmaceuticalGoodsReceiptDto[]
     ) {
-        return this.pharmaceuticalWarehouseService.createPharmaceuticalGoodsReceipt(pharmaceuticalGoodsReceipthouseDto);
+        return this.pharmaceuticalWarehouseService.createPharmaceuticalGoodsReceipt(pharmaceuticalGoodsReceiptDto);
+    }
+
+    @Put('create-pharmaceutical-goods-issue')
+    updatePharmaceuticalGoodsIssue(
+        @Body() pharmaceuticalGoodsIssueDto: PharmaceuticalGoodsIssueDto[]
+    ) {
+        return this.pharmaceuticalWarehouseService.updatePharmaceuticalGoodsIssue(pharmaceuticalGoodsIssueDto);
     }
 }

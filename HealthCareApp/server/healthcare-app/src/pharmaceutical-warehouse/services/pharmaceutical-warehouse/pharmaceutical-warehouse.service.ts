@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DrugService } from 'src/drug/services/drug/drug.service';
 import { Drug } from 'src/entities/drug.entity';
 import { PharmaceuticalWarehouse } from 'src/entities/pharmaceutical-warehouse.entity';
-import { PharmaceuticalGoodsReceiptParams } from 'src/pharmaceutical-warehouse/utils/types';
+import { PharmaceuticalGoodsIssueParams, PharmaceuticalGoodsReceiptParams } from 'src/pharmaceutical-warehouse/utils/types';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -35,13 +35,24 @@ export class PharmaceuticalWarehouseService {
         return this.pharmaceuticalWarehouseRepository.save(newPharmaceuticalWarehouse);
     }
 
-    async updatePharmaceuticalWarehouse(quantity: number, id: number) {
+    async updatePharmaceuticalGoodsReceipt(quantity: number, id: number) {
         const pharmaceuticalWarehouseById = await this.pharmaceuticalWarehouseRepository.findOneBy({id: id});
 
         return await this.pharmaceuticalWarehouseRepository.update({ id: id }, {
             quantity: pharmaceuticalWarehouseById.quantity + quantity,
             updatedAt: new Date()
         });
+    }
+
+    async updatePharmaceuticalGoodsIssue(pharmaceuticalGoodsReceiptParams: PharmaceuticalGoodsIssueParams[]) {
+        pharmaceuticalGoodsReceiptParams.map(async(data) => {
+            const pharmaceuticalWarehouseById = await this.pharmaceuticalWarehouseRepository.findOneBy({id: data.drugId});
+    
+            return await this.pharmaceuticalWarehouseRepository.update({ id: data.drugId }, {
+                quantity: pharmaceuticalWarehouseById.quantity - data.quantity,
+                updatedAt: new Date(),
+            });
+        })
     }
 
     async updatePharmaceuticalWarehouseByPrescription(quantity: number, id: number) {
@@ -66,7 +77,7 @@ export class PharmaceuticalWarehouseService {
             const medicine = await this.drugRepository.findOneBy({drugName: data.drugName});
             
             if(medicine) {
-                return this.updatePharmaceuticalWarehouse(data.quantity, medicine.id);
+                return this.updatePharmaceuticalGoodsReceipt(data.quantity, medicine.id);
             } else {
                 const newMedicine = await this.drugService.createDrug(data, data.typeDrugId);
     

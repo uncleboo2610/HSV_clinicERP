@@ -10,3 +10,8 @@ export type PharmaceuticalGoodsReceiptParams = {
     typeDrugId: number;
     quantity: number;
 }
+
+export type PharmaceuticalGoodsIssueParams = {
+    quantity: number;
+    drugId: number;
+}

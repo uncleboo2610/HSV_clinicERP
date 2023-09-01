@@ -4,12 +4,19 @@ import { apiEndpoints } from "../../../shared/config/api.config";
 class PharmaceuticalWarehouseService {
     getPharmaceuticalWarehouse() {
         return httpClient.get(
-            apiEndpoints.PharmaceuticalWarehouse.GetPharmaceuticalWarehousee,
+            apiEndpoints.PharmaceuticalWarehouse.GetPharmaceuticalWarehouse,
         );
     }
-    createPharmaceuticalWarehouse(data: any) {
+    createPharmaceuticalGoodsReceipt(data: any) {
         return httpClient.post(
-            apiEndpoints.PharmaceuticalWarehouse.AddPharmaceuticalWarehousee,
+            apiEndpoints.PharmaceuticalWarehouse.AddPharmaceuticalGoodsReceipt,
+            data
+        );
+    }
+
+    createPharmaceuticalGoodsIssue(data: any) {
+        return httpClient.put(
+            apiEndpoints.PharmaceuticalWarehouse.AddPharmaceuticalGoodsIssue,
             data
         );
     }

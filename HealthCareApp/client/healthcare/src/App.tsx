@@ -10,7 +10,6 @@ import { MedicalExaminationPage } from './modules/medical-examination/MedicalExa
 import { ImagingDiagnosticPage } from './modules/paraclinical/components/imagining-diagnostic/components/ImaginingDiagnosticPage';
 import { BloodTestPage } from './modules/paraclinical/components/blood-test/component/BloodTestPage';
 import { PharmaceuticalWarehousePage } from './modules/pharmaceutical-warehouse/components/PharmaceuticalWarehousePage';
-
 function App() {
   return (
     <HashRouter>

@@ -1,26 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react'
-import PharmaceuticalGoodsReceiptForm, { RefObject } from './form/PharmaceuticalGoodsReceiptForm';
 import { IMedicineTable } from '../../models';
 import { Button, Col, Row, Space, Table } from 'antd';
 import { BasicNotification } from '../../../../shared/components/BasicNotification';
 import { pharmaceuticalWarehouseService } from '../../services/pharmaceutical-warehouse.service';
-import { usePharmaceuticalGoodsReceiptTableColumn } from './PharmaceuticalGoodsReceiptTable.column';
+import PharmaceuticalGoodsIssueForm, { RefObject } from './form/PharmaceuticalGoodsIssueForm';
+import { usePharmaceuticalGoodsIssueTableColumn } from './PharmaceuticalGoodsIssueTable.column';
 
-export const PharmaceuticalGoodsReceiptPage = () => {
+export const PharmaceuticalGoodsIssuePage = () => {
     const child = useRef<RefObject>(null);
     const [count, setCount] = useState<number>(0);
     const [medicine, setMedicine] = useState<IMedicineTable[]>([]);
-    const pharmaceuticalGoodsReceiptTableResult = usePharmaceuticalGoodsReceiptTableColumn();
+    const pharmaceuticalGoodsIssueTableResult = usePharmaceuticalGoodsIssueTableColumn();
 
-    const onCreatingPharmaceuticalGoodsReceipt = () => {
-        pharmaceuticalWarehouseService.createPharmaceuticalGoodsReceipt(medicine)
+    const onCreatingPharmaceuticalGoodsIssue = () => {
+        pharmaceuticalWarehouseService.createPharmaceuticalGoodsIssue(medicine)
             .then(() => {
                 BasicNotification(
                     "success",
                     "Success",
-                    "Đã nhập kho thành công !",
+                    "Đã xuât kho thành công !",
                 );
-                // setMedicineData([]);
             })
             .catch((e) => {
                 BasicNotification(
@@ -35,6 +34,7 @@ export const PharmaceuticalGoodsReceiptPage = () => {
     const submitForm = (values: any) => {
         const newData = {
             key: count + 1,
+            drugId: values.drugId,
             drugName: values.drugName,
             price: values.price,
             unit: values.unit,
@@ -48,10 +48,10 @@ export const PharmaceuticalGoodsReceiptPage = () => {
   return (
     <Row>
         <Col span={24}>
-            <PharmaceuticalGoodsReceiptForm 
+            <PharmaceuticalGoodsIssueForm 
                 ref={child.current?.showForm} 
                 submitForm={submitForm} 
-                onCreatingPharmaceuticalGoodsReceipt={onCreatingPharmaceuticalGoodsReceipt} 
+                onCreatingPharmaceuticalGoodsIssue={onCreatingPharmaceuticalGoodsIssue} 
                 clearTable={() => setMedicine([])}
             />
         </Col>
@@ -59,7 +59,7 @@ export const PharmaceuticalGoodsReceiptPage = () => {
             <>  
                 <Row style={{marginTop: '1rem'}}>
                     <Table
-                        columns={pharmaceuticalGoodsReceiptTableResult["columns"]}
+                        columns={pharmaceuticalGoodsIssueTableResult["columns"]}
                         dataSource={medicine}
                         style={{minWidth: '900px'}}
                     />
