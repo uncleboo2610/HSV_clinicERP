@@ -12,6 +12,10 @@ import { PharmaceuticalWarehouse } from 'src/entities/pharmaceutical-warehouse.e
 import { PharmaceuticalWarehouseService } from 'src/pharmaceutical-warehouse/services/pharmaceutical-warehouse/pharmaceutical-warehouse.service';
 import { DrugService } from 'src/drug/services/drug/drug.service';
 import { TypeDrug } from 'src/entities/type-drug.entity';
+import { PharmaceuticalGoodsReceiptNoteDetail } from 'src/entities/pharmaceutical-goods-receipt-note-detail';
+import { PharmaceuticalGoodsReceiptNote } from 'src/entities/pharmaceutical-goods-receipt-note';
+import { PharmaceuticalGoodsIssueNote } from 'src/entities/pharmaceutical-goods-issue-note';
+import { PharmaceuticalGoodsIssueNoteDetail } from 'src/entities/pharmaceutical-goods-issue-note-detail';
 
 @Module({
   imports: [TypeOrmModule.forFeature([
@@ -22,7 +26,11 @@ import { TypeDrug } from 'src/entities/type-drug.entity';
     MedicalReport, 
     TypePrescription, 
     PharmaceuticalWarehouse, 
-    TypeDrug
+    TypeDrug,
+    PharmaceuticalGoodsReceiptNote,
+    PharmaceuticalGoodsReceiptNoteDetail,
+    PharmaceuticalGoodsIssueNote,
+    PharmaceuticalGoodsIssueNoteDetail
   ])],
   controllers: [PrescriptionController],
   providers: [PrescriptionService, PharmaceuticalWarehouseService, DrugService]

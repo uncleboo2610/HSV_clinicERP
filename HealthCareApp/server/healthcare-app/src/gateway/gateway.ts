@@ -67,24 +67,24 @@ export class MyGateWay implements OnModuleInit {
         })
     }
 
-    @SubscribeMessage('newHealthRecord')
-    async onHealthRecord(@MessageBody() body: any) {
+    @SubscribeMessage('newMedicalRecord')
+    async onMedicalRecord(@MessageBody() body: any) {
         const data = await this.patientRepository.findOne({ 
             where: {id: body.data},
             relations: ['prescription.prescriptionDetail', 'prescription.medicalReport.staff.department', 'medicalReport']
         });
-        this.server.to(body.to).emit('onHealthRecord', {
+        this.server.to(body.to).emit('onMedicalRecord', {
             content: data
         })
     }
 
-    @SubscribeMessage('checkHealthRecordDetail')
-    async onHealthRecordDetail(@MessageBody() body: any) {
+    @SubscribeMessage('checkMedicalRecordDetail')
+    async onMedicalRecordDetail(@MessageBody() body: any) {
         const data = await this.prescriptionRepository.findOne({
             where: {id: body.data},
-            relations: ['prescriptionDetail.drug'],
+            relations: ['prescriptionDetail.drug', 'patient'],
         })
-        this.server.to(body.to).emit('onCheckHealthRecordDetail', {
+        this.server.to(body.to).emit('onCheckMedicalRecordDetail', {
             content: data
         })
     }

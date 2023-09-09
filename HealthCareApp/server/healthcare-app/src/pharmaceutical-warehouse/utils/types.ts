@@ -11,6 +11,16 @@ export type PharmaceuticalGoodsReceiptParams = {
     quantity: number;
 }
 
+export type PharmaceuticalGoodsReceiptNoteParams = {
+    inputInStock: string;
+    location: string;
+}
+
+export type PharmaceuticalGoodsIssueNoteParams = {
+    exportInStock: string;
+    location: string;
+}
+
 export type PharmaceuticalGoodsIssueParams = {
     quantity: number;
     drugId: number;

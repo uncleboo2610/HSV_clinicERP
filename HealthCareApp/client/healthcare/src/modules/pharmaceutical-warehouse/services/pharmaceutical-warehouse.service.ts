@@ -13,10 +13,21 @@ class PharmaceuticalWarehouseService {
             data
         );
     }
-
+    createPharmaceuticalGoodsReceiptNote(data: any) {
+        return httpClient.post(
+            apiEndpoints.PharmaceuticalWarehouse.AddPharmaceuticalGoodsReceiptNote,
+            data
+        );
+    }
     createPharmaceuticalGoodsIssue(data: any) {
         return httpClient.put(
             apiEndpoints.PharmaceuticalWarehouse.AddPharmaceuticalGoodsIssue,
+            data
+        );
+    }
+    createPharmaceuticalGoodsIssueNote(data: any) {
+        return httpClient.post(
+            apiEndpoints.PharmaceuticalWarehouse.AddPharmaceuticalGoodsIssueNote,
             data
         );
     }

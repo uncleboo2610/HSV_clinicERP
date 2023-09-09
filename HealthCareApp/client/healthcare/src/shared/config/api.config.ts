@@ -25,7 +25,9 @@ export const apiEndpoints = {
     PharmaceuticalWarehouse: {
         GetPharmaceuticalWarehouse: `${apiBaseUrl}/pharmaceutical-warehouse/get-pharmaceutical-warehouses`,
         AddPharmaceuticalGoodsReceipt: `${apiBaseUrl}/pharmaceutical-warehouse/create-pharmaceutical-goods-receipt`,
+        AddPharmaceuticalGoodsReceiptNote: `${apiBaseUrl}/pharmaceutical-warehouse/create-pharmaceutical-goods-receipt-note`,
         AddPharmaceuticalGoodsIssue: `${apiBaseUrl}/pharmaceutical-warehouse/create-pharmaceutical-goods-issue`,
+        AddPharmaceuticalGoodsIssueNote: `${apiBaseUrl}/pharmaceutical-warehouse/create-pharmaceutical-goods-issue-note`,
     },
     Paraclinical: {
         GetParaclinicalReport: `${apiBaseUrl}/paraclinical/get-paraclinical-reports`,

@@ -4,7 +4,7 @@ import { Table } from 'antd';
 import { IPrescriptionDetail } from '../../prescription/models';
 import { ColumnsType } from 'antd/es/table';
 
-export const HealthRecordDetail = () => {
+export const MedicalRecordDetail = () => {
     const [prescription, setPrescription] = useState([]);
     const socket = useContext(WebsocketContext);
 
@@ -12,13 +12,13 @@ export const HealthRecordDetail = () => {
         socket.on('connect', () => {
         });
 
-        socket.on('onCheckHealthRecordDetail', (newMessage) => {
+        socket.on('onCheckMedicalRecordDetail', (newMessage) => {
             setPrescription(newMessage.content.prescriptionDetail);
         });
 
         return () => {
             socket.off('connect');
-            socket.off('onCheckHealthRecordDetail');
+            socket.off('onCheckMedicalRecordDetail');
         };
     }, []);
     
@@ -58,7 +58,7 @@ export const HealthRecordDetail = () => {
             title: 'Ghi chú',
             dataIndex: 'note',
             key: 'note'
-        }
+        },
     ];
 
     const dataPrescriptionDetail: IPrescriptionDetail[] = prescription?.map((prescriptionDetail: any, i) => ({

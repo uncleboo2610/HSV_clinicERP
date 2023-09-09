@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { StaffTicketForm } from './staff-ticket/components/StaffTicketForm';
 import { IReceivingCardDetail, IPatient } from '../patients/models';
 import { PrescriptionPage } from './prescription/component/PrescriptionPage';
-import { HealthRecordPage } from './health-record/components/HealthRecordPage';
+import { MedicalRecordPage } from './health-record/components/MedicalRecordPage';
 import { useReceivingCardTableColumn } from './ReceivingCardTable.column';
 import { MedicalReportForm } from './medical-report/components/form/MedicalReportForm';
 import { MedicalReportPage } from './medical-report/components/MedicalReportPage';
@@ -42,7 +42,7 @@ export const MedicalExaminationPage = () => {
         {
             key: '4',
             label: `Bệnh án`,
-            children: <HealthRecordPage patient={patient}/>
+            children: <MedicalRecordPage patient={patient}/>
         }
     ];
 

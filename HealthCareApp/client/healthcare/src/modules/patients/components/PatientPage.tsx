@@ -10,7 +10,7 @@ import Highlighter from 'react-highlight-words';
 import usePatient from '../hooks/usePatient';
 import ModalReceivingCardForm, { RefObject } from './form/ModalReceivingCardFrom';
 import { WebsocketContext } from '../../../contexts/WebSocketContext';
-import { HealthRecordPage } from '../../medical-examination/health-record/components/HealthRecordPage';
+import { MedicalRecordPage } from '../../medical-examination/health-record/components/MedicalRecordPage';
   
 type DataIndex = keyof IPatient;
 
@@ -269,7 +269,7 @@ export const PatientPage = () => {
     };
 
     const onReceiving = () => {
-        // socket.emit('newHealthRecord', {to: socket.id, data: props?.patient?.id})
+        // socket.emit('newMedicalRecord', {to: socket.id, data: props?.patient?.id})
         child.current?.openModal(patient);
     };
 
@@ -299,7 +299,7 @@ export const PatientPage = () => {
                 dataSource={dataPatient} 
             />
         </Row>
-        <HealthRecordPage patient={patient}/>
+        <MedicalRecordPage patient={patient}/>
     </>
   )
 }

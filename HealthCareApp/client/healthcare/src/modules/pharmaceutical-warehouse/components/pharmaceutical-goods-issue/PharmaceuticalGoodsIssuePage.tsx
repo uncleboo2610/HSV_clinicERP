@@ -13,22 +13,37 @@ export const PharmaceuticalGoodsIssuePage = () => {
     const pharmaceuticalGoodsIssueTableResult = usePharmaceuticalGoodsIssueTableColumn();
 
     const onCreatingPharmaceuticalGoodsIssue = () => {
-        pharmaceuticalWarehouseService.createPharmaceuticalGoodsIssue(medicine)
-            .then(() => {
-                BasicNotification(
-                    "success",
-                    "Success",
-                    "Đã xuât kho thành công !",
-                );
+        pharmaceuticalWarehouseService.createPharmaceuticalGoodsIssueNote({
+            exportInStock: ``,
+            location: ``
+        }).then((res) => {
+            pharmaceuticalWarehouseService.createPharmaceuticalGoodsIssue({
+                detail: medicine,
+                pharmaceuticalGoodsIssueNoteId: res.data.id
             })
-            .catch((e) => {
-                BasicNotification(
-                    "error",
-                    "Error",
-                    "Failed to update data !",
-                );
-                console.log(e);
-            })
+                .then(() => {
+                    BasicNotification(
+                        "success",
+                        "Success",
+                        "Đã xuât kho thành công !",
+                    );
+                })
+                .catch((e) => {
+                    BasicNotification(
+                        "error",
+                        "Error",
+                        "Failed to update data !",
+                    );
+                    console.log(e);
+                })
+        }).catch((e) => {
+            BasicNotification(
+                "error",
+                "Error",
+                "Failed to update data !",
+            );
+            console.log(e);
+        });
     };
 
     const submitForm = (values: any) => {

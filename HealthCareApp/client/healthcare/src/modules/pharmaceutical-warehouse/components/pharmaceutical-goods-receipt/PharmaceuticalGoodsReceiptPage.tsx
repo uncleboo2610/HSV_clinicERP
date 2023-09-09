@@ -13,23 +13,38 @@ export const PharmaceuticalGoodsReceiptPage = () => {
     const pharmaceuticalGoodsReceiptTableResult = usePharmaceuticalGoodsReceiptTableColumn();
 
     const onCreatingPharmaceuticalGoodsReceipt = () => {
-        pharmaceuticalWarehouseService.createPharmaceuticalGoodsReceipt(medicine)
-            .then(() => {
-                BasicNotification(
-                    "success",
-                    "Success",
-                    "Đã nhập kho thành công !",
-                );
-                // setMedicineData([]);
+        pharmaceuticalWarehouseService.createPharmaceuticalGoodsReceiptNote({
+            inputInStock: ``,
+            location: ``
+        }).then((res) => {
+            pharmaceuticalWarehouseService.createPharmaceuticalGoodsReceipt({
+                detail: medicine,
+                pharmaceuticalGoodsReceiptNoteId: res.data.id
             })
-            .catch((e) => {
-                BasicNotification(
-                    "error",
-                    "Error",
-                    "Failed to update data !",
-                );
-                console.log(e);
-            })
+                .then(() => {
+                    BasicNotification(
+                        "success",
+                        "Success",
+                        "Đã nhập kho thành công !",
+                    );
+                    // setMedicineData([]);
+                })
+                .catch((e) => {
+                    BasicNotification(
+                        "error",
+                        "Error",
+                        "Failed to update data !",
+                    );
+                    console.log(e);
+                })
+        }).catch((e) => {
+            BasicNotification(
+                "error",
+                "Error",
+                "Failed to update data !",
+            );
+            console.log(e);
+        });
     };
 
     const submitForm = (values: any) => {

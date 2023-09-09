@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { WebsocketContext } from "../../../../contexts/WebSocketContext";
 
-export default function useHealthRecord() {
+export default function useMedicalRecord() {
     const [data, setData] = useState<[]>([]);
     const socket = useContext(WebsocketContext);
 
@@ -9,13 +9,13 @@ export default function useHealthRecord() {
         socket.on('connect', () => {
         });
 
-        socket.on('onHealthRecord', (newMessage) => {
+        socket.on('onMedicalRecord', (newMessage) => {
             setData(newMessage.content.prescription);
         });
 
         return () => {
             socket.off('connect');
-            socket.off('onHealthRecord');
+            socket.off('onMedicalRecord');
         };
     }, []);
 

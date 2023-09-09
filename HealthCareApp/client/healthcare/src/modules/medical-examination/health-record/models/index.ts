@@ -1,4 +1,4 @@
-export interface IHealthRecord {
+export interface IMedicalRecord {
     key: React.Key;
     id: number;
     diagnostic: string;

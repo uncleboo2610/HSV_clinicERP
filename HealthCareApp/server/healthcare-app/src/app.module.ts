@@ -37,6 +37,10 @@ import { TypeSolutionModule } from './type-solution/type-solution.module';
 import { ICD } from './entities/ICD.entity';
 import { IcdModule } from './icd/icd.module';
 import { PharmaceuticalWarehouseModule } from './pharmaceutical-warehouse/pharmaceutical-warehouse.module';
+import { PharmaceuticalGoodsReceiptNote } from './entities/pharmaceutical-goods-receipt-note';
+import { PharmaceuticalGoodsReceiptNoteDetail } from './entities/pharmaceutical-goods-receipt-note-detail';
+import { PharmaceuticalGoodsIssueNote } from './entities/pharmaceutical-goods-issue-note';
+import { PharmaceuticalGoodsIssueNoteDetail } from './entities/pharmaceutical-goods-issue-note-detail';
 
 const healthcare_image = TypeOrmModule.forRoot({
   name: 'healthcare_image',
@@ -79,6 +83,8 @@ const healthcare_image = TypeOrmModule.forRoot({
         ParaclinicalReport, 
         Prescription, 
         PrescriptionDetail, 
+        PharmaceuticalGoodsReceiptNote,
+        PharmaceuticalGoodsReceiptNoteDetail,
         ReceivingCard, 
         ReceivingCardDetail, 
         StaffTicketDetail, 
@@ -112,7 +118,13 @@ const healthcare_image = TypeOrmModule.forRoot({
       ParaclinicalModule, 
       AuthModule, 
       PrescriptionModule, 
-      DrugModule, ImaginingDiagnosticModule, TypeSolutionModule, IcdModule, PharmaceuticalWarehouseModule, 
+      DrugModule, 
+      ImaginingDiagnosticModule, 
+      TypeSolutionModule, 
+      IcdModule, 
+      PharmaceuticalWarehouseModule, 
+      PharmaceuticalGoodsIssueNote,
+      PharmaceuticalGoodsIssueNoteDetail
     ],
     controllers: [AppController],
     providers: [AppService],

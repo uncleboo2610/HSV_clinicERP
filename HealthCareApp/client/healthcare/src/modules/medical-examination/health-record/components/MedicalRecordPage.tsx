@@ -2,13 +2,13 @@ import React, { useContext } from 'react'
 import { UploadOutlined } from '@ant-design/icons';
 import { Row, Space, Button, Modal, Col } from 'antd';
 import { WebsocketContext } from '../../../../contexts/WebSocketContext';
-import { HealthRecordTable } from './HealthRecordTable';
+import { MedicalRecordTable } from './MedicalRecordTable';
 
-export const HealthRecordPage = (props: any) => {
+export const MedicalRecordPage = (props: any) => {
     const socket = useContext(WebsocketContext);
 
     const onCheck = () => {
-        socket.emit('newHealthRecord', {to: socket.id, data: props?.patient?.id})
+        socket.emit('newMedicalRecord', {to: socket.id, data: props?.patient?.id})
     };
 
   return (
@@ -31,7 +31,7 @@ export const HealthRecordPage = (props: any) => {
                 </div>
             </Col>
         </Row>
-        <HealthRecordTable />
+        <MedicalRecordTable />
     </>
   )
 }
